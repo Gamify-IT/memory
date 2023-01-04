@@ -49,7 +49,12 @@ export default {
   <div class="MemoryCard" id="card" ref="card" @click="flipCard()">
     <div class="front">front</div>
     <div class="back">
-      <p id="text" ref="text">text</p>
+      <p id="text" ref="text">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum optio
+        vel sequi. Nam dolorem qui consectetur corrupti quod optio. Libero sequi
+        harum debitis. Quae mollitia aspernatur obcaecati, repellendus eveniet
+        doloribus!
+      </p>
       <img src="@/assets/images/ghost.jpg" alt="image" id="image" ref="image" />
     </div>
   </div>
@@ -57,8 +62,8 @@ export default {
 
 <style scoped>
 .MemoryCard {
-  width: 100px; /*calc(25%-10px)*/
-  height: 100px; /*calc(25%-10px)*/
+  width: 200px; /*calc(25%-10px)*/
+  height: 200px; /*calc(25%-10px)*/
   cursor: pointer;
   transform: scale(1);
   margin: 5px;
@@ -81,13 +86,16 @@ export default {
   position: absolute;
   text-align: center;
   backface-visibility: hidden;
+  overflow: auto;
 }
 .back {
   transform: rotateY(180deg);
 }
 
 #text {
+  width: calc(100% - 5px);
   display: none;
+  margin: auto;
 }
 
 #image {
@@ -96,6 +104,6 @@ export default {
 
 .back img {
   width: 100%;
-  height: auto;
+  height: 100%;
 }
 </style>
