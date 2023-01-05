@@ -1,11 +1,18 @@
 <template>
-  <div class="app">test</div>
+  <GamePanel />
+  <SummaryPanel />
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from "@vue/runtime-core";
+import SummaryPanel from "./components/SummaryPanel.vue";
+import GamePanel from "./components/GamePanel.vue";
+
 export default defineComponent({
   name: "App",
-  components: {},
+  components: {
+    SummaryPanel,
+    GamePanel,
+  },
 });
 </script>
