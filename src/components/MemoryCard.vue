@@ -1,26 +1,23 @@
 <script lang="ts">
-//import { PropType } from "vue";
-//import CardContent from "@/Types/CardContent";
+import { PropType } from "vue";
+import CardContent from "@/Types/CardContent";
 export default {
+  /*  data(): { content: CardContent } {
+    return {
+      content: this.cardContent as CardContent,
+    };
+  },*/
+  props: {
+    cardContent: {
+      type: Object as PropType<CardContent>,
+      required: true,
+    },
+  },
   mounted(this: {
     setContent: () => void;
     $refs: { text: HTMLParagraphElement; image: HTMLImageElement };
   }) {
     this.setContent();
-  },
-  /*  props: {
-    contents: {
-      required: true,
-      content: "text",
-      id:-1,
-      pairid:-1,
-      type: Array as PropType<CardContent[]>,
-    }
-  },*/
-  data() {
-    return {
-      content: "text",
-    };
   },
   methods: {
     flipCard(this: any) {
@@ -30,15 +27,20 @@ export default {
         );
     },
     setContent(this: {
-      content: string;
+      content: CardContent;
+      cardContent: CardContent;
       $refs: { text: HTMLParagraphElement; image: HTMLImageElement };
     }) {
-      console.log("here");
-      if (this.content === "text") {
-        if (this.$refs.text) this.$refs.text.style.display = "block";
+      if (this.cardContent.type === "text") {
+        if (this.$refs.text) {
+          this.$refs.text.style.display = "block";
+        }
       }
-      if (this.content === "image") {
-        if (this.$refs.image) this.$refs.image.style.display = "block";
+      if (this.cardContent.type === "image") {
+        if (this.$refs.image) {
+          this.$refs.image.src = this.cardContent.content;
+          this.$refs.image.style.display = "block";
+        }
       }
     },
   },
@@ -50,20 +52,18 @@ export default {
     <div class="front">front</div>
     <div class="back">
       <p id="text" ref="text">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum optio
-        vel sequi. Nam dolorem qui consectetur corrupti quod optio. Libero sequi
-        harum debitis. Quae mollitia aspernatur obcaecati, repellendus eveniet
-        doloribus!
+        {{ cardContent.content }}
       </p>
-      <img src="@/assets/images/ghost.jpg" alt="image" id="image" ref="image" />
+      <img alt="image" id="image" ref="image" />
+      <!--"@/assets/images/ghost.jpg"-->
     </div>
   </div>
 </template>
 
 <style scoped>
 .MemoryCard {
-  width: 200px; /*calc(25%-10px)*/
-  height: 200px; /*calc(25%-10px)*/
+  width: 100%; /*calc(25%-10px)*/
+  height: 100%; /*calc(25%-10px)*/
   cursor: pointer;
   transform: scale(1);
   margin: 5px;
