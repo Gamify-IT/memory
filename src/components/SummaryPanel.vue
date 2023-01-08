@@ -29,8 +29,8 @@ export default defineComponent({
 
 <style scoped>
 #panel {
-  width: 400px;
-  height: 800px;
+  width: 100%;
+  height: 100%;
 }
 #heading {
   padding: 16px;

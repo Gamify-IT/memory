@@ -62,7 +62,7 @@ h1{
 
 #MemoryBox {
     position: absolute;
-    border: 0.5px solid #ffffff;
+    border: 0.5px solid #000000;
     margin-top: 6%;
     height: 84%;
     width: 65%;
@@ -74,7 +74,7 @@ h1{
 #PairBox {
     position: absolute;
     padding: 10px;
-    border: 0.5px solid #ffffff;
+    border: 0.5px solid #000000;
     margin-top: 6%;
     height: 84%;
     width: 25%;

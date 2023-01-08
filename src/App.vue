@@ -17,10 +17,7 @@ export default defineComponent({
   components: {
     SummaryPanel,
     GamePanel,
-    HeaderWebsite
+    HeaderWebsite,
   },
-document.getElementById("MemoryBox")?.style;
-function startGame() {
-  document.getElementById("MemoryBox")!.style.borderColor = "white";
-}
+});
 </script>

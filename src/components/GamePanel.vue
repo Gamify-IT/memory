@@ -23,8 +23,8 @@ export default defineComponent({
 
 <style scoped>
 #panel {
-  width: 80vw;
-  height: 80vh;
+  width: 100%;
+  height: 100%;
 }
 #gridContainer {
   display: grid;
