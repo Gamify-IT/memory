@@ -10,8 +10,13 @@ html {
     margin: 0;
     padding: 0;
     display: flex;
-    
+}
 
+.gloss {
+    border-radius: 20px;
+    box-shadow: 0 3px 30px rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(7px);
+    background-color: rgba(239, 239, 239, 0.6);
 }
 
 h1{
