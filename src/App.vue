@@ -3,16 +3,16 @@
   <div id="PairBox"><SummaryPanel /></div>
   <div class="center">
     <div class="app"><HeaderWebsite /></div>
-    <button onclick="startGame()" class="button button1">Start Game</button>
+    <!--<button onclick="startGame()" class="button button1">Start Game</button>-->
   </div>
+  <!--<MemoryCard :cardContent="cardContent" />-->
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import HeaderWebsite from "@/components/HeaderWebsite.vue";
+import { defineComponent } from "vue";
+import HeaderWebsite from "./components/HeaderWebsite.vue";
 import SummaryPanel from "./components/SummaryPanel.vue";
 import GamePanel from "./components/GamePanel.vue";
-import MemoryCard from "./components/MemoryCard.vue";
 import CardContent from "./Types/CardContent";
 export default defineComponent({
   name: "App",
@@ -20,7 +20,6 @@ export default defineComponent({
     SummaryPanel,
     GamePanel,
     HeaderWebsite,
-    MemoryCard
   },
   /*setup() {
     const cards = ref<CardContent[]>([
@@ -38,19 +37,6 @@ export default defineComponent({
         pairid: 0,
       } as CardContent,
     };
+  },
 });
 </script>
-
-<template>
-  <div class="app">
-    <div id="test"><MemoryCard :cardContent="cardContent" /></div>
-  </div>
-  <!-- :cards="cards"  -->
-</template>
-
-<style scoped>
-#test {
-  width: 200px;
-  height: 200px;
-}
-</style>

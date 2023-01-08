@@ -1,5 +1,5 @@
 <template>
-  <h1 style="color: white">Memory</h1>
+  <h1 style="color: black">Memory</h1>
   <!--<form>
     <button type="submit">Start Game</button>
   </form>-->
@@ -8,5 +8,3 @@
 <script lang="ts">
 export default {};
 </script>
-
-<style lang="scss" scoped></style>

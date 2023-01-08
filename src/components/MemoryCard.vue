@@ -49,7 +49,7 @@ export default {
 
 <template>
   <div class="MemoryCard" id="card" ref="card" @click="flipCard()">
-    <div class="front">front</div>
+    <div class="front"></div>
     <div class="back">
       <p id="text" ref="text">
         {{ cardContent.content }}
@@ -82,7 +82,7 @@ export default {
 .back {
   width: 100%;
   height: 100%;
-  background: lightblue;
+  background: lightskyblue;
   position: absolute;
   text-align: center;
   backface-visibility: hidden;

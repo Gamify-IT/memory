@@ -4,8 +4,7 @@ body,
 html, .app {
     height: 100vh;
     font-family: 'Open Sans';
-    background: #000000;
-    font-size: 10px;
+    background: lightgray;
     width: 100%;
     height: 100%;
     margin: 0;
@@ -15,7 +14,6 @@ html, .app {
 }
 
 .gloss {
-    border-radius: 20px;
     box-shadow: 0 3px 30px rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(7px);
     background-color: rgba(239, 239, 239, 0.6);
@@ -58,13 +56,14 @@ h1{
     top: 0.001%;
     -ms-transform: translate(-50%,0.001%);
     transform: translate(-50%,0.001%);
+
 }
 
 
 
 #MemoryBox {
     position: absolute;
-    border: 0.5px solid #000000;
+    border: none;
     margin-top: 6%;
     height: 84%;
     width: 65%;
@@ -76,7 +75,7 @@ h1{
 #PairBox {
     position: absolute;
     padding: 10px;
-    border: 0.5px solid #000000;
+    border: none;
     margin-top: 6%;
     height: 84%;
     width: 25%;
