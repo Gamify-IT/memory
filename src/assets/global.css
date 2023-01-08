@@ -1,6 +1,82 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap');
 
-body {
+body,
+html {
     font-family: 'Open Sans';
-    background: #ffffff;
+    background: #000000;
+    font-size: 10px;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    
+
+}
+
+h1{
+    text-align: center;
+    font-size: 220%;
+}
+
+.button {
+    background-color: #ffffff;
+    color: #000000;
+    border: none;
+    padding: 1em 1.5em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.5em;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    }
+
+.button1 {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #ffffff;
+    }
+.button1:hover{
+    background-color: #000000;
+    color: #ffffff;
+    border: 2px solid #000000;
+}  
+
+  
+.center {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    top: 0.001%;
+    -ms-transform: translate(-50%,0.001%);
+    transform: translate(-50%,0.001%);
+}
+
+
+
+#MemoryBox {
+    position: absolute;
+    border: 0.5px solid #ffffff;
+    margin-top: 6%;
+    height: 84%;
+    width: 65%;
+    margin-left: 1%;
+    padding: 10px;
+
+}
+
+#PairBox {
+    position: absolute;
+    padding: 10px;
+    border: 0.5px solid #ffffff;
+    margin-top: 6%;
+    height: 84%;
+    width: 25%;
+    margin-left: 73%;
+
+}
+
+.newBorder {
+    border: 0.5px solid #ffffff;
 }
