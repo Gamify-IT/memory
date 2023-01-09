@@ -1,11 +1,42 @@
 <template>
-  <div class="app">test</div>
+  <div id="MemoryBox"><GamePanel /></div>
+  <div id="PairBox"><SummaryPanel /></div>
+  <div class="center">
+    <div class="app"><HeaderWebsite /></div>
+    <!--<button onclick="startGame()" class="button button1">Start Game</button>-->
+  </div>
+  <!--<MemoryCard :cardContent="cardContent" />-->
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import HeaderWebsite from "./components/HeaderWebsite.vue";
+import SummaryPanel from "./components/SummaryPanel.vue";
+import GamePanel from "./components/GamePanel.vue";
+import CardContent from "./Types/CardContent";
 export default defineComponent({
   name: "App",
-  components: {},
+  components: {
+    SummaryPanel,
+    GamePanel,
+    HeaderWebsite,
+  },
+  /*setup() {
+    const cards = ref<CardContent[]>([
+      { content: "test", type: "text", id: 1, pairid: 1 },
+    ]);
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum optio vel sequi. Nam dolorem qui consectetur corrupti quod optio. Libero sequi harum debitis. Quae mollitia aspernatur obcaecati, repellendus eveniet doloribus!",
+    return { cards };
+  },*/
+  data() {
+    return {
+      cardContent: {
+        content: "@/assets/images/ghost.jpg",
+        type: "text",
+        id: 0,
+        pairid: 0,
+      } as CardContent,
+    };
+  },
 });
 </script>
