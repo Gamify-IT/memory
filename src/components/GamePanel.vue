@@ -4,7 +4,6 @@
       <div v-for="card in cardContent" :key="card.id">
         <MemoryCard :cardContent="card" />
       </div>
-      <!--<div><MemoryCard :cardContent="cardContent" /></div>-->
     </div>
   </div>
 </template>
@@ -16,7 +15,6 @@ import CardContent from "../Types/CardContent";
 export default defineComponent({
   name: "GamePanel",
   components: { MemoryCard },
-  //"@/assets/images/ghost.jpg",
   data() {
     return {
       pairs: Array.from(Array<string>(12).keys()),

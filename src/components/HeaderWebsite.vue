@@ -1,10 +1,15 @@
 <template>
-  <h1 style="color: black">Memory</h1>
-  <!--<form>
-    <button type="submit">Start Game</button>
-  </form>-->
+  <h1>Memory</h1>
 </template>
 
 <script lang="ts">
 export default {};
 </script>
+
+<style scoped>
+h1 {
+  text-align: center;
+  font-size: 220%;
+  background: transparent;
+}
+</style>

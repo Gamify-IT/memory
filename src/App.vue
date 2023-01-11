@@ -3,9 +3,7 @@
   <div id="PairBox"><SummaryPanel /></div>
   <div class="center">
     <div class="app"><HeaderWebsite /></div>
-    <!--<button onclick="startGame()" class="button button1">Start Game</button>-->
   </div>
-  <!--<MemoryCard :cardContent="cardContent" />-->
 </template>
 
 <script lang="ts">
@@ -21,13 +19,6 @@ export default defineComponent({
     GamePanel,
     HeaderWebsite,
   },
-  /*setup() {
-    const cards = ref<CardContent[]>([
-      { content: "test", type: "text", id: 1, pairid: 1 },
-    ]);
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum optio vel sequi. Nam dolorem qui consectetur corrupti quod optio. Libero sequi harum debitis. Quae mollitia aspernatur obcaecati, repellendus eveniet doloribus!",
-    return { cards };
-  },*/
   data() {
     return {
       cardContent: {

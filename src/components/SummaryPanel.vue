@@ -36,7 +36,6 @@ export default defineComponent({
   padding: 16px;
   font-size: 2em;
   text-align: center;
-  font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   border-bottom: 3px solid rgb(52, 52, 52);
 }

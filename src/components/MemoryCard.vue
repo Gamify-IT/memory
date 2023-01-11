@@ -2,11 +2,6 @@
 import { PropType } from "vue";
 import CardContent from "@/Types/CardContent";
 export default {
-  /*  data(): { content: CardContent } {
-    return {
-      content: this.cardContent as CardContent,
-    };
-  },*/
   props: {
     cardContent: {
       type: Object as PropType<CardContent>,
@@ -55,15 +50,14 @@ export default {
         {{ cardContent.content }}
       </p>
       <img alt="image" id="image" ref="image" />
-      <!--"@/assets/images/ghost.jpg"-->
     </div>
   </div>
 </template>
 
 <style scoped>
 .MemoryCard {
-  width: 100%; /*calc(25%-10px)*/
-  height: 100%; /*calc(25%-10px)*/
+  width: 100%;
+  height: 100%;
   cursor: pointer;
   transform: scale(1);
   margin: 5px;
