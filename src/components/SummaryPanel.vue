@@ -43,6 +43,6 @@ export default defineComponent({
   margin: 5px;
   overflow-x: hidden;
   overflow-y: auto;
-  height: 700px;
+  height: calc(100% - 50px - 2em);
 }
 </style>

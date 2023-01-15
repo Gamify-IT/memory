@@ -1,9 +1,7 @@
 <template>
-  <div id="panel" class="gloss">
-    <div id="gridContainer">
-      <div v-for="card in cardContent" :key="card.id">
-        <MemoryCard :cardContent="card" />
-      </div>
+  <div id="gridContainer" class="gloss">
+    <div v-for="card in cardContent" :key="card.id">
+      <MemoryCard :cardContent="card" />
     </div>
   </div>
 </template>
@@ -92,19 +90,13 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#panel {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
 #gridContainer {
   display: grid;
-  box-sizing: border-box;
+  box-sizing: content-box;
   width: 100%;
   height: 100%;
-  grid-template-columns: repeat(4, 24.5%);
-  grid-template-rows: repeat(3, 32.5%);
+  grid-template-columns: repeat(4, calc(24.9% - 5px));
+  grid-template-rows: repeat(3, calc(33.2% - 5px));
   gap: 5px;
 }
 </style>
