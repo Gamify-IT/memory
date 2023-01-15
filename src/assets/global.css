@@ -17,24 +17,3 @@ html, .app {
     backdrop-filter: blur(7px);
     background-color: rgba(239, 239, 239, 0.6);
 }
-
-#MemoryBox {
-    position: absolute;
-    border: none;
-    margin-top: 2.5%;
-    height: 88%;
-    width: 65%;
-    margin-left: 1%;
-    padding: 10px;
-
-}
-
-#PairBox {
-    position: absolute;
-    padding: 10px;
-    border: none;
-    margin-top: 2.5%;
-    height: 88%;
-    width: 25%;
-    margin-left: 73%;
-}

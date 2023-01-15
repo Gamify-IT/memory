@@ -1,7 +1,20 @@
 <template>
-  <div id="gridContainer" class="gloss">
-    <div v-for="card in cardContent" :key="card.id">
-      <MemoryCard :cardContent="card" />
+  <div id="MemoryPanel">
+    <div id="gridContainer" class="gloss">
+      <div v-for="card in cardContent" :key="card.id">
+        <MemoryCard :cardContent="card" />
+      </div>
+    </div>
+  </div>
+  <div id="SummaryPanel" class="gloss">
+    <div id="heading">Summary</div>
+    <div id="scrollbar">
+      <PairItem
+        v-for="(pair, index) in pairs"
+        :key="index"
+        :text="pair.toString()"
+        class="pairItem"
+      />
     </div>
   </div>
 </template>
@@ -9,10 +22,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import MemoryCard from "./MemoryCard.vue";
-import CardContent from "../Types/CardContent";
+import PairItem from "./PairItem.vue";
+import { CardContent } from "../types/DataModels";
 export default defineComponent({
   name: "GamePanel",
-  components: { MemoryCard },
+  components: { MemoryCard, PairItem },
   data() {
     return {
       pairs: Array.from(Array<string>(12).keys()),
@@ -98,5 +112,35 @@ export default defineComponent({
   grid-template-columns: repeat(4, calc(24.9% - 5px));
   grid-template-rows: repeat(3, calc(33.2% - 5px));
   gap: 5px;
+}
+#MemoryPanel {
+  position: absolute;
+  border: none;
+  margin-top: 2.5%;
+  height: 88%;
+  width: 65%;
+  margin-left: 1%;
+}
+#SummaryPanel {
+  position: absolute;
+  border: none;
+  margin-top: 2.5%;
+  height: 88%;
+  width: 25%;
+  margin-left: 73%;
+}
+
+#heading {
+  padding: 16px;
+  font-size: 2em;
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 3px solid rgb(52, 52, 52);
+}
+#scrollbar {
+  margin: 5px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: calc(100% - 50px - 2em);
 }
 </style>

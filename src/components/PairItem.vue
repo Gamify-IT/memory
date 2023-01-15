@@ -10,7 +10,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import MemoryCard from "./MemoryCard.vue";
-import CardContent from "../Types/CardContent";
+import { CardContent } from "../types/DataModels";
 export default defineComponent({
   name: "PairItem",
   components: { MemoryCard },

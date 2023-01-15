@@ -1,17 +1,21 @@
 <template>
-  <div id="MemoryBox"><GamePanel /></div>
-  <div id="PairBox"><SummaryPanel /></div>
+  <div id="GamePanel"><GamePanel /></div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import SummaryPanel from "./components/SummaryPanel.vue";
 import GamePanel from "./components/GamePanel.vue";
 export default defineComponent({
   name: "App",
   components: {
-    SummaryPanel,
     GamePanel,
   },
 });
 </script>
+
+<style scoped>
+#GamePanel {
+  width: 100%;
+  height: 100%;
+}
+</style>
