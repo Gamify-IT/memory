@@ -1,12 +1,35 @@
 <script lang="ts">
-import { PropType } from "vue";
+import { PropType, ref } from "vue";
 import CardContent from "@/Types/CardContent";
+import ContentModal from "./ContentModal.vue";
 export default {
+  components: {
+    ContentModal,
+  },
   props: {
     cardContent: {
       type: Object as PropType<CardContent>,
       required: true,
     },
+  },
+  emits: ["close"],
+  setup() {
+    const showModal = ref(false);
+
+    function openModal() {
+      console.log("here");
+      showModal.value = true;
+    }
+
+    function closeModal() {
+      showModal.value = false;
+    }
+
+    return {
+      showModal,
+      openModal,
+      closeModal,
+    };
   },
   mounted(this: {
     setContent: () => void;
@@ -50,8 +73,13 @@ export default {
         {{ cardContent.content }}
       </p>
       <img alt="image" id="image" ref="image" />
+      <button id="detailView" @click.stop="openModal">+</button>
     </div>
   </div>
+  <ContentModal v-if="showModal" @close="closeModal">
+    <p>Modal Content</p>
+    <button @click="closeModal">Close</button>
+  </ContentModal>
 </template>
 
 <style scoped>
@@ -94,6 +122,22 @@ export default {
 
 #image {
   display: none;
+}
+
+#detailView {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border: 1px solid black;
+  background: grey;
+  top: 85%;
+  left: 5%;
+  border-radius: 30%;
+  color: white;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .back img {
