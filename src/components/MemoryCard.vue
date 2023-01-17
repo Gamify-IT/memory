@@ -1,10 +1,15 @@
 <script lang="ts">
-import { PropType, ref } from "vue";
+import { PropType } from "vue";
 import CardContent from "@/Types/CardContent";
 import ContentModal from "./ContentModal.vue";
 export default {
   components: {
     ContentModal,
+  },
+  data() {
+    return {
+      showModal: false,
+    };
   },
   props: {
     cardContent: {
@@ -13,24 +18,6 @@ export default {
     },
   },
   emits: ["close"],
-  setup() {
-    const showModal = ref(false);
-
-    function openModal() {
-      console.log("here");
-      showModal.value = true;
-    }
-
-    function closeModal() {
-      showModal.value = false;
-    }
-
-    return {
-      showModal,
-      openModal,
-      closeModal,
-    };
-  },
   mounted(this: {
     setContent: () => void;
     $refs: { text: HTMLParagraphElement; image: HTMLImageElement };
@@ -61,6 +48,15 @@ export default {
         }
       }
     },
+    openModal(this: any) {
+      console.log("here");
+      this.showModal = true;
+      console.log(this.showModal);
+    },
+
+    closeModal(this: any) {
+      this.showModal = false;
+    },
   },
 };
 </script>
@@ -77,7 +73,7 @@ export default {
     </div>
   </div>
   <ContentModal v-if="showModal" @close="closeModal">
-    <p>Modal Content</p>
+    <p>{{ cardContent.content }}</p>
     <button @click="closeModal">Close</button>
   </ContentModal>
 </template>

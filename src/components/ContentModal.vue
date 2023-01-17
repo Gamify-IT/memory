@@ -1,10 +1,10 @@
 <template>
-  <div class="modal" v-show="isOpen">
+  <div class="modal">
     <div class="modal-content" @click.stop>
       <slot></slot>
     </div>
   </div>
-  <div class="modal-backdrop" v-show="isOpen" @click="close"></div>
+  <div class="modal-backdrop" @click="close"></div>
 </template>
 
 <script lang="ts">
@@ -49,6 +49,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
+  text-align: center;
   padding: 1rem;
 }
 
