@@ -1,7 +1,7 @@
 <script lang="ts">
 import { PropType } from "vue";
-import CardContent from "@/Types/CardContent";
 import ContentModal from "./ContentModal.vue";
+import { CardContent } from "..DataModels/types/DataModels";
 export default {
   components: {
     ContentModal,
