@@ -1,7 +1,7 @@
 <script lang="ts">
 import { PropType } from "vue";
 import ContentModal from "./ContentModal.vue";
-import { CardContent } from "..DataModels/types/DataModels";
+import { CardContent } from "../types/DataModels";
 export default {
   components: {
     ContentModal,
@@ -17,7 +17,6 @@ export default {
       required: true,
     },
   },
-  emits: ["close"],
   mounted(this: {
     setContent: () => void;
     $refs: { text: HTMLParagraphElement; image: HTMLImageElement };
