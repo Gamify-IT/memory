@@ -1,6 +1,6 @@
 <script lang="ts">
 import { PropType } from "vue";
-import CardContent from "@/Types/CardContent";
+import { CardContent } from "../types/DataModels";
 export default {
   props: {
     cardContent: {
