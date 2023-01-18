@@ -79,16 +79,11 @@ export default defineComponent({
     },
   },
 });
+//:class="canTurn ? 'showCursor' : 'hideCursor'"
 </script>
 
 <template>
-  <div
-    class="MemoryCard"
-    id="card"
-    ref="card"
-    @click="revealCard"
-    :style="{ transform: 'rotate(${deg}deg)' }"
-  >
+  <div class="MemoryCard" id="card" ref="card" @click.stop="revealCard">
     <div class="front"></div>
     <div class="back">
       <p id="text" ref="text">
@@ -103,12 +98,18 @@ export default defineComponent({
 .MemoryCard {
   width: 100%;
   height: 100%;
-  cursor: pointer;
+
   transform: scale(1);
   margin: 5px;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.5s;
+}
+.showCursor {
+  cursor: pointer;
+}
+.hideCursor {
+  cursor: default;
 }
 /*
 .MemoryCard:active {

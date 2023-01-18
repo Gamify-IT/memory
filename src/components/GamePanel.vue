@@ -1,4 +1,5 @@
 <template>
+  <div id="overlay" v-if="allowReset" @click="manualReset"></div>
   <div id="MemoryPanel">
     <div id="gridContainer" class="gloss">
       <div v-for="(card, index) in cards" :key="index">
@@ -7,7 +8,7 @@
           :index="index"
           :canTurn="canTurnCard"
           v-show="!card.found"
-          @cardToggle="test"
+          @cardToggle="cardClickProcedure"
         />
       </div>
     </div>
@@ -43,38 +44,53 @@ export default defineComponent({
       canTurnCard: true,
       firstCardIndex: -1,
       disabledCards: [] as boolean[],
-      resetTimeout: null
+      resetTimeout: 0,
+      allowReset: false,
     };
   },
   methods: {
-    test(cardIndex: number) {
+    cardClickProcedure(cardIndex: number) {
       if (cardIndex == this.firstCardIndex) return;
       if (this.openCardCount == 0) {
         this.firstCardIndex = cardIndex;
       } else if (this.openCardCount == 1) {
-        this.resetCards();
         const card: CardData = this.cards[cardIndex];
         if (card.pairid == this.cards[this.firstCardIndex].pairid) {
           console.log("You found a pair!");
           this.addPairToSummary(cardIndex, this.firstCardIndex);
+        } else {
+          this.resetCards();
         }
         this.firstCardIndex = -1;
       }
       this.openCardCount++;
     },
-    resetCards() {
-      this.canTurnCard = false;
-      const timeout = setTimeout(() => {
+    manualReset() {
+      if (this.allowReset) {
         this.openCardCount = 0;
         this.canTurnCard = true;
-      }, 5000);
+        clearTimeout(this.resetTimeout);
+        this.allowReset = false;
+      }
+    },
+    resetCards() {
+      this.canTurnCard = false;
+      this.allowReset = true;
+      this.resetTimeout = setTimeout(() => {
+        this.openCardCount = 0;
+        this.canTurnCard = true;
+        this.allowReset = false;
+      }, 4000);
     },
     addPairToSummary(id1: number, id2: number) {
-      this.foundPairs.push(new CardPair(this.cards[id1], this.cards[id2]));
+      this.canTurnCard = false;
       setTimeout(() => {
+        this.foundPairs.push(new CardPair(this.cards[id1], this.cards[id2]));
         this.cards[id1].found = true;
         this.cards[id2].found = true;
-      }, 500);
+        this.openCardCount = 0;
+        this.canTurnCard = true;
+      }, 1000);
     },
   },
   mounted: function () {
@@ -122,5 +138,12 @@ export default defineComponent({
   overflow-x: hidden;
   overflow-y: auto;
   height: calc(100% - 50px - 2em);
+}
+#overlay {
+  background-color: rgba(52, 52, 52, 0.1);
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
 }
 </style>
