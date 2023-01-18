@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent } from "vue";
 import MemoryCard from "./MemoryCard.vue";
 import PairItem from "./PairItem.vue";
 import { CardData, CardPair } from "../types/DataModels";
@@ -43,6 +43,7 @@ export default defineComponent({
       canTurnCard: true,
       firstCardIndex: -1,
       disabledCards: [] as boolean[],
+      resetTimeout: null
     };
   },
   methods: {
@@ -57,15 +58,16 @@ export default defineComponent({
           console.log("You found a pair!");
           this.addPairToSummary(cardIndex, this.firstCardIndex);
         }
+        this.firstCardIndex = -1;
       }
       this.openCardCount++;
     },
     resetCards() {
       this.canTurnCard = false;
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         this.openCardCount = 0;
         this.canTurnCard = true;
-      }, 500);
+      }, 5000);
     },
     addPairToSummary(id1: number, id2: number) {
       this.foundPairs.push(new CardPair(this.cards[id1], this.cards[id2]));

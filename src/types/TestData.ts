@@ -35,5 +35,37 @@ export const testData: GameDataDTO = {
         type: CardType.TEXT,
       },
     },
+    {
+      card1: {
+        content:
+          "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
+        type: CardType.IMAGE,
+      },
+      card2: {
+        content: "test text for pair 4",
+        type: CardType.TEXT,
+      },
+    },
+    {
+      card1: {
+        content:
+          "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
+        type: CardType.IMAGE,
+      },
+      card2: {
+        content: "test text for pair 5",
+        type: CardType.TEXT,
+      },
+    },
+    {
+      card1: {
+        content: "HALLOOO",
+        type: CardType.TEXT,
+      },
+      card2: {
+        content: "test text for pair 6",
+        type: CardType.TEXT,
+      },
+    },
   ],
 };

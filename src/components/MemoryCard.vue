@@ -14,7 +14,10 @@ export default defineComponent({
   data() {
     return {
       turnedOver: false,
-      cardRotation: 0,
+      cardRotation: 180,
+      revealedClass: {
+        transform: "rotate(180deg)",
+      },
     };
   },
   watch: {
@@ -26,13 +29,12 @@ export default defineComponent({
   },
   mounted(this: {
     setContent: () => void;
+    flipCard: () => void;
     $refs: { text: HTMLParagraphElement; image: HTMLImageElement };
+    initiallyRevealed: boolean;
   }) {
     this.setContent();
-  },
-  created(this: any) {
     if (this.initiallyRevealed == true) {
-      console.log("test");
       this.flipCard();
     }
   },
@@ -80,7 +82,13 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="MemoryCard" id="card" ref="card" @click="revealCard">
+  <div
+    class="MemoryCard"
+    id="card"
+    ref="card"
+    @click="revealCard"
+    :style="{ transform: 'rotate(${deg}deg)' }"
+  >
     <div class="front"></div>
     <div class="back">
       <p id="text" ref="text">
