@@ -116,10 +116,11 @@ export default defineComponent({
 #MemoryPanel {
   order: 1;
   border: none;
-  flex: auto;
+  flex-grow: 3;
 }
 #SummaryPanel {
   order: 2;
+  height: 100%;
   border: none;
   flex: auto;
 }

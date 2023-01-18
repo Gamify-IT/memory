@@ -17,7 +17,9 @@ export default defineComponent({
 #GamePanel {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   gap: 3%;
+  padding: 2%;
+  height: 92%;
 }
 </style>
