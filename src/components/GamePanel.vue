@@ -114,20 +114,14 @@ export default defineComponent({
   gap: 5px;
 }
 #MemoryPanel {
-  position: absolute;
+  order: 1;
   border: none;
-  margin-top: 2.5%;
-  height: 88%;
-  width: 65%;
-  margin-left: 1%;
+  flex: auto;
 }
 #SummaryPanel {
-  position: absolute;
+  order: 2;
   border: none;
-  margin-top: 2.5%;
-  height: 88%;
-  width: 25%;
-  margin-left: 73%;
+  flex: auto;
 }
 
 #heading {
@@ -142,5 +136,11 @@ export default defineComponent({
   overflow-x: hidden;
   overflow-y: auto;
   height: calc(100% - 50px - 2em);
+}
+
+.gloss {
+  box-shadow: 0 3px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(7px);
+  background-color: rgba(239, 239, 239, 0.6);
 }
 </style>
