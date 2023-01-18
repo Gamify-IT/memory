@@ -1,11 +1,27 @@
 <script lang="ts">
-import { PropType } from "vue";
-import { CardContent } from "../types/DataModels";
-export default {
+import { defineComponent, PropType } from "vue";
+import { CardData, CardType } from "../types/DataModels";
+export default defineComponent({
   props: {
     cardContent: {
-      type: Object as PropType<CardContent>,
+      type: Object as PropType<CardData>,
       required: true,
+    },
+    index: Number,
+    canTurn: Boolean,
+    initiallyRevealed: Boolean,
+  },
+  data() {
+    return {
+      turnedOver: false,
+      cardRotation: 0,
+    };
+  },
+  watch: {
+    canTurn(newValue: boolean) {
+      if (newValue == true && this.turnedOver) {
+        this.flipCard();
+      }
     },
   },
   mounted(this: {
@@ -14,24 +30,45 @@ export default {
   }) {
     this.setContent();
   },
+  created(this: any) {
+    if (this.initiallyRevealed == true) {
+      console.log("test");
+      this.flipCard();
+    }
+  },
   methods: {
-    flipCard(this: any) {
-      if ((this as { $refs: { card: HTMLElement } }).$refs.card)
+    revealCard(this: any) {
+      if (
+        (this as { $refs: { card: HTMLElement } }).$refs.card &&
+        this.canTurn &&
+        !this.turnedOver
+      ) {
         (this as { $refs: { card: HTMLElement } }).$refs.card.classList.toggle(
           "flip"
         );
+        this.turnedOver = !this.turnedOver;
+        this.$emit("cardToggle", this.index);
+      }
+    },
+    flipCard(this: any) {
+      if ((this as { $refs: { card: HTMLElement } }).$refs.card) {
+        (this as { $refs: { card: HTMLElement } }).$refs.card.classList.toggle(
+          "flip"
+        );
+        this.turnedOver = !this.turnedOver;
+      }
     },
     setContent(this: {
-      content: CardContent;
-      cardContent: CardContent;
+      content: CardData;
+      cardContent: CardData;
       $refs: { text: HTMLParagraphElement; image: HTMLImageElement };
     }) {
-      if (this.cardContent.type === "text") {
+      if (this.cardContent.type === CardType.TEXT) {
         if (this.$refs.text) {
           this.$refs.text.style.display = "block";
         }
       }
-      if (this.cardContent.type === "image") {
+      if (this.cardContent.type == CardType.IMAGE) {
         if (this.$refs.image) {
           this.$refs.image.src = this.cardContent.content;
           this.$refs.image.style.display = "block";
@@ -39,11 +76,11 @@ export default {
       }
     },
   },
-};
+});
 </script>
 
 <template>
-  <div class="MemoryCard" id="card" ref="card" @click="flipCard()">
+  <div class="MemoryCard" id="card" ref="card" @click="revealCard">
     <div class="front"></div>
     <div class="back">
       <p id="text" ref="text">
@@ -65,10 +102,11 @@ export default {
   transform-style: preserve-3d;
   transition: transform 0.5s;
 }
+/*
 .MemoryCard:active {
   transform: scale(0.95);
   transition: transform 0.25s;
-}
+}*/
 .MemoryCard.flip {
   transform: rotateY(180deg);
 }

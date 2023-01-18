@@ -1,39 +1,35 @@
 <template>
   <div id="container">
     <div class="cardContainer">
-      <MemoryCard :cardContent="cardContent1" />
+      <MemoryCard
+        :cardContent="pair.card1"
+        :canTurn="false"
+        :initiallyRevealed="true"
+      />
     </div>
-    <div class="cardContainer"><MemoryCard :cardContent="cardContent2" /></div>
+    <div class="cardContainer">
+      <MemoryCard
+        :cardContent="pair.card2"
+        :canTurn="false"
+        :initiallyRevealed="true"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import MemoryCard from "./MemoryCard.vue";
-import { CardContent } from "../types/DataModels";
+import { CardPair } from "../types/DataModels";
+import { PropType } from "vue";
 export default defineComponent({
   name: "PairItem",
   components: { MemoryCard },
-  data() {
-    return {
-      cardContent1: {
-        content:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum optio vel sequi. Nam dolorem qui consectetur corrupti quod optio. Libero sequi harum debitis. Quae mollitia aspernatur obcaecati, repellendus eveniet doloribus!",
-        type: "text",
-        id: 0,
-        pairid: 0,
-      } as CardContent,
-      cardContent2: {
-        content:
-          "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-        type: "image",
-        id: 0,
-        pairid: 0,
-      } as CardContent,
-    };
-  },
   props: {
-    text: String,
+    pair: {
+      type: Object as PropType<CardPair>,
+      required: true,
+    },
   },
 });
 </script>

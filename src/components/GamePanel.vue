@@ -1,8 +1,14 @@
 <template>
   <div id="MemoryPanel">
     <div id="gridContainer" class="gloss">
-      <div v-for="card in cardContent" :key="card.id">
-        <MemoryCard :cardContent="card" />
+      <div v-for="(card, index) in cards" :key="index">
+        <MemoryCard
+          :cardContent="card"
+          :index="index"
+          :canTurn="canTurnCard"
+          v-show="!card.found"
+          @cardToggle="test"
+        />
       </div>
     </div>
   </div>
@@ -10,9 +16,9 @@
     <div id="heading">Summary</div>
     <div id="scrollbar">
       <PairItem
-        v-for="(pair, index) in pairs"
+        v-for="(pair, index) in foundPairs"
         :key="index"
-        :text="pair.toString()"
+        :pair="pair"
         class="pairItem"
       />
     </div>
@@ -20,85 +26,57 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import MemoryCard from "./MemoryCard.vue";
 import PairItem from "./PairItem.vue";
-import { CardContent } from "../types/DataModels";
+import { CardData, CardPair } from "../types/DataModels";
+import { MemoryController } from "@/types/MemoryController";
+
 export default defineComponent({
   name: "GamePanel",
   components: { MemoryCard, PairItem },
   data() {
     return {
-      pairs: Array.from(Array<string>(12).keys()),
-      w: 10,
-      cardContent: [
-        {
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum optio vel sequi. Nam dolorem qui consectetur corrupti quod optio. Libero sequi harum debitis. Quae mollitia aspernatur obcaecati, repellendus eveniet doloribus!",
-          type: "text",
-          id: 0,
-          pairid: 0,
-        } as CardContent,
-        {
-          content:
-            "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-          type: "image",
-          id: 1,
-          pairid: 0,
-        } as CardContent,
-        { content: "some text", type: "text", id: 2, pairid: 0 } as CardContent,
-        {
-          content:
-            "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-          type: "image",
-          id: 3,
-          pairid: 0,
-        } as CardContent,
-        { content: "some text", type: "text", id: 4, pairid: 0 } as CardContent,
-        {
-          content:
-            "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-          type: "image",
-          id: 5,
-          pairid: 0,
-        } as CardContent,
-        {
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum optio vel sequi. Nam dolorem qui consectetur corrupti quod optio. Libero sequi harum debitis. Quae mollitia aspernatur obcaecati, repellendus eveniet doloribus!",
-          type: "text",
-          id: 6,
-          pairid: 0,
-        } as CardContent,
-        {
-          content:
-            "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-          type: "image",
-          id: 7,
-          pairid: 0,
-        } as CardContent,
-        { content: "some text", type: "text", id: 8, pairid: 0 } as CardContent,
-        {
-          content:
-            "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-          type: "image",
-          id: 9,
-          pairid: 0,
-        } as CardContent,
-        {
-          content: "some text",
-          type: "text",
-          id: 10,
-          pairid: 0,
-        } as CardContent,
-        {
-          content:
-            "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-          type: "image",
-          id: 11,
-          pairid: 0,
-        } as CardContent,
-      ],
+      cards: [] as CardData[],
+      foundPairs: [] as CardPair[],
+      openCardCount: 0,
+      canTurnCard: true,
+      firstCardIndex: -1,
+      disabledCards: [] as boolean[],
     };
+  },
+  methods: {
+    test(cardIndex: number) {
+      if (cardIndex == this.firstCardIndex) return;
+      if (this.openCardCount == 0) {
+        this.firstCardIndex = cardIndex;
+      } else if (this.openCardCount == 1) {
+        this.resetCards();
+        const card: CardData = this.cards[cardIndex];
+        if (card.pairid == this.cards[this.firstCardIndex].pairid) {
+          console.log("You found a pair!");
+          this.addPairToSummary(cardIndex, this.firstCardIndex);
+        }
+      }
+      this.openCardCount++;
+    },
+    resetCards() {
+      this.canTurnCard = false;
+      setTimeout(() => {
+        this.openCardCount = 0;
+        this.canTurnCard = true;
+      }, 500);
+    },
+    addPairToSummary(id1: number, id2: number) {
+      this.foundPairs.push(new CardPair(this.cards[id1], this.cards[id2]));
+      setTimeout(() => {
+        this.cards[id1].found = true;
+        this.cards[id2].found = true;
+      }, 500);
+    },
+  },
+  mounted: function () {
+    this.cards = new MemoryController().gameData.cards;
   },
 });
 </script>
