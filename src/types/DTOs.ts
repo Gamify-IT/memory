@@ -1,17 +1,17 @@
 interface CardDTO {
-    content: string,
-    type: CardType,
+  content: string,
+  type: CardType,
 }
 
 enum CardType {
-    IMAGE,
-    TEXT,
+  IMAGE,
+  TEXT,
 }
 
 interface CardPairDTO {
-    card1: CardDTO,
-    card2: CardDTO,
+  card1: CardDTO,
+  card2: CardDTO,
 }
 interface GameDataDTO {
-    pairs: CardPairDTO[]
+  pairs: CardPairDTO[]
 }
