@@ -1,5 +1,6 @@
 <template>
-  <div class="memory-card" id="card" ref="card" @click.stop="revealCard">
+  <div class="memory-card" id="card" ref="card" @click.stop="revealCard"
+    :class="canTurn ? 'show-cursor' : 'hide-cursor'">
     <div class="front"></div>
     <div class="back">
       <p id="text" ref="text">
@@ -112,12 +113,15 @@ export default defineComponent({
   transform-style: preserve-3d;
   transition: transform 0.5s;
 }
-.showCursor {
+
+.show-cursor {
   cursor: pointer;
 }
-.hideCursor {
+
+.hide-cursor {
   cursor: default;
 }
+
 /*
 .MemoryCard:active {
   transform: scale(0.95);
@@ -126,6 +130,7 @@ export default defineComponent({
 .memory-card.flip {
   transform: rotateY(180deg);
 }
+
 .front,
 .back {
   width: 100%;
@@ -136,6 +141,7 @@ export default defineComponent({
   backface-visibility: hidden;
   overflow: auto;
 }
+
 .back {
   transform: rotateY(180deg);
 }

@@ -6,7 +6,7 @@ export class CardData {
     public content: string,
     public type: CardType,
     public pairid: number
-  ) {}
+  ) { }
 }
 
 export enum CardType {
@@ -14,9 +14,9 @@ export enum CardType {
   TEXT,
 }
 export class CardPair {
-  constructor(public card1: CardData, public card2: CardData) {}
+  constructor(public card1: CardData, public card2: CardData) { }
 }
 
 export class GameData {
-  constructor(public cards: CardData[]) {}
+  constructor(public cards: CardData[]) { }
 }
