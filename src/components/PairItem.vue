@@ -1,13 +1,13 @@
 <template>
   <div id="container">
-    <div class="cardContainer">
+    <div class="card-container">
       <MemoryCard
         :cardContent="pair.card1"
         :canTurn="false"
         :initiallyRevealed="true"
       />
     </div>
-    <div class="cardContainer">
+    <div class="card-container">
       <MemoryCard
         :cardContent="pair.card2"
         :canTurn="false"
@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineComponent } from "@vue/runtime-core";
 import MemoryCard from "./MemoryCard.vue";
-import { CardPair } from "../types/DataModels";
+import { CardPair } from "../types/data-models";
 import { PropType } from "vue";
 export default defineComponent({
   name: "PairItem",
@@ -44,7 +44,7 @@ export default defineComponent({
   align-items: center;
   margin-bottom: 1%;
 }
-.cardContainer {
+.card-container {
   display: flex;
   justify-content: center;
   align-items: center;

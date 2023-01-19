@@ -1,7 +1,7 @@
 <template>
   <div id="overlay" v-if="allowReset" @click="manualReset"></div>
-  <div id="MemoryPanel">
-    <div id="gridContainer" class="gloss">
+  <div id="memory-panel">
+    <div id="grid-container" class="gloss">
       <div v-for="(card, index) in cards" :key="index">
         <MemoryCard
           :cardContent="card"
@@ -13,15 +13,10 @@
       </div>
     </div>
   </div>
-  <div id="SummaryPanel" class="gloss">
+  <div id="summary-panel" class="gloss">
     <div id="heading">Summary</div>
     <div id="scrollbar">
-      <PairItem
-        v-for="(pair, index) in foundPairs"
-        :key="index"
-        :pair="pair"
-        class="pairItem"
-      />
+      <PairItem v-for="(pair, index) in foundPairs" :key="index" :pair="pair" />
     </div>
   </div>
 </template>
@@ -30,41 +25,50 @@
 import { defineComponent } from "vue";
 import MemoryCard from "./MemoryCard.vue";
 import PairItem from "./PairItem.vue";
-import { CardData, CardPair } from "../types/DataModels";
-import { MemoryController } from "@/types/MemoryController";
+import { CardData, CardPair } from "../types/data-models";
+import { MemoryController } from "@/types/memory-controller";
 
 export default defineComponent({
   name: "GamePanel",
   components: { MemoryCard, PairItem },
+
   data() {
     return {
       cards: [] as CardData[],
       foundPairs: [] as CardPair[],
       openCardCount: 0,
       canTurnCard: true,
-      firstCardIndex: -1,
+      firstCard: undefined as CardData | undefined,
       disabledCards: [] as boolean[],
       resetTimeout: 0,
       allowReset: false,
     };
   },
+
+  mounted: function () {
+    this.cards = new MemoryController().gameData.cards;
+  },
+
   methods: {
-    cardClickProcedure(cardIndex: number) {
-      if (cardIndex == this.firstCardIndex) return;
+    cardClickProcedure(clickedCard: CardData) {
+      if (this.firstCard === clickedCard) return;
       if (this.openCardCount == 0) {
-        this.firstCardIndex = cardIndex;
+        this.firstCard = clickedCard;
       } else if (this.openCardCount == 1) {
-        const card: CardData = this.cards[cardIndex];
-        if (card.pairid == this.cards[this.firstCardIndex].pairid) {
+        if (
+          this.firstCard !== undefined &&
+          clickedCard.pairid == this.firstCard.pairid
+        ) {
           console.log("You found a pair!");
-          this.addPairToSummary(cardIndex, this.firstCardIndex);
+          this.addPairToSummary(clickedCard, this.firstCard);
         } else {
           this.resetCards();
         }
-        this.firstCardIndex = -1;
+        this.firstCard = undefined;
       }
       this.openCardCount++;
     },
+
     manualReset() {
       if (this.allowReset) {
         this.openCardCount = 0;
@@ -73,6 +77,7 @@ export default defineComponent({
         this.allowReset = false;
       }
     },
+
     resetCards() {
       this.canTurnCard = false;
       this.allowReset = true;
@@ -82,25 +87,23 @@ export default defineComponent({
         this.allowReset = false;
       }, 4000);
     },
-    addPairToSummary(id1: number, id2: number) {
+
+    addPairToSummary(card1: CardData, card2: CardData) {
       this.canTurnCard = false;
       setTimeout(() => {
-        this.foundPairs.push(new CardPair(this.cards[id1], this.cards[id2]));
-        this.cards[id1].found = true;
-        this.cards[id2].found = true;
+        this.foundPairs.push(new CardPair(card1, card2));
+        card1.found = true;
+        card2.found = true;
         this.openCardCount = 0;
         this.canTurnCard = true;
       }, 1000);
     },
   },
-  mounted: function () {
-    this.cards = new MemoryController().gameData.cards;
-  },
 });
 </script>
 
 <style scoped>
-#gridContainer {
+#grid-container {
   display: grid;
   box-sizing: content-box;
   width: 100%;
@@ -109,7 +112,7 @@ export default defineComponent({
   grid-template-rows: repeat(3, calc(33.2% - 5px));
   gap: 5px;
 }
-#MemoryPanel {
+#memory-panel {
   position: absolute;
   border: none;
   margin-top: 2.5%;
@@ -117,7 +120,7 @@ export default defineComponent({
   width: 65%;
   margin-left: 1%;
 }
-#SummaryPanel {
+#summary-panel {
   position: absolute;
   border: none;
   margin-top: 2.5%;

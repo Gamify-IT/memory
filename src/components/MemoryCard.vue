@@ -1,7 +1,20 @@
+<template>
+  <div class="memory-card" id="card" ref="card" @click.stop="revealCard">
+    <div class="front"></div>
+    <div class="back">
+      <p id="text" ref="text">
+        {{ cardContent.content }}
+      </p>
+      <img alt="image" id="image" ref="image" />
+    </div>
+  </div>
+</template>
+
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { CardData, CardType } from "../types/DataModels";
+import { CardData, CardType } from "../types/data-models";
 export default defineComponent({
+  name: "MemoryCard",
   props: {
     cardContent: {
       type: Object as PropType<CardData>,
@@ -11,6 +24,7 @@ export default defineComponent({
     canTurn: Boolean,
     initiallyRevealed: Boolean,
   },
+
   data() {
     return {
       turnedOver: false,
@@ -20,6 +34,7 @@ export default defineComponent({
       },
     };
   },
+
   watch: {
     canTurn(newValue: boolean) {
       if (newValue == true && this.turnedOver) {
@@ -27,6 +42,7 @@ export default defineComponent({
       }
     },
   },
+
   mounted(this: {
     setContent: () => void;
     flipCard: () => void;
@@ -38,6 +54,7 @@ export default defineComponent({
       this.flipCard();
     }
   },
+
   methods: {
     revealCard(this: any) {
       if (
@@ -49,9 +66,10 @@ export default defineComponent({
           "flip"
         );
         this.turnedOver = !this.turnedOver;
-        this.$emit("cardToggle", this.index);
+        this.$emit("cardToggle", this.cardContent);
       }
     },
+
     flipCard(this: any) {
       if ((this as { $refs: { card: HTMLElement } }).$refs.card) {
         (this as { $refs: { card: HTMLElement } }).$refs.card.classList.toggle(
@@ -60,6 +78,7 @@ export default defineComponent({
         this.turnedOver = !this.turnedOver;
       }
     },
+
     setContent(this: {
       content: CardData;
       cardContent: CardData;
@@ -82,20 +101,8 @@ export default defineComponent({
 //:class="canTurn ? 'showCursor' : 'hideCursor'"
 </script>
 
-<template>
-  <div class="MemoryCard" id="card" ref="card" @click.stop="revealCard">
-    <div class="front"></div>
-    <div class="back">
-      <p id="text" ref="text">
-        {{ cardContent.content }}
-      </p>
-      <img alt="image" id="image" ref="image" />
-    </div>
-  </div>
-</template>
-
 <style scoped>
-.MemoryCard {
+.memory-card {
   width: 100%;
   height: 100%;
 
@@ -116,7 +123,7 @@ export default defineComponent({
   transform: scale(0.95);
   transition: transform 0.25s;
 }*/
-.MemoryCard.flip {
+.memory-card.flip {
   transform: rotateY(180deg);
 }
 .front,

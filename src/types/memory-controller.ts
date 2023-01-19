@@ -1,5 +1,5 @@
-import { CardData, GameData } from "./DataModels";
-import { testData } from "./TestData";
+import { CardData, GameData } from "./data-models";
+import { testData } from "./test-data";
 
 export class MemoryController {
   gameData: GameData;
