@@ -1,4 +1,8 @@
 <template>
+  <div id="nav">
+    <router-link to="/"> StartGame</router-link>
+  </div>
+  <router-view />
   <div id="GamePanel"><GamePanel /></div>
 </template>
 
@@ -17,5 +21,8 @@ export default defineComponent({
 #GamePanel {
   width: 100%;
   height: 100%;
+}
+#nav {
+  padding: 30px;
 }
 </style>
