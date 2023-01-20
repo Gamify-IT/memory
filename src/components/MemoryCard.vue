@@ -9,19 +9,14 @@
       <button id="detailView" @click.stop="openModal">+</button>
     </div>
   </div>
-  <ContentModal v-bind="$props" v-if="showModal" @close="closeModal">
-    <button @click="closeModal">Close</button>
-  </ContentModal>
 </template>
 
 <script lang="ts">
 import { PropType } from "vue";
-import ContentModal from "./ContentModal.vue";
 import { CardContent } from "../types/DataModels";
+import eventBus from "../eventBus";
 export default {
-  components: {
-    ContentModal,
-  },
+  components: {},
   data() {
     return {
       showModal: false,
@@ -29,7 +24,6 @@ export default {
       showModalImage: false,
     };
   },
-  emist: ["close"],
   props: {
     cardContent: {
       type: Object as PropType<CardContent>,
@@ -69,12 +63,8 @@ export default {
         }
       }
     },
-    openModal(this: { showModal: boolean }) {
-      this.showModal = true;
-    },
-
-    closeModal(this: any) {
-      this.showModal = false;
+    openModal(this: { $root: any; $emit: any; cardContent: CardContent }) {
+      eventBus.emit("open-modal", this.cardContent);
     },
   },
 };
@@ -128,12 +118,12 @@ export default {
 }
 
 #detailView {
-  position: absolute;
+  position: fixed;
   width: 25px;
   height: 25px;
   border: 1px solid black;
   background: grey;
-  top: 85%;
+  bottom: 5%;
   left: 5%;
   border-radius: 30%;
   color: white;
@@ -141,6 +131,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1;
 }
 
 .back img {
