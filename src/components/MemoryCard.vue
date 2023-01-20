@@ -1,3 +1,19 @@
+<template>
+  <div class="MemoryCard" id="card" ref="card" @click="flipCard()">
+    <div class="front"></div>
+    <div class="back">
+      <p id="text" ref="text">
+        {{ cardContent.content }}
+      </p>
+      <img alt="image" id="image" ref="image" />
+      <button id="detailView" @click.stop="openModal">+</button>
+    </div>
+  </div>
+  <ContentModal v-bind="$props" v-if="showModal" @close="closeModal">
+    <button @click="closeModal">Close</button>
+  </ContentModal>
+</template>
+
 <script lang="ts">
 import { PropType } from "vue";
 import ContentModal from "./ContentModal.vue";
@@ -9,8 +25,11 @@ export default {
   data() {
     return {
       showModal: false,
+      showModalText: false,
+      showModalImage: false,
     };
   },
+  emist: ["close"],
   props: {
     cardContent: {
       type: Object as PropType<CardContent>,
@@ -33,7 +52,10 @@ export default {
     setContent(this: {
       content: CardContent;
       cardContent: CardContent;
-      $refs: { text: HTMLParagraphElement; image: HTMLImageElement };
+      $refs: {
+        text: HTMLParagraphElement;
+        image: HTMLImageElement;
+      };
     }) {
       if (this.cardContent.type === "text") {
         if (this.$refs.text) {
@@ -47,10 +69,8 @@ export default {
         }
       }
     },
-    openModal(this: any) {
-      console.log("here");
+    openModal(this: { showModal: boolean }) {
       this.showModal = true;
-      console.log(this.showModal);
     },
 
     closeModal(this: any) {
@@ -59,23 +79,6 @@ export default {
   },
 };
 </script>
-
-<template>
-  <div class="MemoryCard" id="card" ref="card" @click="flipCard()">
-    <div class="front"></div>
-    <div class="back">
-      <p id="text" ref="text">
-        {{ cardContent.content }}
-      </p>
-      <img alt="image" id="image" ref="image" />
-      <button id="detailView" @click.stop="openModal">+</button>
-    </div>
-  </div>
-  <ContentModal v-if="showModal" @close="closeModal">
-    <p>{{ cardContent.content }}</p>
-    <button @click="closeModal">Close</button>
-  </ContentModal>
-</template>
 
 <style scoped>
 .MemoryCard {
@@ -116,6 +119,11 @@ export default {
 }
 
 #image {
+  display: none;
+}
+
+#modaltext,
+#modalimage {
   display: none;
 }
 

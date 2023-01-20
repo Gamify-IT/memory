@@ -112,17 +112,20 @@ export default defineComponent({
   grid-template-columns: repeat(4, calc(24.9% - 5px));
   grid-template-rows: repeat(3, calc(33.2% - 5px));
   gap: 5px;
+  z-index: 1;
 }
 #MemoryPanel {
   order: 1;
   border: none;
   flex-grow: 3;
+  z-index: 1;
 }
 #SummaryPanel {
   order: 2;
   height: 100%;
   border: none;
   flex: auto;
+  z-index: 0;
 }
 
 #heading {
@@ -131,17 +134,20 @@ export default defineComponent({
   text-align: center;
   font-weight: bold;
   border-bottom: 3px solid rgb(52, 52, 52);
+  z-index: 1;
 }
 #scrollbar {
   margin: 5px;
   overflow-x: hidden;
   overflow-y: auto;
   height: calc(100% - 50px - 2em);
+  z-index: 1;
 }
 
 .gloss {
   box-shadow: 0 3px 30px rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(7px);
   background-color: rgba(239, 239, 239, 0.6);
+  z-index: 1;
 }
 </style>
