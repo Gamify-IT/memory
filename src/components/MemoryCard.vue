@@ -1,6 +1,11 @@
 <template>
-  <div class="memory-card" id="card" ref="card" @click.stop="revealCard"
-    :class="canTurn ? 'show-cursor' : 'hide-cursor'">
+  <div
+    class="memory-card"
+    id="card"
+    ref="card"
+    :class="canTurn ? 'show-cursor' : 'hide-cursor'"
+    @click="revealCard"
+  >
     <div class="front"></div>
     <div class="back">
       <p id="text" ref="text">
@@ -55,7 +60,13 @@ export default defineComponent({
       this.flipCard();
     }
   },
-
+  computed: {
+    flippedClass() {
+      return {
+        test: 0,
+      };
+    },
+  },
   methods: {
     revealCard(this: any) {
       if (

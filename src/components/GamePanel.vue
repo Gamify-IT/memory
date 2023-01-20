@@ -1,5 +1,4 @@
 <template>
-  <div id="overlay" v-if="allowReset" @click="manualReset"></div>
   <div id="memory-panel">
     <div id="grid-container" class="gloss">
       <div v-for="(card, index) in cards" :key="index">

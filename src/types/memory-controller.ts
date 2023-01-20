@@ -6,7 +6,7 @@ export class MemoryController {
   constructor() {
     const gameDataDto: GameDataDTO = this.fetchData();
     this.gameData = this.convertDTOToData(gameDataDto);
-    this.shuffleCards();
+    //this.shuffleCards();
   }
 
   private convertDTOToData(gameDataDto: GameDataDTO) {
