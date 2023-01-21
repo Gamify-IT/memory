@@ -18,45 +18,36 @@
   </div>
 </template>
 
-<script lang="ts">
-//      noEvents: !test,
-import { defineComponent, PropType } from "vue";
+<script setup lang="ts">
+import { PropType, ref, watch } from "vue";
 import { CardData, CardType } from "../types/data-models";
-export default defineComponent({
-  name: "MemoryCard",
-  props: {
-    cardContent: {
-      type: Object as PropType<CardData>,
-      required: true,
-    },
-    canFlip: Boolean,
-    initiallyRevealed: Boolean,
-  },
 
-  data() {
-    return {
-      isImage: this.cardContent.type == CardType.IMAGE,
-      test: this.canFlip,
-    };
+const props = defineProps({
+  cardContent: {
+    type: Object as PropType<CardData>,
+    required: true,
   },
-
-  watch: {
-    canFlip(newValue: boolean) {
-      if (newValue == true && this.cardContent.flipped) {
-        this.$emit("cardHide", this.cardContent);
-      }
-      this.test = newValue;
-    },
-  },
-
-  methods: {
-    revealCard() {
-      if (this.canFlip && !this.cardContent.flipped) {
-        this.$emit("cardReveal", this.cardContent);
-      }
-    },
-  },
+  canFlip: Boolean,
+  initiallyRevealed: Boolean,
 });
+const emit = defineEmits(["cardReveal", "cardHide"]);
+
+const isImage = ref(props.cardContent.type == CardType.IMAGE);
+
+function revealCard() {
+  if (props.canFlip && !props.cardContent.flipped) {
+    emit("cardReveal", props.cardContent);
+  }
+}
+
+watch(
+  () => props.canFlip,
+  (newValue) => {
+    if (newValue == true && props.cardContent.flipped) {
+      emit("cardHide", props.cardContent);
+    }
+  }
+);
 </script>
 
 <style scoped>

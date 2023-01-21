@@ -17,19 +17,14 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+<script setup lang="ts">
 import MemoryCard from "./MemoryCard.vue";
 import { CardPair } from "../types/data-models";
 import { PropType } from "vue";
-export default defineComponent({
-  name: "PairItem",
-  components: { MemoryCard },
-  props: {
-    pair: {
-      type: Object as PropType<CardPair>,
-      required: true,
-    },
+defineProps({
+  pair: {
+    type: Object as PropType<CardPair>,
+    required: true,
   },
 });
 </script>

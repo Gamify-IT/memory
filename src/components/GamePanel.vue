@@ -20,87 +20,75 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
 import MemoryCard from "./MemoryCard.vue";
 import PairItem from "./PairItem.vue";
 import { CardData, CardPair } from "../types/data-models";
 import { MemoryController } from "@/types/memory-controller";
 
-export default defineComponent({
-  name: "GamePanel",
-  components: { MemoryCard, PairItem },
+const cards = ref([] as CardData[]);
+const foundPairs = ref([] as CardPair[]);
+const canFlipCards = ref(true);
+let openCardCount = 0;
+let firstCard: CardData | undefined = undefined;
+let resetTimeout = 0;
+let allowReset = false;
 
-  data() {
-    return {
-      cards: [] as CardData[],
-      foundPairs: [] as CardPair[],
-      openCardCount: 0,
-      canFlipCards: true,
-      firstCard: undefined as CardData | undefined,
-      disabledCards: [] as boolean[],
-      resetTimeout: 0,
-      allowReset: false,
-    };
-  },
-
-  mounted: function () {
-    this.cards = new MemoryController().gameData.cards;
-  },
-
-  methods: {
-    cardRevealProcedure(clickedCard: CardData) {
-      if (this.firstCard === clickedCard) return;
-      clickedCard.flipped = true;
-      if (this.openCardCount == 0) {
-        this.firstCard = clickedCard;
-      } else if (this.openCardCount == 1) {
-        if (clickedCard.pairid == this.firstCard?.pairid) {
-          console.log("You found a pair!");
-          this.addPairToSummary(clickedCard, this.firstCard);
-        } else {
-          this.resetCards();
-        }
-        this.firstCard = undefined;
-      }
-      this.openCardCount++;
-    },
-
-    cardHideProcedure(clickedCard: CardData) {
-      clickedCard.flipped = false;
-    },
-
-    manualReset() {
-      if (this.allowReset) {
-        this.openCardCount = 0;
-        this.canFlipCards = true;
-        clearTimeout(this.resetTimeout);
-        this.allowReset = false;
-      }
-    },
-
-    resetCards() {
-      this.canFlipCards = false;
-      this.allowReset = true;
-      this.resetTimeout = setTimeout(() => {
-        this.openCardCount = 0;
-        this.canFlipCards = true;
-        this.allowReset = false;
-      }, 5000);
-    },
-
-    addPairToSummary(card1: CardData, card2: CardData) {
-      this.canFlipCards = false;
-      setTimeout(() => {
-        this.foundPairs.push(new CardPair(card1, card2));
-        card1.found = true;
-        card2.found = true;
-        this.openCardCount = 0;
-        this.canFlipCards = true;
-      }, 1000);
-    },
-  },
+onMounted(() => {
+  cards.value = new MemoryController().gameData.cards;
 });
+
+function cardRevealProcedure(clickedCard: CardData) {
+  if (firstCard === clickedCard) return;
+  clickedCard.flipped = true;
+  if (openCardCount == 0) {
+    firstCard = clickedCard;
+  } else if (openCardCount == 1) {
+    if (clickedCard.pairid == firstCard?.pairid) {
+      console.log("You found a pair!");
+      addPairToSummary(clickedCard, firstCard);
+    } else {
+      resetCards();
+    }
+    firstCard = undefined;
+  }
+  openCardCount++;
+}
+
+function cardHideProcedure(clickedCard: CardData) {
+  clickedCard.flipped = false;
+}
+
+function manualReset() {
+  if (allowReset) {
+    openCardCount = 0;
+    canFlipCards.value = true;
+    clearTimeout(resetTimeout);
+    allowReset = false;
+  }
+}
+
+function resetCards() {
+  canFlipCards.value = false;
+  allowReset = true;
+  resetTimeout = setTimeout(() => {
+    openCardCount = 0;
+    canFlipCards.value = true;
+    allowReset = false;
+  }, 5000);
+}
+
+function addPairToSummary(card1: CardData, card2: CardData) {
+  canFlipCards.value = false;
+  setTimeout(() => {
+    foundPairs.value.push(new CardPair(card1, card2));
+    card1.found = true;
+    card2.found = true;
+    openCardCount = 0;
+    canFlipCards.value = true;
+  }, 1000);
+}
 </script>
 
 <style scoped>
@@ -149,8 +137,5 @@ export default defineComponent({
   width: 100vw;
   height: 100vh;
   z-index: 100;
-}
-.flip {
-  transform: rotateY(180deg);
 }
 </style>
