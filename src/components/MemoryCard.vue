@@ -1,22 +1,25 @@
 <template>
   <div
     class="memory-card"
-    id="card"
-    ref="card"
-    :class="canTurn ? 'show-cursor' : 'hide-cursor'"
-    @click="revealCard"
+    @click.stop="revealCard"
+    :class="{
+      showCursor: canFlip,
+      flip: cardContent.flipped || initiallyRevealed,
+      noEvents: !canFlip,
+    }"
   >
     <div class="front"></div>
     <div class="back">
-      <p id="text" ref="text">
+      <p id="text" v-if="!isImage">
         {{ cardContent.content }}
       </p>
-      <img alt="image" id="image" ref="image" />
+      <img alt="image" id="image" :src="cardContent.content" v-if="isImage" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
+//      noEvents: !test,
 import { defineComponent, PropType } from "vue";
 import { CardData, CardType } from "../types/data-models";
 export default defineComponent({
@@ -26,91 +29,34 @@ export default defineComponent({
       type: Object as PropType<CardData>,
       required: true,
     },
-    index: Number,
-    canTurn: Boolean,
+    canFlip: Boolean,
     initiallyRevealed: Boolean,
   },
 
   data() {
     return {
-      turnedOver: false,
-      cardRotation: 180,
-      revealedClass: {
-        transform: "rotate(180deg)",
-      },
+      isImage: this.cardContent.type == CardType.IMAGE,
+      test: this.canFlip,
     };
   },
 
   watch: {
-    canTurn(newValue: boolean) {
-      if (newValue == true && this.turnedOver) {
-        this.flipCard();
+    canFlip(newValue: boolean) {
+      if (newValue == true && this.cardContent.flipped) {
+        this.$emit("cardHide", this.cardContent);
       }
+      this.test = newValue;
     },
   },
 
-  mounted(this: {
-    setContent: () => void;
-    flipCard: () => void;
-    $refs: { text: HTMLParagraphElement; image: HTMLImageElement };
-    initiallyRevealed: boolean;
-  }) {
-    this.setContent();
-    if (this.initiallyRevealed == true) {
-      this.flipCard();
-    }
-  },
-  computed: {
-    flippedClass() {
-      return {
-        test: 0,
-      };
-    },
-  },
   methods: {
-    revealCard(this: any) {
-      if (
-        (this as { $refs: { card: HTMLElement } }).$refs.card &&
-        this.canTurn &&
-        !this.turnedOver
-      ) {
-        (this as { $refs: { card: HTMLElement } }).$refs.card.classList.toggle(
-          "flip"
-        );
-        this.turnedOver = !this.turnedOver;
-        this.$emit("cardToggle", this.cardContent);
-      }
-    },
-
-    flipCard(this: any) {
-      if ((this as { $refs: { card: HTMLElement } }).$refs.card) {
-        (this as { $refs: { card: HTMLElement } }).$refs.card.classList.toggle(
-          "flip"
-        );
-        this.turnedOver = !this.turnedOver;
-      }
-    },
-
-    setContent(this: {
-      content: CardData;
-      cardContent: CardData;
-      $refs: { text: HTMLParagraphElement; image: HTMLImageElement };
-    }) {
-      if (this.cardContent.type === CardType.TEXT) {
-        if (this.$refs.text) {
-          this.$refs.text.style.display = "block";
-        }
-      }
-      if (this.cardContent.type == CardType.IMAGE) {
-        if (this.$refs.image) {
-          this.$refs.image.src = this.cardContent.content;
-          this.$refs.image.style.display = "block";
-        }
+    revealCard() {
+      if (this.canFlip && !this.cardContent.flipped) {
+        this.$emit("cardReveal", this.cardContent);
       }
     },
   },
 });
-//:class="canTurn ? 'showCursor' : 'hideCursor'"
 </script>
 
 <style scoped>
@@ -125,21 +71,14 @@ export default defineComponent({
   transition: transform 0.5s;
 }
 
-.show-cursor {
+.showCursor {
   cursor: pointer;
 }
-
-.hide-cursor {
-  cursor: default;
-}
-
-/*
-.MemoryCard:active {
-  transform: scale(0.95);
-  transition: transform 0.25s;
-}*/
-.memory-card.flip {
+.flip {
   transform: rotateY(180deg);
+}
+.noEvents {
+  pointer-events: none;
 }
 
 .front,
@@ -159,12 +98,7 @@ export default defineComponent({
 
 #text {
   width: calc(100% - 5px);
-  display: none;
   margin: auto;
-}
-
-#image {
-  display: none;
 }
 
 .back img {

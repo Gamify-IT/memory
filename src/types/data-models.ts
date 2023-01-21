@@ -1,6 +1,6 @@
 export class CardData {
-  public id = 0;
   public found = false;
+  public flipped = false;
 
   constructor(
     public content: string,

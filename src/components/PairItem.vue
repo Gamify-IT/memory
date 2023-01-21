@@ -3,14 +3,14 @@
     <div class="card-container">
       <MemoryCard
         :cardContent="pair.card1"
-        :canTurn="false"
+        :canFlip="false"
         :initiallyRevealed="true"
       />
     </div>
     <div class="card-container">
       <MemoryCard
         :cardContent="pair.card2"
-        :canTurn="false"
+        :canFlip="false"
         :initiallyRevealed="true"
       />
     </div>
@@ -51,5 +51,8 @@ export default defineComponent({
   background: rgb(125, 125, 125);
   width: 45%;
   height: 90%;
+}
+.flip {
+  transform: rotateY(180deg);
 }
 </style>

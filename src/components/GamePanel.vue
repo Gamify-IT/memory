@@ -1,13 +1,13 @@
 <template>
-  <div id="memory-panel">
+  <div id="memory-panel" @click="manualReset">
     <div id="grid-container" class="gloss">
       <div v-for="(card, index) in cards" :key="index">
         <MemoryCard
           :cardContent="card"
-          :index="index"
-          :canTurn="canTurnCard"
+          :canFlip="canFlipCards"
           v-show="!card.found"
-          @cardToggle="cardClickProcedure"
+          @cardReveal="cardRevealProcedure"
+          @cardHide="cardHideProcedure"
         />
       </div>
     </div>
@@ -36,7 +36,7 @@ export default defineComponent({
       cards: [] as CardData[],
       foundPairs: [] as CardPair[],
       openCardCount: 0,
-      canTurnCard: true,
+      canFlipCards: true,
       firstCard: undefined as CardData | undefined,
       disabledCards: [] as boolean[],
       resetTimeout: 0,
@@ -49,15 +49,13 @@ export default defineComponent({
   },
 
   methods: {
-    cardClickProcedure(clickedCard: CardData) {
+    cardRevealProcedure(clickedCard: CardData) {
       if (this.firstCard === clickedCard) return;
+      clickedCard.flipped = true;
       if (this.openCardCount == 0) {
         this.firstCard = clickedCard;
       } else if (this.openCardCount == 1) {
-        if (
-          this.firstCard !== undefined &&
-          clickedCard.pairid == this.firstCard.pairid
-        ) {
+        if (clickedCard.pairid == this.firstCard?.pairid) {
           console.log("You found a pair!");
           this.addPairToSummary(clickedCard, this.firstCard);
         } else {
@@ -68,33 +66,37 @@ export default defineComponent({
       this.openCardCount++;
     },
 
+    cardHideProcedure(clickedCard: CardData) {
+      clickedCard.flipped = false;
+    },
+
     manualReset() {
       if (this.allowReset) {
         this.openCardCount = 0;
-        this.canTurnCard = true;
+        this.canFlipCards = true;
         clearTimeout(this.resetTimeout);
         this.allowReset = false;
       }
     },
 
     resetCards() {
-      this.canTurnCard = false;
+      this.canFlipCards = false;
       this.allowReset = true;
       this.resetTimeout = setTimeout(() => {
         this.openCardCount = 0;
-        this.canTurnCard = true;
+        this.canFlipCards = true;
         this.allowReset = false;
-      }, 4000);
+      }, 5000);
     },
 
     addPairToSummary(card1: CardData, card2: CardData) {
-      this.canTurnCard = false;
+      this.canFlipCards = false;
       setTimeout(() => {
         this.foundPairs.push(new CardPair(card1, card2));
         card1.found = true;
         card2.found = true;
         this.openCardCount = 0;
-        this.canTurnCard = true;
+        this.canFlipCards = true;
       }, 1000);
     },
   },
@@ -147,5 +149,8 @@ export default defineComponent({
   width: 100vw;
   height: 100vh;
   z-index: 100;
+}
+.flip {
+  transform: rotateY(180deg);
 }
 </style>
