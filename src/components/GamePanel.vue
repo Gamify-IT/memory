@@ -1,36 +1,49 @@
 <template>
-  <div id="MemoryPanel">
-    <div id="gridContainer" class="gloss">
-      <div v-for="card in cardContent" :key="card.id">
-        <MemoryCard :cardContent="card" />
+  <div id="GamePanel">
+    <div id="MemoryPanel">
+      <div id="gridContainer" class="gloss">
+        <div v-for="card in cardContent" :key="card.id">
+          <MemoryCard :cardContent="card" />
+        </div>
+      </div>
+    </div>
+    <div id="SummaryPanel" class="gloss">
+      <div id="heading">Summary</div>
+      <div id="scrollbar">
+        <PairItem
+          v-for="(pair, index) in pairs"
+          :key="index"
+          :text="pair.toString()"
+          class="pairItem"
+        />
       </div>
     </div>
   </div>
-  <div id="SummaryPanel" class="gloss">
-    <div id="heading">Summary</div>
-    <div id="scrollbar">
-      <PairItem
-        v-for="(pair, index) in pairs"
-        :key="index"
-        :text="pair.toString()"
-        class="pairItem"
-      />
-    </div>
-  </div>
+  <ContentModal v-if="showModal" :cardContent="content" @open-modal="openModal">
+    <button @click="closeModal">Close</button>
+  </ContentModal>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import MemoryCard from "./MemoryCard.vue";
+import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
 import { CardContent } from "../types/DataModels";
+import eventBus from "../eventBus";
 export default defineComponent({
   name: "GamePanel",
-  components: { MemoryCard, PairItem },
+  components: { MemoryCard, PairItem, ContentModal },
+  created() {
+    eventBus.on("open-modal", (cardContent: CardContent) => {
+      this.openModal(cardContent);
+    });
+  },
   data() {
     return {
       pairs: Array.from(Array<string>(12).keys()),
-      w: 10,
+      showModal: false,
+      content: { content: "", type: "", id: 0 },
       cardContent: [
         {
           content:
@@ -100,10 +113,27 @@ export default defineComponent({
       ],
     };
   },
+  methods: {
+    openModal(cardContent: CardContent) {
+      this.showModal = true;
+      this.content = cardContent;
+    },
+    closeModal() {
+      this.showModal = false;
+    },
+  },
 });
 </script>
 
 <style scoped>
+#GamePanel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 3%;
+  padding: 2%;
+  height: 92%;
+}
 #gridContainer {
   display: grid;
   box-sizing: content-box;
