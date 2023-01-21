@@ -1,10 +1,16 @@
 <template>
   <div class="modal">
     <div class="modal-content" @click.stop>
-      <p id="modalText" ref="modalText">
+      <p id="modalText" v-if="!isImage">
         {{ cardContent.content }}
       </p>
-      <img alt="image" id="modalImage" ref="modalImage" />
+      <img
+        alt="image"
+        id="modalImage"
+        :src="cardContent.content"
+        class="img-responsive"
+        v-if="isImage"
+      />
       <slot></slot>
     </div>
     <div class="modal-backdrop"></div>
@@ -22,34 +28,18 @@ export default {
       required: true,
     },
   },
-  mounted(this: {
-    setContent: () => void;
-    $refs: { modalText: HTMLParagraphElement; modalImage: HTMLImageElement };
-  }) {
+  data() {
+    return {
+      isImage: false,
+    };
+  },
+  mounted(this: { setContent: () => void }) {
     this.setContent();
   },
+
   methods: {
-    setContent(this: {
-      content: CardContent;
-      cardContent: CardContent;
-      $refs: {
-        modalText: HTMLParagraphElement;
-        modalImage: HTMLImageElement;
-      };
-    }) {
-      console.log(this.cardContent.type);
-      if (this.cardContent.type === "text") {
-        if (this.$refs.modalText) {
-          console.log("here");
-          this.$refs.modalText.style.display = "block";
-        }
-      }
-      if (this.cardContent.type === "image") {
-        if (this.$refs.modalImage) {
-          this.$refs.modalImage.src = this.cardContent.content;
-          this.$refs.modalImage.style.display = "block";
-        }
-      }
+    setContent(this: { cardContent: CardContent; isImage: boolean }) {
+      this.isImage = this.cardContent.type === "image";
     },
   },
 };
@@ -68,6 +58,10 @@ export default {
   z-index: 999;
 }
 
+.img-responsive {
+  width: 100%;
+}
+
 .modal-content {
   position: absolute;
   top: 50%;
@@ -83,13 +77,5 @@ export default {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 998;
-}
-
-#modalText {
-  display: none;
-}
-
-#modalImage {
-  display: none;
 }
 </style>
