@@ -25,7 +25,7 @@
         />
       </div>
     </div>
-    <ContentModal v-if="showModal" :cardContent="modalContent">
+    <ContentModal v-if="showModal" :cardData="modalContent">
       <button id="closeButton" @click="closeModal">Close</button>
     </ContentModal>
   </div>
@@ -134,13 +134,11 @@ function addPairToSummary(card1: CardData, card2: CardData) {
 }
 #memory-panel {
   order: 1;
-  position: absolute;
   border: none;
   flex-grow: 3;
   z-index: 1;
 }
 #summary-panel {
-  position: absolute;
   border: none;
   order: 2;
   height: 100%;
@@ -161,6 +159,7 @@ function addPairToSummary(card1: CardData, card2: CardData) {
   overflow-x: hidden;
   overflow-y: auto;
   height: calc(100% - 50px - 2em);
+  z-index: 1;
 }
 #overlay {
   background-color: rgba(52, 52, 52, 0.1);
@@ -168,5 +167,18 @@ function addPairToSummary(card1: CardData, card2: CardData) {
   width: 100vw;
   height: 100vh;
   z-index: 100;
+}
+.gloss {
+  box-shadow: 0 3px 25px rgb(60, 60, 60);
+  background-color: rgb(244, 244, 244);
+  z-index: 1;
+}
+#closeButton {
+  border: 1px solid black;
+  background: grey;
+  color: white;
+}
+#closeButton:hover {
+  cursor: pointer;
 }
 </style>

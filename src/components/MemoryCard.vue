@@ -48,7 +48,7 @@ function openModal() {
 watch(
   () => props.canFlip,
   (newValue) => {
-    if (newValue == true && props.cardContent.flipped) {
+    if (newValue && props.cardContent.flipped) {
       emit("cardHide", props.cardContent);
     }
   }
@@ -59,7 +59,7 @@ watch(
 .memory-card {
   width: 100%;
   height: 100%;
-
+  box-sizing: border-box;
   transform: scale(1);
   margin: 5px;
   position: relative;
@@ -78,7 +78,6 @@ watch(
   pointer-events: none;
 }
 
-.front,
 .back {
   width: 100%;
   height: 100%;
@@ -87,9 +86,6 @@ watch(
   text-align: center;
   backface-visibility: hidden;
   overflow: auto;
-}
-
-.back {
   transform: rotateY(180deg);
 }
 
@@ -101,7 +97,6 @@ watch(
   position: absolute;
   text-align: center;
   backface-visibility: hidden;
-  overflow: auto;
   background-size: 100%;
 }
 
@@ -110,6 +105,23 @@ watch(
   margin: auto;
 }
 
+#detailView {
+  position: fixed;
+  width: 25px;
+  height: 25px;
+  border: 1px solid black;
+  background: grey;
+  bottom: 5%;
+  left: 5%;
+  border-radius: 30%;
+  color: white;
+  font-size: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  pointer-events: all;
+}
 .back img {
   width: 100%;
   height: 100%;

@@ -2,12 +2,12 @@
   <div class="modal">
     <div class="modalContent" @click.stop>
       <p id="modalText" v-if="!isImage">
-        {{ cardContent.content }}
+        {{ cardData.content }}
       </p>
       <img
         alt="image"
         id="modalImage"
-        :src="cardContent.content"
+        :src="cardData.content"
         class="imgResponsive"
         v-if="isImage"
       />
@@ -18,17 +18,17 @@
 </template>
 
 <script setup lang="ts">
-import { CardContent } from "@/types/DataModels";
+import { CardData, CardType } from "@/types/data-models";
 import { defineProps, ref, PropType } from "vue";
 
 const props = defineProps({
-  cardContent: {
-    type: Object as PropType<CardContent>,
+  cardData: {
+    type: Object as PropType<CardData>,
     required: true,
   },
 });
 
-const isImage = ref(props.cardContent.type == "image");
+const isImage = ref(props.cardData.type == CardType.IMAGE);
 </script>
 
 <style>

@@ -1,7 +1,5 @@
 <template>
-  <div id="app">
-    <GamePanel />
-  </div>
+  <GamePanel />
 </template>
 
 <script lang="ts">
@@ -14,13 +12,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-#app {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-}
-</style>
