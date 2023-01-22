@@ -20,7 +20,7 @@
     </div>
   </div>
   <ContentModal v-if="showModal" :cardContent="content" @open-modal="openModal">
-    <button @click="closeModal">Close</button>
+    <button id="closeButton" @click="closeModal">Close</button>
   </ContentModal>
 </template>
 
@@ -175,9 +175,19 @@ export default defineComponent({
 }
 
 .gloss {
-  box-shadow: 0 3px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 3px 25px rgb(60, 60, 60);
   backdrop-filter: blur(7px);
-  background-color: rgba(239, 239, 239, 0.6);
+  background-color: rgb(244, 244, 244);
   z-index: 1;
+}
+
+#closeButton {
+  border: 1px solid black;
+  background: grey;
+  color: white;
+}
+
+#closeButton:hover {
+  cursor: pointer;
 }
 </style>
