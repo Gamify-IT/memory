@@ -1,110 +1,98 @@
 <template>
-  <div id="MemoryPanel">
-    <div id="gridContainer" class="gloss">
-      <div v-for="card in cardContent" :key="card.id">
-        <MemoryCard :cardContent="card" />
+  <div id="memory-panel" @click="manualReset">
+    <div id="grid-container" class="gloss">
+      <div v-for="(card, index) in cards" :key="index">
+        <MemoryCard
+          :cardContent="card"
+          :canFlip="canFlipCards"
+          v-show="!card.found"
+          @cardReveal="cardRevealProcedure"
+          @cardHide="cardHideProcedure"
+        />
       </div>
     </div>
   </div>
-  <div id="SummaryPanel" class="gloss">
+  <div id="summary-panel" class="gloss">
     <div id="heading">Summary</div>
     <div id="scrollbar">
-      <PairItem
-        v-for="(pair, index) in pairs"
-        :key="index"
-        :text="pair.toString()"
-        class="pairItem"
-      />
+      <PairItem v-for="(pair, index) in foundPairs" :key="index" :pair="pair" />
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
 import MemoryCard from "./MemoryCard.vue";
 import PairItem from "./PairItem.vue";
-import { CardContent } from "../types/DataModels";
-export default defineComponent({
-  name: "GamePanel",
-  components: { MemoryCard, PairItem },
-  data() {
-    return {
-      pairs: Array.from(Array<string>(12).keys()),
-      w: 10,
-      cardContent: [
-        {
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum optio vel sequi. Nam dolorem qui consectetur corrupti quod optio. Libero sequi harum debitis. Quae mollitia aspernatur obcaecati, repellendus eveniet doloribus!",
-          type: "text",
-          id: 0,
-          pairid: 0,
-        } as CardContent,
-        {
-          content:
-            "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-          type: "image",
-          id: 1,
-          pairid: 0,
-        } as CardContent,
-        { content: "some text", type: "text", id: 2, pairid: 0 } as CardContent,
-        {
-          content:
-            "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-          type: "image",
-          id: 3,
-          pairid: 0,
-        } as CardContent,
-        { content: "some text", type: "text", id: 4, pairid: 0 } as CardContent,
-        {
-          content:
-            "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-          type: "image",
-          id: 5,
-          pairid: 0,
-        } as CardContent,
-        {
-          content:
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum optio vel sequi. Nam dolorem qui consectetur corrupti quod optio. Libero sequi harum debitis. Quae mollitia aspernatur obcaecati, repellendus eveniet doloribus!",
-          type: "text",
-          id: 6,
-          pairid: 0,
-        } as CardContent,
-        {
-          content:
-            "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-          type: "image",
-          id: 7,
-          pairid: 0,
-        } as CardContent,
-        { content: "some text", type: "text", id: 8, pairid: 0 } as CardContent,
-        {
-          content:
-            "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-          type: "image",
-          id: 9,
-          pairid: 0,
-        } as CardContent,
-        {
-          content: "some text",
-          type: "text",
-          id: 10,
-          pairid: 0,
-        } as CardContent,
-        {
-          content:
-            "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-          type: "image",
-          id: 11,
-          pairid: 0,
-        } as CardContent,
-      ],
-    };
-  },
+import { CardData, CardPair } from "../types/data-models";
+import { MemoryController } from "@/types/memory-controller";
+
+const cards = ref([] as CardData[]);
+const foundPairs = ref([] as CardPair[]);
+const canFlipCards = ref(true);
+let openCardCount = 0;
+let firstCard: CardData | undefined = undefined;
+let resetTimeout = 0;
+let allowReset = false;
+
+onMounted(() => {
+  cards.value = new MemoryController().gameData.cards;
 });
+
+function cardRevealProcedure(clickedCard: CardData) {
+  if (firstCard === clickedCard) return;
+  clickedCard.flipped = true;
+  if (openCardCount == 0) {
+    firstCard = clickedCard;
+  } else if (openCardCount == 1) {
+    if (clickedCard.pairid == firstCard?.pairid) {
+      console.log("You found a pair!");
+      addPairToSummary(clickedCard, firstCard);
+    } else {
+      resetCards();
+    }
+    firstCard = undefined;
+  }
+  openCardCount++;
+}
+
+function cardHideProcedure(clickedCard: CardData) {
+  clickedCard.flipped = false;
+}
+
+function manualReset() {
+  if (allowReset) {
+    openCardCount = 0;
+    canFlipCards.value = true;
+    clearTimeout(resetTimeout);
+    allowReset = false;
+  }
+}
+
+function resetCards() {
+  canFlipCards.value = false;
+  allowReset = true;
+  resetTimeout = setTimeout(() => {
+    openCardCount = 0;
+    canFlipCards.value = true;
+    allowReset = false;
+  }, 5000);
+}
+
+function addPairToSummary(card1: CardData, card2: CardData) {
+  canFlipCards.value = false;
+  setTimeout(() => {
+    foundPairs.value.push(new CardPair(card1, card2));
+    card1.found = true;
+    card2.found = true;
+    openCardCount = 0;
+    canFlipCards.value = true;
+  }, 1000);
+}
 </script>
 
 <style scoped>
-#gridContainer {
+#grid-container {
   display: grid;
   box-sizing: content-box;
   width: 100%;
@@ -113,7 +101,7 @@ export default defineComponent({
   grid-template-rows: repeat(3, calc(33.2% - 5px));
   gap: 5px;
 }
-#MemoryPanel {
+#memory-panel {
   position: absolute;
   border: none;
   margin-top: 2.5%;
@@ -121,7 +109,7 @@ export default defineComponent({
   width: 65%;
   margin-left: 1%;
 }
-#SummaryPanel {
+#summary-panel {
   position: absolute;
   border: none;
   margin-top: 2.5%;
@@ -142,5 +130,12 @@ export default defineComponent({
   overflow-x: hidden;
   overflow-y: auto;
   height: calc(100% - 50px - 2em);
+}
+#overlay {
+  background-color: rgba(52, 52, 52, 0.1);
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
 }
 </style>

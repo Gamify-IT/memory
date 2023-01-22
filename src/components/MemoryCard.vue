@@ -1,77 +1,77 @@
-<script lang="ts">
-import { PropType } from "vue";
-import { CardContent } from "../types/DataModels";
-export default {
-  props: {
-    cardContent: {
-      type: Object as PropType<CardContent>,
-      required: true,
-    },
-  },
-  mounted(this: {
-    setContent: () => void;
-    $refs: { text: HTMLParagraphElement; image: HTMLImageElement };
-  }) {
-    this.setContent();
-  },
-  methods: {
-    flipCard(this: any) {
-      if ((this as { $refs: { card: HTMLElement } }).$refs.card)
-        (this as { $refs: { card: HTMLElement } }).$refs.card.classList.toggle(
-          "flip"
-        );
-    },
-    setContent(this: {
-      content: CardContent;
-      cardContent: CardContent;
-      $refs: { text: HTMLParagraphElement; image: HTMLImageElement };
-    }) {
-      if (this.cardContent.type === "text") {
-        if (this.$refs.text) {
-          this.$refs.text.style.display = "block";
-        }
-      }
-      if (this.cardContent.type === "image") {
-        if (this.$refs.image) {
-          this.$refs.image.src = this.cardContent.content;
-          this.$refs.image.style.display = "block";
-        }
-      }
-    },
-  },
-};
-</script>
-
 <template>
-  <div class="MemoryCard" id="card" ref="card" @click="flipCard()">
+  <div
+    class="memory-card"
+    @click.stop="revealCard"
+    :class="{
+      showCursor: canFlip,
+      flip: cardContent.flipped || initiallyRevealed,
+      noEvents: !canFlip,
+    }"
+  >
     <div class="front"></div>
     <div class="back">
-      <p id="text" ref="text">
+      <p id="text" v-if="!isImage">
         {{ cardContent.content }}
       </p>
-      <img alt="image" id="image" ref="image" />
+      <img alt="image" id="image" :src="cardContent.content" v-if="isImage" />
     </div>
   </div>
 </template>
 
+<script setup lang="ts">
+import { PropType, ref, watch } from "vue";
+import { CardData, CardType } from "../types/data-models";
+
+const props = defineProps({
+  cardContent: {
+    type: Object as PropType<CardData>,
+    required: true,
+  },
+  canFlip: Boolean,
+  initiallyRevealed: Boolean,
+});
+const emit = defineEmits(["cardReveal", "cardHide"]);
+
+const isImage = ref(props.cardContent.type == CardType.IMAGE);
+
+function revealCard() {
+  if (props.canFlip && !props.cardContent.flipped) {
+    emit("cardReveal", props.cardContent);
+  }
+}
+
+watch(
+  () => props.canFlip,
+  (newValue) => {
+    if (newValue == true && props.cardContent.flipped) {
+      emit("cardHide", props.cardContent);
+    }
+  }
+);
+</script>
+
 <style scoped>
-.MemoryCard {
+.memory-card {
   width: 100%;
   height: 100%;
-  cursor: pointer;
+
   transform: scale(1);
   margin: 5px;
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.5s;
 }
-.MemoryCard:active {
-  transform: scale(0.95);
-  transition: transform 0.25s;
+
+.showCursor {
+  cursor: pointer;
 }
-.MemoryCard.flip {
+.flip {
   transform: rotateY(180deg);
 }
+.noEvents {
+  pointer-events: none;
+}
+
 .front,
 .back {
   width: 100%;
@@ -82,18 +82,14 @@ export default {
   backface-visibility: hidden;
   overflow: auto;
 }
+
 .back {
   transform: rotateY(180deg);
 }
 
 #text {
   width: calc(100% - 5px);
-  display: none;
   margin: auto;
-}
-
-#image {
-  display: none;
 }
 
 .back img {
