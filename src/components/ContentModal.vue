@@ -1,19 +1,19 @@
 <template>
   <div class="modal">
-    <div class="modalContent" @click.stop>
-      <p id="modalText" v-if="!isImage">
+    <div class="modal-content" @click.stop>
+      <p id="modal-text" v-if="!isImage">
         {{ cardData.content }}
       </p>
       <img
         alt="image"
-        id="modalImage"
+        id="modal-image"
         :src="cardData.content"
-        class="imgResponsive"
+        class="img-responsive"
         v-if="isImage"
       />
       <slot></slot>
     </div>
-    <div class="modalBackdrop"></div>
+    <div class="modal-backdrop"></div>
   </div>
 </template>
 
@@ -44,11 +44,11 @@ const isImage = ref(props.cardData.type == CardType.IMAGE);
   z-index: 999;
 }
 
-.imgResponsive {
+.img-responsive {
   width: 100%;
 }
 
-.modalContent {
+.modal-content {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -59,7 +59,7 @@ const isImage = ref(props.cardData.type == CardType.IMAGE);
   z-index: 999;
 }
 
-.modalBackdrop {
+.modal-backdrop {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 998;
