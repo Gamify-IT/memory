@@ -19,7 +19,7 @@
       </div>
     </div>
   </div>
-  <ContentModal v-if="showModal" :cardContent="content" @open-modal="openModal">
+  <ContentModal v-if="showModal" :cardContent="content" @openModal="openModal">
     <button id="closeButton" @click="closeModal">Close</button>
   </ContentModal>
 </template>
@@ -35,7 +35,7 @@ export default defineComponent({
   name: "GamePanel",
   components: { MemoryCard, PairItem, ContentModal },
   created() {
-    eventBus.on("open-modal", (cardContent: CardContent) => {
+    eventBus.on("openModal", (cardContent: CardContent) => {
       this.openModal(cardContent);
     });
   },

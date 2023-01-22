@@ -64,7 +64,7 @@ export default {
       }
     },
     openModal(this: { $root: any; $emit: any; cardContent: CardContent }) {
-      eventBus.emit("open-modal", this.cardContent);
+      eventBus.emit("openModal", this.cardContent);
     },
   },
 };

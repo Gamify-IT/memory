@@ -1,6 +1,6 @@
 <template>
   <div class="modal">
-    <div class="modal-content" @click.stop>
+    <div class="modalContent" @click.stop>
       <p id="modalText" v-if="!isImage">
         {{ cardContent.content }}
       </p>
@@ -8,12 +8,12 @@
         alt="image"
         id="modalImage"
         :src="cardContent.content"
-        class="img-responsive"
+        class="imgResponsive"
         v-if="isImage"
       />
       <slot></slot>
     </div>
-    <div class="modal-backdrop"></div>
+    <div class="modalBackdrop"></div>
   </div>
 </template>
 
@@ -58,11 +58,11 @@ export default {
   z-index: 999;
 }
 
-.img-responsive {
+.imgResponsive {
   width: 100%;
 }
 
-.modal-content {
+.modalContent {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -73,7 +73,7 @@ export default {
   z-index: 999;
 }
 
-.modal-backdrop {
+.modalBackdrop {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 998;
