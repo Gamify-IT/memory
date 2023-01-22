@@ -5,6 +5,7 @@
         :cardContent="pair.card1"
         :canFlip="false"
         :initiallyRevealed="true"
+        @openModal="$emit('openModal', pair.card1)"
       />
     </div>
     <div class="card-container">
@@ -12,6 +13,7 @@
         :cardContent="pair.card2"
         :canFlip="false"
         :initiallyRevealed="true"
+        @openModal="$emit('openModal', pair.card2)"
       />
     </div>
   </div>
@@ -33,7 +35,7 @@ defineProps({
 #container {
   width: 100%;
   height: 30%;
-  background-color: rgb(125, 125, 125);
+  background-color: rgb(186, 186, 186);
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -43,7 +45,7 @@ defineProps({
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgb(125, 125, 125);
+  background: transparent;
   width: 45%;
   height: 90%;
 }

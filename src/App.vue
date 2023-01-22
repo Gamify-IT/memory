@@ -1,5 +1,5 @@
 <template>
-  <div id="GamePanel"><GamePanel /></div>
+  <GamePanel />
 </template>
 
 <script lang="ts">
@@ -12,10 +12,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-#GamePanel {
-  width: 100%;
-  height: 100%;
-}
-</style>
