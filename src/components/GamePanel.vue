@@ -3,7 +3,7 @@
     <div id="MemoryPanel">
       <div id="gridContainer" class="gloss">
         <div v-for="card in cardContent" :key="card.id">
-          <MemoryCard :cardContent="card" />
+          <MemoryCard :cardContent="card" @openModal="openModal" />
         </div>
       </div>
     </div>
@@ -15,11 +15,12 @@
           :key="index"
           :text="pair.toString()"
           class="pairItem"
+          @openModal="openModal"
         />
       </div>
     </div>
   </div>
-  <ContentModal v-if="showModal" :cardContent="content" @openModal="openModal">
+  <ContentModal v-if="showModal" :cardContent="content">
     <button id="closeButton" @click="closeModal">Close</button>
   </ContentModal>
 </template>
@@ -30,15 +31,9 @@ import MemoryCard from "./MemoryCard.vue";
 import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
 import { CardContent } from "../types/DataModels";
-import eventBus from "../eventBus";
 export default defineComponent({
   name: "GamePanel",
   components: { MemoryCard, PairItem, ContentModal },
-  created() {
-    eventBus.on("openModal", (cardContent: CardContent) => {
-      this.openModal(cardContent);
-    });
-  },
   data() {
     return {
       pairs: Array.from(Array<string>(12).keys()),

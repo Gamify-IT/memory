@@ -1,9 +1,17 @@
 <template>
   <div id="container">
     <div class="cardContainer">
-      <MemoryCard :cardContent="cardContent1" />
+      <MemoryCard
+        :cardContent="cardContent1"
+        @openModal="$emit('openModal', cardContent1)"
+      />
     </div>
-    <div class="cardContainer"><MemoryCard :cardContent="cardContent2" /></div>
+    <div class="cardContainer">
+      <MemoryCard
+        :cardContent="cardContent2"
+        @openModal="$emit('openModal', cardContent2)"
+      />
+    </div>
   </div>
 </template>
 

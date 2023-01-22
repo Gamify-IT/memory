@@ -14,7 +14,6 @@
 <script lang="ts">
 import { PropType } from "vue";
 import { CardContent } from "../types/DataModels";
-import eventBus from "../eventBus";
 export default {
   components: {},
   data() {
@@ -63,8 +62,8 @@ export default {
         }
       }
     },
-    openModal(this: { $root: any; $emit: any; cardContent: CardContent }) {
-      eventBus.emit("openModal", this.cardContent);
+    openModal(this: { $emit: any; cardContent: CardContent }) {
+      this.$emit("openModal", this.cardContent);
     },
   },
 };
