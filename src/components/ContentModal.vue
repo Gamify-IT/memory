@@ -17,32 +17,18 @@
   </div>
 </template>
 
-<script lang="ts">
-import { PropType } from "vue";
-import { CardContent } from "../types/DataModels";
-export default {
-  name: "ContentModal",
-  props: {
-    cardContent: {
-      type: Object as PropType<CardContent>,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      isImage: false,
-    };
-  },
-  mounted(this: { setContent: () => void }) {
-    this.setContent();
-  },
+<script setup lang="ts">
+import { CardContent } from "@/types/DataModels";
+import { defineProps, ref, PropType } from "vue";
 
-  methods: {
-    setContent(this: { cardContent: CardContent; isImage: boolean }) {
-      this.isImage = this.cardContent.type === "image";
-    },
+const props = defineProps({
+  cardContent: {
+    type: Object as PropType<CardContent>,
+    required: true,
   },
-};
+});
+
+const isImage = ref(props.cardContent.type == "image");
 </script>
 
 <style>
