@@ -1,9 +1,6 @@
 <template>
-  <button
-    class="goback-button shadow-button"
-    @click="redirecredirectToStartPage()"
-  >
-    Go Back
+  <button class="goback-button" @click="redirecredirectToStartPage()">
+    <span>Go Back</span>
   </button>
   <div id="game-panel">
     <div id="memory-panel" @click="manualReset">
@@ -42,6 +39,9 @@ import { useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 import { CardData, CardPair } from "../types/data-models";
 import { MemoryController } from "@/types/memory-controller";
+import MemoryCard from "./MemoryCard.vue";
+import ContentModal from "./ContentModal.vue";
+import PairItem from "./PairItem.vue";
 
 const router = useRouter();
 const cards = ref([] as CardData[]);
@@ -120,7 +120,7 @@ function redirecredirectToStartPage() {
   flex-direction: row;
   justify-content: space-around;
   gap: 3%;
-  padding: 1%;
+  padding: 2%;
   height: 92%;
 }
 #grid-container {
@@ -182,22 +182,47 @@ function redirecredirectToStartPage() {
   cursor: pointer;
 }
 .goback-button {
-  background-color: none;
-  border: none;
-  color: black;
-  padding: 4px 16px;
-  text-align: center;
-  text-decoration: none;
   display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  position: absolute;
+  border-radius: 2%;
+  background-color: transparent;
+  border: rgb(0, 0, 0);
+  color: #000000;
+  text-align: center;
+  font-size: 20px;
+  padding: 5px;
+  width: 140px;
+  transition: all 0.5s;
   cursor: pointer;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
+  margin: 5px;
+  margin-left: 0%;
+  margin-top: 0%;
+  text-align: center;
+  z-index: 999;
 }
 
-.shadow-button:hover {
-  box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+.goback-button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.goback-button span:after {
+  content: "\00ab";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: -20px;
+  transition: 0.5s;
+}
+
+.goback-button:hover span {
+  padding-left: 25px;
+}
+
+.goback-button:hover span:after {
+  opacity: 1;
+  left: 0;
 }
 </style>

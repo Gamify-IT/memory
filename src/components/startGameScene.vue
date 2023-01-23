@@ -8,19 +8,16 @@
   </button>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-export default defineComponent({
-  name: "App",
-  methods: {
-    redirecredirectToSingleplayer() {
-      this.$router.push({ path: "/singleplayer" });
-    },
-    redirecredirectToMultiplayer() {
-      this.$router.push({ path: "/multiplayer" });
-    },
-  },
-});
+<script setup lang="ts">
+import { useRouter } from "vue-router";
+const router = useRouter();
+
+function redirecredirectToSingleplayer() {
+  router.push({ path: "/singleplayer" });
+}
+function redirecredirectToMultiplayer() {
+  router.push({ path: "/multiplayer" });
+}
 </script>
 
 <style scoped>

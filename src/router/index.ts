@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import StartGameScene from "../components/StartGameScene.vue";
 import GamePanel from "../components/GamePanel.vue";
+import MultiPlayer from "../components/MultiPlayer.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -15,7 +16,7 @@ const router = createRouter({
     },
     {
       path: "/multiplayer",
-      component: GamePanel,
+      component: MultiPlayer,
     },
   ],
 });

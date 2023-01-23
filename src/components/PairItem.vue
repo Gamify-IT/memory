@@ -22,6 +22,7 @@
 <script setup lang="ts">
 import { CardPair } from "../types/data-models";
 import { PropType } from "vue";
+import MemoryCard from "./MemoryCard.vue";
 defineProps({
   pair: {
     type: Object as PropType<CardPair>,
