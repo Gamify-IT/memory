@@ -9,10 +9,3 @@ export default defineComponent({
   components: {},
 });
 </script>
-
-<style scoped>
-#GamePanel {
-  width: 100%;
-  height: 100%;
-}
-</style>

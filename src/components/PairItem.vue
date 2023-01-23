@@ -1,39 +1,32 @@
 <template>
   <div id="container">
-    <div class="cardContainer">
-      <MemoryCard :cardContent="cardContent1" />
+    <div class="card-container">
+      <MemoryCard
+        :cardContent="pair.card1"
+        :canFlip="false"
+        :initiallyRevealed="true"
+        @openModal="$emit('openModal', pair.card1)"
+      />
     </div>
-    <div class="cardContainer"><MemoryCard :cardContent="cardContent2" /></div>
+    <div class="card-container">
+      <MemoryCard
+        :cardContent="pair.card2"
+        :canFlip="false"
+        :initiallyRevealed="true"
+        @openModal="$emit('openModal', pair.card2)"
+      />
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "@vue/runtime-core";
+<script setup lang="ts">
 import MemoryCard from "./MemoryCard.vue";
-import { CardContent } from "../types/DataModels";
-export default defineComponent({
-  name: "PairItem",
-  components: { MemoryCard },
-  data() {
-    return {
-      cardContent1: {
-        content:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum optio vel sequi. Nam dolorem qui consectetur corrupti quod optio. Libero sequi harum debitis. Quae mollitia aspernatur obcaecati, repellendus eveniet doloribus!",
-        type: "text",
-        id: 0,
-        pairid: 0,
-      } as CardContent,
-      cardContent2: {
-        content:
-          "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-        type: "image",
-        id: 0,
-        pairid: 0,
-      } as CardContent,
-    };
-  },
-  props: {
-    text: String,
+import { CardPair } from "../types/data-models";
+import { PropType } from "vue";
+defineProps({
+  pair: {
+    type: Object as PropType<CardPair>,
+    required: true,
   },
 });
 </script>
@@ -42,18 +35,21 @@ export default defineComponent({
 #container {
   width: 100%;
   height: 30%;
-  background-color: rgb(125, 125, 125);
+  background-color: rgb(186, 186, 186);
   display: flex;
   justify-content: space-around;
   align-items: center;
   margin-bottom: 1%;
 }
-.cardContainer {
+.card-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgb(125, 125, 125);
+  background: transparent;
   width: 45%;
   height: 90%;
+}
+.flip {
+  transform: rotateY(180deg);
 }
 </style>
