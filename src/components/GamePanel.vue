@@ -31,9 +31,6 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import MemoryCard from "./MemoryCard.vue";
-import ContentModal from "./ContentModal.vue";
-import PairItem from "./PairItem.vue";
 import { CardData, CardPair } from "../types/data-models";
 import { MemoryController } from "@/types/memory-controller";
 
@@ -51,7 +48,7 @@ onMounted(() => {
   cards.value = new MemoryController().gameData.cards;
 });
 
-function redirecredirectToStartPage() {
+function redirecredirectToStartPage(this: any) {
   this.$router.push({ path: "/" });
 }
 

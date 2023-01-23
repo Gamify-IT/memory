@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-import MemoryCard from "./MemoryCard.vue";
 import { CardPair } from "../types/data-models";
 import { PropType } from "vue";
 defineProps({
