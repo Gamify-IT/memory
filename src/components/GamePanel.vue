@@ -1,4 +1,11 @@
 <template>
+  <button
+    class="menu-button"
+    style="vertical align:middle"
+    @click="redirecredirectToStartPage()"
+  >
+    <span>Go Back</span>
+  </button>
   <div id="MemoryPanel">
     <div id="gridContainer" class="gloss">
       <div v-for="card in cardContent" :key="card.id">
@@ -27,6 +34,11 @@ import { CardContent } from "../types/DataModels";
 export default defineComponent({
   name: "GamePanel",
   components: { MemoryCard, PairItem },
+  methods: {
+    redirecredirectToStartPage() {
+      this.$router.push({ path: "/" });
+    },
+  },
   data() {
     return {
       pairs: Array.from(Array<string>(12).keys()),

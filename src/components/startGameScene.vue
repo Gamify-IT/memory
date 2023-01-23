@@ -1,22 +1,44 @@
 <template>
   <h1>Memory</h1>
-  <button class="button" style="vertical align:middle">
-    <span>Start Game</span>
+  <button class="singleplayer-button" @click="redirecredirectToSingleplayer()">
+    <span>Singleplayer</span>
+  </button>
+  <button class="multiplayer-button" @click="redirecredirectToMultiplayer()">
+    <span>Multiplayer</span>
   </button>
 </template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+export default defineComponent({
+  name: "App",
+  methods: {
+    redirecredirectToSingleplayer() {
+      this.$router.push({ path: "/singleplayer" });
+    },
+    redirecredirectToMultiplayer() {
+      this.$router.push({ path: "/multiplayer" });
+    },
+  },
+});
+</script>
 
 <style scoped>
 h1 {
   color: black;
-  font-size: 100%;
-  align-content: center;
+  font-size: 500%;
+  top: 20%;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
 }
-
-.button {
+.singleplayer-button {
+  vertical-align: middle;
   display: inline-block;
-  border-radius: 4px;
-  background-color: transparent;
-  border: none;
+  position: absolute;
+  border-radius: 2%;
+  background-color: white;
+  border: rgb(0, 0, 0);
   color: #000000;
   text-align: center;
   font-size: 28px;
@@ -25,16 +47,20 @@ h1 {
   transition: all 0.5s;
   cursor: pointer;
   margin: 5px;
+  margin-left: 42%;
+  margin-top: 20%;
+  text-align: center;
+  z-index: 999;
 }
 
-.button span {
+.singleplayer-button span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
 
-.button span:after {
+.singleplayer-button span:after {
   content: "\00bb";
   position: absolute;
   opacity: 0;
@@ -43,23 +69,58 @@ h1 {
   transition: 0.5s;
 }
 
-.button:hover span {
+.singleplayer-button:hover span {
   padding-right: 25px;
 }
 
-.button:hover span:after {
+.singleplayer-button:hover span:after {
   opacity: 1;
   right: 0;
 }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: lightgray;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  perspective: 1000px;
+.multiplayer-button {
+  vertical-align: middle;
+  display: inline-block;
+  position: absolute;
+  border-radius: 2%;
+  background-color: white;
+  border: rgb(0, 0, 0);
+  color: #000000;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 300px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  margin-left: 42%;
+  margin-top: 25%;
+  text-align: center;
+  z-index: 999;
+}
+
+.multiplayer-button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.multiplayer-button span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.multiplayer-button:hover span {
+  padding-right: 25px;
+}
+
+.multiplayer-button:hover span:after {
+  opacity: 1;
+  right: 0;
 }
 </style>

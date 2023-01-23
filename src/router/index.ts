@@ -1,17 +1,21 @@
 import { createRouter, createWebHistory } from "vue-router";
-import startScreen from "../views/startScreen.vue";
-import loadingScreen from "../views/loadingScreen.vue";
+import StartGameScene from "../components/StartGameScene.vue";
+import GamePanel from "../components/GamePanel.vue";
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
     {
       path: "/",
-      component: startScreen,
+      component: StartGameScene,
     },
     {
-      path: "/loading",
-      component: loadingScreen,
+      path: "/singleplayer",
+      component: GamePanel,
+    },
+    {
+      path: "/multiplayer",
+      component: GamePanel,
     },
   ],
 });
