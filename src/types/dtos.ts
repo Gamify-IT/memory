@@ -1,6 +1,6 @@
 interface CardDTO {
-  content: string,
-  type: CardType,
+  content: string;
+  type: CardType;
 }
 
 enum CardType {
@@ -9,9 +9,10 @@ enum CardType {
 }
 
 interface CardPairDTO {
-  card1: CardDTO,
-  card2: CardDTO,
+  card1: CardDTO;
+  card2: CardDTO;
 }
+
 interface GameDataDTO {
-  pairs: CardPairDTO[]
+  pairs: CardPairDTO[];
 }

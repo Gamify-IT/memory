@@ -1,4 +1,7 @@
 <template>
+  <button class="goback-button" @click="redirectToStartPage()">
+    <span>Go Back</span>
+  </button>
   <div id="game-panel">
     <div id="memory-panel" class="shadowed-panel" @click="manualReset">
       <div id="grid-container" v-if="!isFinished">
@@ -33,6 +36,7 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from "vue-router";
 import { computed, onMounted, ref } from "vue";
 import MemoryCard from "./MemoryCard.vue";
 import ContentModal from "./ContentModal.vue";
@@ -40,6 +44,7 @@ import PairItem from "./PairItem.vue";
 import { CardData, CardPair, CardSelection } from "../types/data-models";
 import { MemoryController } from "@/types/memory-controller";
 
+const router = useRouter();
 const cards = ref([] as CardData[]);
 const foundPairs = ref([] as CardPair[]);
 const canFlipCards = ref(true);
@@ -53,11 +58,9 @@ let firstCard: CardData | undefined = undefined;
 let secondCard: CardData | undefined = undefined;
 let resetTimeout = 0;
 let allowReset = false;
-
 onMounted(() => {
   cards.value = new MemoryController().gameData.cards;
 });
-
 function openModal(cardContent: CardData) {
   showModal.value = true;
   modalContent.value = cardContent;
@@ -65,7 +68,6 @@ function openModal(cardContent: CardData) {
 function closeModal() {
   showModal.value = false;
 }
-
 function cardRevealProcedure(clickedCard: CardData) {
   if (firstCard === clickedCard) return;
   clickedCard.flipped = true;
@@ -82,11 +84,9 @@ function cardRevealProcedure(clickedCard: CardData) {
   }
   openCardCount++;
 }
-
 function cardHideProcedure(clickedCard: CardData) {
   clickedCard.flipped = false;
 }
-
 function manualReset() {
   if (allowReset) {
     openCardCount = 0;
@@ -101,7 +101,6 @@ function manualReset() {
     secondCard = undefined;
   }
 }
-
 function resetCards() {
   canFlipCards.value = false;
   allowReset = true;
@@ -121,7 +120,6 @@ function resetCards() {
     secondCard = undefined;
   }, 5000);
 }
-
 function addPairToSummary(card1: CardData, card2: CardData) {
   canFlipCards.value = false;
   card1.selection = CardSelection.MATCH;
@@ -135,6 +133,9 @@ function addPairToSummary(card1: CardData, card2: CardData) {
     card2.selection = CardSelection.UNSELECTED;
     canFlipCards.value = true;
   }, 1000);
+}
+function redirectToStartPage() {
+  router.push({ path: "/" });
 }
 </script>
 
@@ -177,7 +178,6 @@ function addPairToSummary(card1: CardData, card2: CardData) {
   flex: auto;
   z-index: 0;
 }
-
 #heading {
   padding: 16px;
   font-size: 2em;
@@ -212,5 +212,49 @@ function addPairToSummary(card1: CardData, card2: CardData) {
 }
 #close-button:hover {
   cursor: pointer;
+}
+.goback-button {
+  display: inline-block;
+  position: absolute;
+  border-radius: 2%;
+  background-color: transparent;
+  border: rgb(0, 0, 0);
+  color: #000000;
+  text-align: center;
+  font-size: 20px;
+  padding: 5px;
+  width: 140px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  margin-left: 0%;
+  margin-top: 0%;
+  text-align: center;
+  z-index: 999;
+}
+
+.goback-button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.goback-button span:after {
+  content: "\00ab";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: -20px;
+  transition: 0.5s;
+}
+
+.goback-button:hover span {
+  padding-left: 25px;
+}
+
+.goback-button:hover span:after {
+  opacity: 1;
+  left: 0;
 }
 </style>
