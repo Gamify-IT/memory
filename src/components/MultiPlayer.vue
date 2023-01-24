@@ -1,6 +1,6 @@
 <template>
   <h1>Work in Progress</h1>
-  <button class="button goback-button" @click="redirecredirectToStartPage()">
+  <button class="button goback-button" @click="redirectToStartPage()">
     Go Back
   </button>
 </template>
@@ -9,7 +9,7 @@
 import { useRouter } from "vue-router";
 const router = useRouter();
 
-function redirecredirectToStartPage() {
+function redirectToStartPage() {
   router.push({ path: "/" });
 }
 </script>
