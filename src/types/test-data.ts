@@ -5,11 +5,21 @@ export const testData: GameDataDTO = {
     {
       card1: {
         content:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum optio vel sequi. Nam dolorem qui consectetur corrupti quod optio. Libero sequi harum debitis. Quae mollitia aspernatur obcaecati, repellendus eveniet doloribus!",
+          "He was a German-born theoretical physicist, widely acknowledged to be one of the greatest and most influential physicists of all time. He is best known for developing the theory of relativity, but he also made important contributions to the development of the theory of quantum mechanics.",
         type: CardType.TEXT,
       },
       card2: {
-        content: "test text for pair 1",
+        content: "Albert Einstein",
+        type: CardType.TEXT,
+      },
+    },
+    {
+      card1: {
+        content: "10*50-2",
+        type: CardType.TEXT,
+      },
+      card2: {
+        content: "498",
         type: CardType.TEXT,
       },
     },
@@ -20,18 +30,7 @@ export const testData: GameDataDTO = {
         type: CardType.TEXT,
       },
       card2: {
-        content: "test text for pair 2",
-        type: CardType.TEXT,
-      },
-    },
-    {
-      card1: {
-        content:
-          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum optio vel sequi. Nam dolorem qui consectetur corrupti quod optio. Libero sequi harum debitis. Quae mollitia aspernatur obcaecati, repellendus eveniet doloribus!",
-        type: CardType.TEXT,
-      },
-      card2: {
-        content: "test text for pair 3",
+        content: "Latin Text",
         type: CardType.TEXT,
       },
     },
@@ -42,7 +41,7 @@ export const testData: GameDataDTO = {
         type: CardType.IMAGE,
       },
       card2: {
-        content: "test text for pair 4",
+        content: "Ghost",
         type: CardType.TEXT,
       },
     },
@@ -53,17 +52,17 @@ export const testData: GameDataDTO = {
         type: CardType.IMAGE,
       },
       card2: {
-        content: "test text for pair 5",
+        content: "Ghost Nr.2",
         type: CardType.TEXT,
       },
     },
     {
       card1: {
-        content: "HALLOOO",
+        content: "Tschüss",
         type: CardType.TEXT,
       },
       card2: {
-        content: "test text for pair 6",
+        content: "Auf Wiedersehen",
         type: CardType.TEXT,
       },
     },
