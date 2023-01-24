@@ -26,7 +26,7 @@
       </div>
     </div>
     <ContentModal v-if="showModal" :cardData="modalContent">
-      <button id="closeButton" @click="closeModal">Close</button>
+      <button id="close-button" @click="closeModal">Close</button>
     </ContentModal>
   </div>
 </template>
@@ -124,12 +124,13 @@ function addPairToSummary(card1: CardData, card2: CardData) {
 }
 #grid-container {
   display: grid;
-  box-sizing: content-box;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
-  grid-template-columns: repeat(4, calc(24.9% - 5px));
-  grid-template-rows: repeat(3, calc(33.2% - 5px));
-  gap: 5px;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-gap: 5px;
+  padding: 5px;
   z-index: 1;
 }
 #memory-panel {
@@ -173,12 +174,12 @@ function addPairToSummary(card1: CardData, card2: CardData) {
   background-color: rgb(244, 244, 244);
   z-index: 1;
 }
-#closeButton {
+#close-button {
   border: 1px solid black;
   background: grey;
   color: white;
 }
-#closeButton:hover {
+#close-button:hover {
   cursor: pointer;
 }
 </style>
