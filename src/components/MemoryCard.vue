@@ -10,10 +10,17 @@
   >
     <div class="front"></div>
     <div class="back">
-      <p id="text" v-if="!isImage">
-        {{ cardContent.content }}
-      </p>
-      <img alt="image" id="image" :src="cardContent.content" v-if="isImage" />
+      <div id="content">
+        <div id="text" v-if="!isImage">
+          {{ cardContent.content }}
+        </div>
+        <img
+          alt="image not available"
+          id="image"
+          :src="cardContent.content"
+          v-if="isImage"
+        />
+      </div>
       <button id="detail-view" @click.stop="openModal">+</button>
     </div>
   </div>
@@ -84,8 +91,8 @@ watch(
   position: absolute;
   text-align: center;
   backface-visibility: hidden;
-  overflow: auto;
   transform: rotateY(180deg);
+  pointer-events: all;
 }
 
 .front {
@@ -98,31 +105,35 @@ watch(
   backface-visibility: hidden;
   background-size: cover;
 }
-
+#content {
+  height: 100%;
+  overflow: auto;
+}
 #text {
-  width: calc(100% - 5px);
+  padding: 5px;
   margin: auto;
+  text-align: center;
+  vertical-align: middle;
 }
 
 #detail-view {
   position: fixed;
-  width: 25px;
-  height: 25px;
-  border: 1px solid black;
-  background: grey;
-  bottom: 5%;
-  left: 5%;
-  border-radius: 30%;
-  color: white;
-  font-size: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
-  pointer-events: all;
+  width: 25px;
+  height: 25px;
+  border: 1px solid black;
+  border-radius: 30%;
+  background: grey;
+  bottom: 5%;
+  left: 5%;
+  color: white;
+  font-size: 25px;
 }
 .back img {
   width: 100%;
   height: 100%;
+  display: block;
 }
 </style>
