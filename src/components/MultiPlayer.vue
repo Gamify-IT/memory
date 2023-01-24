@@ -1,9 +1,6 @@
 <template>
   <h1>Work in Progress</h1>
-  <button
-    class="goback-button shadow-button"
-    @click="redirecredirectToStartPage()"
-  >
+  <button class="button goback-button" @click="redirecredirectToStartPage()">
     Go Back
   </button>
 </template>

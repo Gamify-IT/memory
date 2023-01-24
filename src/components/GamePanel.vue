@@ -1,5 +1,5 @@
 <template>
-  <button class="goback-button" @click="redirecredirectToStartPage()">
+  <button class="goback-button" @click="redirectToStartPage()">
     <span>Go Back</span>
   </button>
   <div id="game-panel">
@@ -109,7 +109,7 @@ function addPairToSummary(card1: CardData, card2: CardData) {
     canFlipCards.value = true;
   }, 1000);
 }
-function redirecredirectToStartPage() {
+function redirectToStartPage() {
   router.push({ path: "/" });
 }
 </script>
