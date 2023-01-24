@@ -33,7 +33,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import MemoryCard from "./MemoryCard.vue";
 import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
@@ -45,7 +45,9 @@ const foundPairs = ref([] as CardPair[]);
 const canFlipCards = ref(true);
 const showModal = ref(false);
 const modalContent = ref({} as CardData);
-const isFinished = ref(false);
+const isFinished = computed(
+  () => foundPairs.value.length == cards.value.length / 2
+);
 let openCardCount = 0;
 let firstCard: CardData | undefined = undefined;
 let secondCard: CardData | undefined = undefined;
@@ -132,9 +134,6 @@ function addPairToSummary(card1: CardData, card2: CardData) {
     card1.selection = CardSelection.UNSELECTED;
     card2.selection = CardSelection.UNSELECTED;
     canFlipCards.value = true;
-    if (foundPairs.value.length == 6) {
-      isFinished.value = true;
-    }
   }, 1000);
 }
 </script>
