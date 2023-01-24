@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 import { CardData, CardType } from "@/types/data-models";
-import { defineProps, ref, PropType } from "vue";
+import { ref, PropType } from "vue";
 
 const props = defineProps({
   cardData: {
