@@ -1,7 +1,7 @@
 <template>
   <div id="game-panel">
-    <div id="memory-panel" @click="manualReset">
-      <div id="grid-container" class="gloss">
+    <div id="memory-panel" class="shadowed-panel" @click="manualReset">
+      <div id="grid-container" v-if="!isFinished">
         <div v-for="(card, index) in cards" :key="index">
           <MemoryCard
             :cardContent="card"
@@ -13,8 +13,9 @@
           />
         </div>
       </div>
+      <div id="finish-screen" v-if="isFinished">Well done!</div>
     </div>
-    <div id="summary-panel" class="gloss">
+    <div id="summary-panel" class="shadowed-panel">
       <div id="heading">Summary</div>
       <div id="scrollbar">
         <PairItem
@@ -36,7 +37,7 @@ import { onMounted, ref } from "vue";
 import MemoryCard from "./MemoryCard.vue";
 import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
-import { CardData, CardPair } from "../types/data-models";
+import { CardData, CardPair, CardSelection } from "../types/data-models";
 import { MemoryController } from "@/types/memory-controller";
 
 const cards = ref([] as CardData[]);
@@ -44,8 +45,10 @@ const foundPairs = ref([] as CardPair[]);
 const canFlipCards = ref(true);
 const showModal = ref(false);
 const modalContent = ref({} as CardData);
+const isFinished = ref(false);
 let openCardCount = 0;
 let firstCard: CardData | undefined = undefined;
+let secondCard: CardData | undefined = undefined;
 let resetTimeout = 0;
 let allowReset = false;
 
@@ -67,13 +70,13 @@ function cardRevealProcedure(clickedCard: CardData) {
   if (openCardCount == 0) {
     firstCard = clickedCard;
   } else if (openCardCount == 1) {
+    secondCard = clickedCard;
     if (clickedCard.pairid == firstCard?.pairid) {
       console.log("You found a pair!");
       addPairToSummary(clickedCard, firstCard);
-    } else {
+    } else if (firstCard !== undefined) {
       resetCards();
     }
-    firstCard = undefined;
   }
   openCardCount++;
 }
@@ -88,27 +91,50 @@ function manualReset() {
     canFlipCards.value = true;
     clearTimeout(resetTimeout);
     allowReset = false;
+    if (firstCard !== undefined && secondCard !== undefined) {
+      firstCard.selection = CardSelection.UNSELECTED;
+      secondCard.selection = CardSelection.UNSELECTED;
+    }
+    firstCard = undefined;
+    secondCard = undefined;
   }
 }
 
 function resetCards() {
   canFlipCards.value = false;
   allowReset = true;
+  if (firstCard !== undefined && secondCard !== undefined) {
+    firstCard.selection = CardSelection.MISMATCH;
+    secondCard.selection = CardSelection.MISMATCH;
+  }
   resetTimeout = setTimeout(() => {
     openCardCount = 0;
     canFlipCards.value = true;
     allowReset = false;
+    if (firstCard !== undefined && secondCard !== undefined) {
+      firstCard.selection = CardSelection.UNSELECTED;
+      secondCard.selection = CardSelection.UNSELECTED;
+    }
+    firstCard = undefined;
+    secondCard = undefined;
   }, 5000);
 }
 
 function addPairToSummary(card1: CardData, card2: CardData) {
   canFlipCards.value = false;
+  card1.selection = CardSelection.MATCH;
+  card2.selection = CardSelection.MATCH;
   setTimeout(() => {
     foundPairs.value.push(new CardPair(card1, card2));
     card1.found = true;
     card2.found = true;
     openCardCount = 0;
+    card1.selection = CardSelection.UNSELECTED;
+    card2.selection = CardSelection.UNSELECTED;
     canFlipCards.value = true;
+    if (foundPairs.value.length == 6) {
+      isFinished.value = true;
+    }
   }, 1000);
 }
 </script>
@@ -139,6 +165,12 @@ function addPairToSummary(card1: CardData, card2: CardData) {
   flex-grow: 3;
   z-index: 1;
 }
+#finish-screen {
+  text-align: center;
+  font-size: 3em;
+  font-weight: 600;
+}
+
 #summary-panel {
   border: none;
   order: 2;
@@ -169,8 +201,8 @@ function addPairToSummary(card1: CardData, card2: CardData) {
   height: 100vh;
   z-index: 100;
 }
-.gloss {
-  box-shadow: 0 3px 25px rgb(60, 60, 60);
+.shadowed-panel {
+  box-shadow: 0 0 25px rgb(60, 60, 60);
   background-color: rgb(244, 244, 244);
   z-index: 1;
 }

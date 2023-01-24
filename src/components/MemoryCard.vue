@@ -6,6 +6,9 @@
       'show-cursor': canFlip,
       flip: cardContent.flipped || initiallyRevealed,
       'no-events': !canFlip,
+      'card-match': cardContent.selection == CardSelection.MATCH,
+      'card-mismatch': cardContent.selection == CardSelection.MISMATCH,
+      'card-unselected': cardContent.selection == CardSelection.UNSELECTED,
     }"
   >
     <div class="front"></div>
@@ -19,6 +22,7 @@
           id="image"
           :src="cardContent.content"
           v-if="isImage"
+          draggable="false"
         />
       </div>
       <button id="detail-view" @click.stop="openModal">+</button>
@@ -28,7 +32,7 @@
 
 <script setup lang="ts">
 import { PropType, ref, watch } from "vue";
-import { CardData, CardType } from "../types/data-models";
+import { CardData, CardType, CardSelection } from "../types/data-models";
 
 const props = defineProps({
   cardContent: {
@@ -71,7 +75,15 @@ watch(
   position: relative;
   transform-style: preserve-3d;
   transition: transform 0.5s;
+}
+.card-unselected {
   border: 2px solid #949494;
+}
+.card-match {
+  border: 2px solid #009e0d;
+}
+.card-mismatch {
+  border: 2px solid #950000;
 }
 
 .show-cursor {
