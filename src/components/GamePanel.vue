@@ -229,7 +229,6 @@ function redirectToStartPage() {
   margin: 5px;
   margin-left: 0%;
   margin-top: 0%;
-  text-align: center;
   z-index: 999;
 }
 
