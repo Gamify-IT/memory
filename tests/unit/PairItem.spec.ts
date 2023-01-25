@@ -1,6 +1,6 @@
 import { CardData, CardPair, CardType } from "@/types/data-models";
 import { mount, VueWrapper } from "@vue/test-utils";
-import PairItem from "srccomponentsPairItem.vue";
+import PairItem from "src/components/PairItem.vue";
 
 function examplePair(): CardPair {
     return new CardPair(
