@@ -1,6 +1,6 @@
 import { CardData, CardPair, CardType } from "@/types/data-models";
 import { mount, VueWrapper } from "@vue/test-utils";
-import PairItem from "src/components/PairItem.vue";
+import PairItem from "@/components/PairItem.vue";
 
 function examplePair(): CardPair {
   return new CardPair(
@@ -20,6 +20,6 @@ describe("PairItem.vue", () => {
       props: { pair },
     });
     expect(wrapper.find(".card-container").exists()).toBe(true);
-    expect(wrapper.find(".card-container").element.children.length).toBe(2);
+    expect(wrapper.findAll(".card-container").length).toBe(2);
   });
 });

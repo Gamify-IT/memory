@@ -1,4 +1,4 @@
-import StartGameScene from "./../src/components/StartGameScene.vue";
+import StartGameScene from "@/components/StartGameScene.vue";
 import { mount } from "@vue/test-utils";
 
 describe("StartGameScene", () => {
