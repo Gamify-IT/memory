@@ -3,20 +3,19 @@ import { mount, VueWrapper } from "@vue/test-utils";
 import PairItem from "src/components/PairItem.vue";
 
 function examplePair(): CardPair {
-    return new CardPair(
-        new CardData("card1", CardType.TEXT, 2),
-        new CardData("card2", CardType.TEXT, 2),
-      );
+  return new CardPair(
+    new CardData("card1", CardType.TEXT, 2),
+    new CardData("card2", CardType.TEXT, 2)
+  );
 }
 
 describe("PairItem.vue", () => {
   let wrapper: VueWrapper;
   let pair: CardPair;
-  beforeEach(()=>{
+  beforeEach(() => {
     pair = examplePair();
-  })
+  });
   test("receives and uses pair props", () => {
-
     wrapper = mount(PairItem, {
       props: { pair },
     });
