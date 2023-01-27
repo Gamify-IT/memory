@@ -1,4 +1,5 @@
 import { testData } from "@/types/test-data";
+import { CardType } from "@/types/data-models";
 
 test("testData has the correct pairs of cards", () => {
   expect(testData.pairs.length).toBe(6);
