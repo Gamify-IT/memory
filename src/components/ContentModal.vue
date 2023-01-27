@@ -1,7 +1,7 @@
 <template>
   <div class="modal">
     <div class="modal-content" @click.stop>
-      <p id="modal-text" v-if="!isImage">
+      <p id="modal-text" v-if="isText">
         {{ cardData.content }}
       </p>
       <img
@@ -11,6 +11,7 @@
         class="img-responsive"
         v-if="isImage"
       />
+      <div id="markdown" v-if="isMarkdown" v-html="markdownContent"></div>
       <slot></slot>
     </div>
     <div class="modal-backdrop"></div>
@@ -19,7 +20,8 @@
 
 <script setup lang="ts">
 import { CardData, CardType } from "@/types/data-models";
-import { ref, PropType } from "vue";
+import { ref, PropType, computed } from "vue";
+import { marked } from "marked";
 
 const props = defineProps({
   cardData: {
@@ -29,6 +31,10 @@ const props = defineProps({
 });
 
 const isImage = ref(props.cardData.type == CardType.IMAGE);
+const isText = ref(props.cardData.type == CardType.TEXT);
+const isMarkdown = ref(props.cardData.type == CardType.MARKDOWN);
+
+const markdownContent = computed(() => marked(props.cardData.content));
 </script>
 
 <style>

@@ -18,6 +18,7 @@ export enum CardSelection {
 export enum CardType {
   IMAGE,
   TEXT,
+  MARKDOWN,
 }
 export class CardPair {
   constructor(public card1: CardData, public card2: CardData) {}

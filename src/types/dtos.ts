@@ -6,6 +6,7 @@ interface CardDTO {
 enum CardType {
   IMAGE,
   TEXT,
+  MARKDOWN,
 }
 
 interface CardPairDTO {
