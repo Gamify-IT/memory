@@ -1,4 +1,4 @@
-import { CardType } from "@/types/data-models";
+import { CardType } from "./data-models";
 
 export const testData: GameDataDTO = {
   pairs: [
