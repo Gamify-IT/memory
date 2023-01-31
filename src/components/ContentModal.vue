@@ -9,9 +9,9 @@
         id="modal-image"
         :src="cardData.content"
         class="img-responsive"
-        v-if="isImage"
+        v-else-if="isImage"
       />
-      <div id="markdown" v-if="isMarkdown" v-html="markdownContent"></div>
+      <div id="markdown" v-else-if="isMarkdown" v-html="markdownContent"></div>
       <slot></slot>
     </div>
     <div class="modal-backdrop"></div>

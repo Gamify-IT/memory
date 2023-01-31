@@ -21,10 +21,14 @@
           alt="image not available"
           id="image"
           :src="cardContent.content"
-          v-if="isImage"
+          v-else-if="isImage"
           draggable="false"
         />
-        <div id="markdown" v-if="isMarkdown" v-html="markdownContent"></div>
+        <div
+          id="markdown"
+          v-else-if="isMarkdown"
+          v-html="markdownContent"
+        ></div>
       </div>
       <button id="detail-view" @click.stop="openModal">+</button>
     </div>
