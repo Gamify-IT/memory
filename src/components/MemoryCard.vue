@@ -14,16 +14,21 @@
     <div class="front"></div>
     <div class="back">
       <div id="content">
-        <div id="text" v-if="!isImage">
+        <div id="text" v-if="isText">
           {{ cardContent.content }}
         </div>
         <img
           alt="image not available"
           id="image"
           :src="cardContent.content"
-          v-if="isImage"
+          v-else-if="isImage"
           draggable="false"
         />
+        <div
+          id="markdown"
+          v-else-if="isMarkdown"
+          v-html="markdownContent"
+        ></div>
       </div>
       <button id="detail-view" @click.stop="openModal">+</button>
     </div>
@@ -31,8 +36,9 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, ref, watch } from "vue";
+import { PropType, ref, watch, computed } from "vue";
 import { CardData, CardType, CardSelection } from "../types/data-models";
+import { marked } from "marked";
 
 const props = defineProps({
   cardContent: {
@@ -45,12 +51,18 @@ const props = defineProps({
 const emit = defineEmits(["cardReveal", "cardHide", "openModal"]);
 
 const isImage = ref(props.cardContent.type == CardType.IMAGE);
+const isText = ref(props.cardContent.type == CardType.TEXT);
+const isMarkdown = ref(props.cardContent.type == CardType.MARKDOWN);
 
 function revealCard() {
   if (props.canFlip && !props.cardContent.flipped) {
     emit("cardReveal", props.cardContent);
   }
 }
+
+marked.setOptions({ breaks: true, gfm: true });
+
+const markdownContent = computed(() => marked(props.cardContent.content));
 
 function openModal() {
   emit("openModal", props.cardContent);

@@ -48,11 +48,11 @@ export const testData: GameDataDTO = {
     {
       card1: {
         content:
-          "https://www.shutterstock.com/image-vector/simple-mini-cartoon-ghost-vector-260nw-1470154256.jpg",
-        type: CardType.IMAGE,
+          '# h1 Heading  \n --- \n  ``` public static void main(String[] args){System.out.println("yay");} ``` \n \n _kursives etwas_ \n <center> \n | A | B | C | \n |--|--|--| \n | 1 | 2 | 3 | \n  </center>',
+        type: CardType.MARKDOWN,
       },
       card2: {
-        content: "Ghost Nr.2",
+        content: "Markdown",
         type: CardType.TEXT,
       },
     },
