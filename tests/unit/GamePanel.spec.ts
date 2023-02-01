@@ -1,10 +1,8 @@
 import { mount, VueWrapper } from "@vue/test-utils";
 import GamePanel from "@/components/GamePanel.vue";
-import { CardData } from "@/types/data-models";
 import ContentModal from "@/components/ContentModal.vue";
 import MemoryCard from "@/components/MemoryCard.vue";
 import PairItem from "@/components/PairItem.vue";
-import { PropType } from "vue";
 
 
   describe("GamePanel.vue", () => {

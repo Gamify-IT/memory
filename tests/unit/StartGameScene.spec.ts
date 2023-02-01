@@ -16,19 +16,6 @@ describe("StartGameScreen.vue", () => {
    expect(push).toHaveBeenCalledWith({path: "/singleplayer"});
 
    });
-   /*test("correct route to Mulitplayer", async () =>{
-    const push = jest.spyOn(router, "push");
-    const wrapper = mount(StartGameScene, {
-      global: {
-        plugins: [router],
-      },
-     })
-   router.push("/multiplayer")
-   await router.isReady();
-   await wrapper.find("button").trigger("click");
-   expect(push).toHaveBeenCalledWith({path: "/multiplayer"});
-   });*/
-
 })
   
   
