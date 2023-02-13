@@ -20,8 +20,10 @@
 
 <script setup lang="ts">
 import { CardData, CardType } from "@/types/data-models";
-import { ref, PropType, computed } from "vue";
+import { ref, PropType, computed, onMounted } from "vue";
 import { marked } from "marked";
+import hljs from "highlight.js";
+import "highlight.js/styles/vs2015.css";
 
 const props = defineProps({
   cardData: {
@@ -35,6 +37,10 @@ const isText = ref(props.cardData.type == CardType.TEXT);
 const isMarkdown = ref(props.cardData.type == CardType.MARKDOWN);
 
 const markdownContent = computed(() => marked(props.cardData.content));
+
+onMounted(() => {
+  hljs.initHighlightingOnLoad();
+});
 </script>
 
 <style>
