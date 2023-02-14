@@ -23,7 +23,7 @@ import { CardData, CardType } from "@/types/data-models";
 import { ref, PropType, computed, onMounted } from "vue";
 import { marked } from "marked";
 import hljs from "highlight.js";
-import "highlight.js/styles/vs2015.css";
+import "highlight.js/styles/vs.css";
 
 const props = defineProps({
   cardData: {
