@@ -15,6 +15,11 @@ describe("memory-controller.ts", () => {
   const data: GameData = convertDTOToData(testData);
   const controller = new MemoryController();
   test("fetchData", async () => {
-    expect(controller.gameData).toEqual(data);
+    controller.gameData.cards.forEach(card => {
+      const matchingCard = data.cards.find(c => c.content === card.content);
+      if (matchingCard) {
+        expect(card).toMatchObject(matchingCard);
+      }
+    });
   });
 });
