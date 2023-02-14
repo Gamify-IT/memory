@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test": "jest"
+    "test": "jest",
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "@types/highlight.js": "^10.1.0",
