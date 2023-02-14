@@ -40,7 +40,7 @@ import { PropType, ref, watch, computed, onMounted } from "vue";
 import { CardData, CardType, CardSelection } from "../types/data-models";
 import { marked } from "marked";
 import hljs from "highlight.js";
-import "highlight.js/styles/vs.css";
+import "highlight.js/styles/googlecode.css";
 
 const props = defineProps({
   cardContent: {
