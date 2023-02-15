@@ -48,7 +48,7 @@ export const testData: GameDataDTO = {
     {
       card1: {
         content:
-          '# h1 Heading  \n --- \n  ``` public static void main(String[] args){System.out.println("yay");} ``` \n \n _kursives etwas_ \n <center> \n | A | B | C | \n |--|--|--| \n | 1 | 2 | 3 | \n  </center>',
+          '# h1 Heading  \n --- \n  ```java \npublic static void main(String[] args){\nSystem.out.println("yay");} \n``` \n \n _kursives etwas_ \n <center> \n | A | B | C | \n |--|--|--| \n | 1 | 2 | 3 | \n  </center>',
         type: CardType.MARKDOWN,
       },
       card2: {

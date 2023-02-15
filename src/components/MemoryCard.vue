@@ -36,9 +36,11 @@
 </template>
 
 <script setup lang="ts">
-import { PropType, ref, watch, computed } from "vue";
+import { PropType, ref, watch, computed, onMounted } from "vue";
 import { CardData, CardType, CardSelection } from "../types/data-models";
 import { marked } from "marked";
+import hljs from "highlight.js";
+import "highlight.js/styles/vs.css";
 
 const props = defineProps({
   cardContent: {
@@ -63,6 +65,10 @@ function revealCard() {
 marked.setOptions({ breaks: true, gfm: true });
 
 const markdownContent = computed(() => marked(props.cardContent.content));
+
+onMounted(() => {
+  hljs.initHighlightingOnLoad();
+});
 
 function openModal() {
   emit("openModal", props.cardContent);

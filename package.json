@@ -10,8 +10,10 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "@types/highlight.js": "^10.1.0",
     "@types/jest": "^27.5.2",
     "@vue/test-utils": "^2.2.7",
+    "highlight.js": "^11.7.0",
     "marked": "^4.2.12",
     "vue": "^3.2.13",
     "vue-router": "^4.1.6",
