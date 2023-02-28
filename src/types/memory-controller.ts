@@ -1,12 +1,36 @@
+import axios from "axios";
 import { CardData, GameData } from "./data-models";
 import { testData } from "./test-data";
 
+const baseURL = "/minigames/memory/api/v1";
+const configurationId = window.location.pathname.split("/").pop();
+
 export class MemoryController {
-  gameData: GameData;
+  gameData!: GameData;
   constructor() {
-    const gameDataDto: GameDataDTO = this.fetchData();
-    this.gameData = this.convertDTOToData(gameDataDto);
-    this.shuffleCards();
+    let gameDataDto: GameDataDTO;
+    this.gameData = this.convertDTOToData(testData);
+    //const fetched = this.fetchData();
+    let test: GameDataDTO;
+    axios
+      .get<GameDataDTO>("${baseURL}/configurations/${configurationId}")
+      .then((response) => {
+        const gameData = this.convertDTOToData(test);
+        this.gameData = gameData;
+        this.shuffleCards();
+      })
+      .catch(() => {
+        const gameData = this.convertDTOToData(testData);
+        this.gameData = gameData;
+        this.shuffleCards();
+      });
+
+    //  this.gameData = this.convertDTOToData(test);
+
+    /*fetched.then((value) => {
+      gameDataDto = value;
+      this.gameData = this.convertDTOToData(gameDataDto);
+    });*/
   }
 
   private convertDTOToData(gameDataDto: GameDataDTO) {
@@ -18,9 +42,10 @@ export class MemoryController {
     return new GameData(cards);
   }
 
-  private fetchData(): GameDataDTO {
-    return testData;
-  }
+  /*private fetchData(): GameDataDTO {
+    return data;
+  }*/
+  private assignData(): void {}
 
   private shuffleCards() {
     const cards = this.gameData.cards;
