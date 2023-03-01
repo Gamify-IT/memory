@@ -45,7 +45,6 @@ export class MemoryController {
   /*private fetchData(): GameDataDTO {
     return data;
   }*/
-  private assignData(): void {}
 
   private shuffleCards() {
     const cards = this.gameData.cards;

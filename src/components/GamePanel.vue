@@ -56,7 +56,7 @@ const isFinished = computed(
 let openCardCount = 0;
 let firstCard: CardData | undefined = undefined;
 let secondCard: CardData | undefined = undefined;
-let resetTimeout: NodeJS.Timeout | number = 0;
+let resetTimeout: ReturnType<typeof setTimeout>;
 let allowReset = false;
 onMounted(() => {
   cards.value = new MemoryController().gameData.cards;
