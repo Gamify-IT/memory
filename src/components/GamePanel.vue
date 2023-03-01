@@ -58,8 +58,8 @@ let firstCard: CardData | undefined = undefined;
 let secondCard: CardData | undefined = undefined;
 let resetTimeout: ReturnType<typeof setTimeout>;
 let allowReset = false;
-onMounted(() => {
-  cards.value = new MemoryController().gameData.cards;
+onMounted(async () => {
+  cards.value = (await new MemoryController().fetchData()).cards;
 });
 function openModal(cardContent: CardData) {
   showModal.value = true;
