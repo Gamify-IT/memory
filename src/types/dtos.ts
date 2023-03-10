@@ -17,3 +17,7 @@ interface CardPairDTO {
 interface GameDataDTO {
   pairs: CardPairDTO[];
 }
+
+class GameResultDTO {
+  constructor(public isFinished: boolean){};
+}

@@ -6,6 +6,9 @@ const baseURL = "/minigames/memory/api/v1";
 const configurationId = window.location.pathname.split("/").pop();
 
 export class MemoryController {
+  postGameResult() {
+  axios.post(`${baseURL}/results`, new GameResultDTO(true));
+  }
   gameData!: GameData;
   constructor() {
     this.gameData = this.convertDTOToData(testData);

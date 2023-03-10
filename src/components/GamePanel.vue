@@ -37,12 +37,13 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import MemoryCard from "./MemoryCard.vue";
 import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
 import { CardData, CardPair, CardSelection } from "../types/data-models";
 import { MemoryController } from "@/types/memory-controller";
+import axios from "axios";
 
 const router = useRouter();
 const cards = ref([] as CardData[]);
@@ -50,8 +51,17 @@ const foundPairs = ref([] as CardPair[]);
 const canFlipCards = ref(true);
 const showModal = ref(false);
 const modalContent = ref({} as CardData);
+let memoryController: MemoryController;
 const isFinished = computed(
   () => foundPairs.value.length == cards.value.length / 2
+);
+watch(
+  () => isFinished,
+  (newValue) => {
+    if (newValue) {
+      memoryController.postGameResult();
+    }
+  }
 );
 let openCardCount = 0;
 let firstCard: CardData | undefined = undefined;
@@ -59,7 +69,8 @@ let secondCard: CardData | undefined = undefined;
 let resetTimeout: ReturnType<typeof setTimeout>;
 let allowReset = false;
 onMounted(async () => {
-  cards.value = (await new MemoryController().fetchData()).cards;
+  memoryController = new MemoryController();
+  cards.value = (await memoryController.fetchData()).cards;
 });
 function openModal(cardContent: CardData) {
   showModal.value = true;
