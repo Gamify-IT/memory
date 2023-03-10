@@ -7,7 +7,7 @@ const configurationId = window.location.pathname.split("/").pop();
 
 export class MemoryController {
   postGameResult() {
-  axios.post(`${baseURL}/results`, new GameResultDTO(true));
+    axios.post(`${baseURL}/results`, new GameResultDTO(true));
   }
   gameData!: GameData;
   constructor() {
