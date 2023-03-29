@@ -14,10 +14,11 @@ interface CardPairDTO {
   card2: CardDTO;
 }
 
-interface GameDataDTO {
+export interface GameDataDTO {
   pairs: CardPairDTO[];
 }
 
-class GameResultDTO {
-  constructor(public isFinished: boolean){};
+export class GameResultDTO {
+  constructor(public configurationAsUUID: string, public playerId: string) {}
+  public isFinished = true;
 }

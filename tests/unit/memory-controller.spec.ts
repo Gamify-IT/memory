@@ -1,4 +1,5 @@
 import { CardData, GameData } from "@/types/data-models";
+import { GameDataDTO } from "@/types/dtos";
 import { MemoryController } from "@/types/memory-controller";
 import { testData } from "@/types/test-data";
 

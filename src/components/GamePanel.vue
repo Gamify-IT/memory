@@ -55,14 +55,26 @@ let memoryController: MemoryController;
 const isFinished = computed(
   () => foundPairs.value.length == cards.value.length / 2
 );
-watch(
-  () => isFinished,
-  (newValue) => {
-    if (newValue) {
+
+/*watch('isFinished')
+function saveResult(){
+    console.log("here");
+    if (isFinished) {
+      console.log("here1");
       memoryController.postGameResult();
     }
+    console.log("here2");
+  };*/
+
+watch(isFinished, (isFinished) => {
+  console.log("here");
+  if (isFinished) {
+    console.log("here1");
+    memoryController.postGameResult();
   }
-);
+  console.log("here2");
+});
+
 let openCardCount = 0;
 let firstCard: CardData | undefined = undefined;
 let secondCard: CardData | undefined = undefined;

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CardData, GameData } from "./data-models";
+import { GameDataDTO, GameResultDTO } from "./dtos";
 import { testData } from "./test-data";
 
 const baseURL = "/minigames/memory/api/v1";
@@ -7,7 +8,14 @@ const configurationId = window.location.pathname.split("/").pop();
 
 export class MemoryController {
   postGameResult() {
-    axios.post(`${baseURL}/results`, new GameResultDTO(true));
+    const result: GameResultDTO = new GameResultDTO(
+      configurationId!,
+      window.localStorage.getItem("userId")!
+    );
+    console.log(result);
+    axios.post(`${baseURL}/results`, result).catch(function (error) {
+      console.log(error);
+    });
   }
   gameData!: GameData;
   constructor() {
@@ -30,7 +38,7 @@ export class MemoryController {
       );
       const gameData = this.convertDTOToData(result.data);
       this.gameData = gameData;
-      this.shuffleCards();
+      //this.shuffleCards();
       return gameData;
     } catch (error) {
       const gameData = this.convertDTOToData(testData);
