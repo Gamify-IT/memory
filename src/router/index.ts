@@ -4,7 +4,7 @@ import GamePanel from "../components/GamePanel.vue";
 import MultiPlayer from "../components/MultiPlayer.vue";
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   routes: [
     {
       path: "/",
