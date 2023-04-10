@@ -80,7 +80,7 @@ services:
       - MEMORY_URL=http://memory-backend/api/v1
       - KEYCLOAK_ISSUER=http://localhost/keycloak/realms/Gamify-IT
       - KEYCLOAK_URL=http://keycloak/keycloak/realms/Gamify-IT
-
+  
   memory-backend:
     container_name: memory-backend
     image: ghcr.io/gamify-it/memory-backend:main
@@ -97,7 +97,6 @@ services:
       - OVERWORLD_URL=http://overworld-backend/api/v1
       - KEYCLOAK_ISSUER=http://localhost/keycloak/realms/Gamify-IT
       - KEYCLOAK_URL=http://keycloak/keycloak/realms/Gamify-IT
-
 
   #frontends
   landing-page:
@@ -116,6 +115,13 @@ services:
     expose:
       - "80"
 
+  memory:
+    container_name: memory
+    build: .
+    restart: always
+    expose:
+      - "80"
+
   lecturer-interface:
     container_name: lecturer-interface
     image: ghcr.io/gamify-it/lecturer-interface:main
@@ -129,8 +135,6 @@ services:
     image: nginx
     restart: always
     volumes:
-      - ./.nginx/compose/nginx-dev.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./build:/var/www/html/minigames/chickenshock
-      - ./.nginx/style.css:/var/www/html/minigames/chickenshock/TemplateData/style.css
+      - ./.nginx/compose/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - "80:80"
