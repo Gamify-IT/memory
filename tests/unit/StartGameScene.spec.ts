@@ -13,7 +13,7 @@ describe("StartGameScreen.vue", () => {
    router.push("/singleplayer")
    await router.isReady();
    await wrapper.find("button").trigger("click");
-   expect(push).toHaveBeenCalledWith({path: "/singleplayer"});
+   expect(push).toHaveBeenCalledWith("/singleplayer");
 
    });
 })

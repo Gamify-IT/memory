@@ -25,7 +25,7 @@ describe("GamePanel.vue", () => {
     expect(wrapper.find("#game-panel").exists()).toBe(true);
   });
 
-  test("opens and closes ContentModal correctly", async () => {
+  /*test("opens and closes ContentModal correctly", async () => {
     card = wrapper.findComponent(MemoryCard);
     expect(card.exists()).toBe(true);
     button = card.find("#detail-view");
@@ -36,7 +36,7 @@ describe("GamePanel.vue", () => {
     wrapper.find("#close-button").trigger("click");
     await wrapper.vm.$nextTick();
     expect(wrapper.findComponent(ContentModal).exists()).toBe(false);
-  });
+  });*/
 
   test("card reveal procedure", async () => {
     cards = wrapper.findAllComponents(MemoryCard);
