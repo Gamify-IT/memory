@@ -1,12 +1,8 @@
+import { CardType } from "./data-models";
+
 interface CardDTO {
   content: string;
   type: CardType;
-}
-
-enum CardType {
-  IMAGE = "IMAGE",
-  TEXT = "TEXT",
-  MARKDOWN = "MARKDOWN",
 }
 
 interface CardPairDTO {

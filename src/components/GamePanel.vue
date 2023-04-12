@@ -2,6 +2,9 @@
   <button class="goback-button" @click="redirectToStartPage()">
     <span>Go Back</span>
   </button>
+  <div id="error-text" v-if="hasPostError">
+    Request failed with status code 404. Backend not reachable.
+  </div>
   <div id="game-panel">
     <div id="memory-panel" class="shadowed-panel" @click="manualReset">
       <div id="grid-container" v-if="!isFinished">
@@ -43,7 +46,6 @@ import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
 import { CardData, CardPair, CardSelection } from "../types/data-models";
 import { MemoryController } from "@/types/memory-controller";
-import axios from "axios";
 
 const router = useRouter();
 const cards = ref([] as CardData[]);
@@ -51,26 +53,18 @@ const foundPairs = ref([] as CardPair[]);
 const canFlipCards = ref(true);
 const showModal = ref(false);
 const modalContent = ref({} as CardData);
+const hasPostError = ref();
 let memoryController: MemoryController;
 const isFinished = computed(
   () => foundPairs.value.length == cards.value.length / 2
 );
 
-/*watch('isFinished')
-function saveResult(){
-    console.log("here");
-    if (isFinished) {
-      console.log("here1");
-      memoryController.postGameResult();
-    }
-    console.log("here2");
-  };*/
-
 watch(isFinished, (isFinished) => {
   console.log("here");
   if (isFinished) {
     console.log("here1");
-    memoryController.postGameResult();
+    hasPostError.value = memoryController.postGameResult();
+    console.log("asdf" + hasPostError.value);
   }
   console.log("here2");
 });
@@ -158,7 +152,7 @@ function addPairToSummary(card1: CardData, card2: CardData) {
   }, 1000);
 }
 function redirectToStartPage() {
-  router.push({ path: "/" });
+  router.back();
 }
 </script>
 
@@ -278,5 +272,14 @@ function redirectToStartPage() {
 .goback-button:hover span:after {
   opacity: 1;
   left: 0;
+}
+
+#error-text {
+  left: 0;
+  right: 0;
+  position: absolute;
+  text-align: center;
+  color: red;
+  font-size: 200%;
 }
 </style>
