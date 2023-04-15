@@ -60,13 +60,9 @@ const isFinished = computed(
 );
 
 watch(isFinished, (isFinished) => {
-  console.log("here");
   if (isFinished) {
-    console.log("here1");
     hasPostError.value = memoryController.postGameResult();
-    console.log("asdf" + hasPostError.value);
   }
-  console.log("here2");
 });
 
 let openCardCount = 0;

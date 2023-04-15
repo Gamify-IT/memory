@@ -46,7 +46,6 @@ export class MemoryController {
     } catch (error) {
       const gameData = this.convertDTOToData(testData);
       this.gameData = gameData;
-      this.shuffleCards();
       return gameData;
     }
   }
