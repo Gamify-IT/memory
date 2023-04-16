@@ -16,7 +16,6 @@ export class MemoryController {
     let hasError = false;
     let hasConfigError = false;
     if (configError) {
-      axios.post(`${baseURL}/results`, null);
       hasConfigError = true;
       return hasConfigError;
     }
