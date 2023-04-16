@@ -5,7 +5,7 @@ import { testData } from "./test-data";
 
 const baseURL = "/minigames/memory/api/v1";
 const configurationId = window.location.pathname.split("/").pop();
-let configError: boolean;
+let hasConfigError: boolean;
 export class MemoryController {
   async postGameResult() {
     const result: GameResultDTO = new GameResultDTO(
@@ -14,8 +14,8 @@ export class MemoryController {
     );
     console.log(result);
     let hasError = false;
-    if (configError) {
-      return configError;
+    if (hasConfigError) {
+      return hasConfigError;
     }
     await axios.post(`${baseURL}/results`, result).catch(function (error) {
       console.log(error.message);
@@ -47,7 +47,7 @@ export class MemoryController {
       this.shuffleCards();
       return gameData;
     } catch (error) {
-      configError = true;
+      hasConfigError = true;
       const gameData = this.convertDTOToData(testData);
       this.gameData = gameData;
       return gameData;
