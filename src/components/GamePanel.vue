@@ -5,6 +5,9 @@
   <div id="error-text" v-if="hasPostError">
     Request failed with status code 404. Backend not reachable.
   </div>
+  <div id="error-config-text" v-if="hasConfigError">
+    Config could not be fetched!!
+  </div>
   <div id="game-panel">
     <div id="memory-panel" class="shadowed-panel" @click="manualReset">
       <div id="grid-container" v-if="!isFinished">
@@ -46,6 +49,7 @@ import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
 import { CardData, CardPair, CardSelection } from "../types/data-models";
 import { MemoryController } from "@/types/memory-controller";
+import { testData } from "@/types/test-data";
 
 const router = useRouter();
 const cards = ref([] as CardData[]);
@@ -54,6 +58,7 @@ const canFlipCards = ref(true);
 const showModal = ref(false);
 const modalContent = ref({} as CardData);
 const hasPostError = ref();
+const hasConfigError = ref();
 let memoryController: MemoryController;
 const isFinished = computed(
   () => foundPairs.value.length == cards.value.length / 2
@@ -62,6 +67,7 @@ const isFinished = computed(
 watch(isFinished, (isFinished) => {
   if (isFinished) {
     hasPostError.value = memoryController.postGameResult();
+    hasConfigError.value = memoryController.postGameResult();
   }
 });
 
@@ -277,5 +283,16 @@ function redirectToStartPage() {
   text-align: center;
   color: red;
   font-size: 200%;
+}
+
+#error-config-text {
+  left: 10%;
+  right: 35%;
+  position: absolute;
+  padding-top: 23%;
+  text-align: center;
+  color: red;
+  font-size: 400%;
+  z-index: 999;
 }
 </style>
