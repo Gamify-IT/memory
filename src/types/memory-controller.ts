@@ -14,10 +14,8 @@ export class MemoryController {
     );
     console.log(result);
     let hasError = false;
-    let hasConfigError = false;
     if (configError) {
-      hasConfigError = true;
-      return hasConfigError;
+      return configError;
     }
     await axios.post(`${baseURL}/results`, result).catch(function (error) {
       console.log(error.message);
