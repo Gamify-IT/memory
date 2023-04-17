@@ -19,6 +19,7 @@ export class MemoryController {
       console.log("Posting result failed: " + error.message);
       hasError = true;
     });
+    console.log("has Error: " + hasError);
     return hasError;
   }
   gameData!: GameData;
