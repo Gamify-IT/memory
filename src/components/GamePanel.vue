@@ -74,7 +74,6 @@ watch(gameStarted, (gameStarted) => {
 watch(isFinished, async (isFinished) => {
   if (isFinished) {
     hasPostError.value = await memoryController.postGameResult();
-    console.log("HasPostError: " + hasPostError.value);
   }
 });
 

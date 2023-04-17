@@ -16,10 +16,8 @@ export class MemoryController {
     console.log(result);
     let hasError = false;
     await axios.post(`${baseURL}/results`, result).catch(function (error) {
-      console.log("Posting result failed: " + error.message);
       hasError = true;
     });
-    console.log("has Error: " + hasError);
     return hasError;
   }
   gameData!: GameData;
