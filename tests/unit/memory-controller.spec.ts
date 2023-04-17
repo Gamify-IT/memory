@@ -1,7 +1,7 @@
 import { CardData, GameData } from "@/types/data-models";
 import { GameDataDTO } from "@/types/dtos";
 import { MemoryController } from "@/types/memory-controller";
-import { testData } from "@/types/test-data";
+import { emptyData } from "@/types/empty-data";
 
 function convertDTOToData(data: GameDataDTO) {
   const cards: CardData[] = [];
@@ -13,7 +13,7 @@ function convertDTOToData(data: GameDataDTO) {
 }
 
 describe("memory-controller.ts", () => {
-  const data: GameData = convertDTOToData(testData);
+  const data: GameData = convertDTOToData(emptyData);
   const controller = new MemoryController();
   /*test("fetchData", async () => {
     controller.gameData.cards.forEach(card => {

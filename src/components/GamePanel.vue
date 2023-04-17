@@ -2,11 +2,10 @@
   <button class="goback-button" @click="redirectToStartPage()">
     <span>Go Back</span>
   </button>
-  <div id="error-text" v-if="hasPostError">
-    Request failed with status code 404. Backend not reachable.
-  </div>
+  <div id="error-text" v-if="hasPostError">Backend not reachable.</div>
   <div id="error-config-text" v-if="hasConfigError">
-    Because config could not be fetched. Game result can not be transmitted!!
+    Because the config could not be fetched, the game result can't be
+    transmitted.
   </div>
   <div id="game-panel">
     <div id="memory-panel" class="shadowed-panel" @click="manualReset">
@@ -22,7 +21,9 @@
           />
         </div>
       </div>
-      <div id="finish-screen" v-if="isFinished">Well done!</div>
+      <div id="finish-screen" v-if="isFinished && !hasConfigError">
+        Well done!
+      </div>
     </div>
     <div id="summary-panel" class="shadowed-panel">
       <div id="heading">Summary</div>
@@ -48,7 +49,7 @@ import MemoryCard from "./MemoryCard.vue";
 import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
 import { CardData, CardPair, CardSelection } from "../types/data-models";
-import { MemoryController, hasConfigErr } from "@/types/memory-controller";
+import { MemoryController } from "@/types/memory-controller";
 
 const router = useRouter();
 const cards = ref([] as CardData[]);
@@ -66,7 +67,7 @@ const isFinished = computed(
 
 watch(gameStarted, (gameStarted) => {
   if (gameStarted) {
-    hasConfigError.value = hasConfigErr;
+    hasConfigError.value = memoryController.hasConfigError;
   }
 });
 
@@ -298,8 +299,7 @@ function redirectToStartPage() {
   top: 4%;
   text-align: center;
   color: red;
-  font-size: 950%;
+  font-size: 500%;
   z-index: 999;
-  background-color: white;
 }
 </style>
