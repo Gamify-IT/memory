@@ -15,11 +15,8 @@ export class MemoryController {
     );
     console.log(result);
     let hasError = false;
-    if (this.hasConfigError) {
-      return this.hasConfigError;
-    }
     await axios.post(`${baseURL}/results`, result).catch(function (error) {
-      console.log(error.message);
+      console.log("Posting result failed: " + error.message);
       hasError = true;
     });
     return hasError;
