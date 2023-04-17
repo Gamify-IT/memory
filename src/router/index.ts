@@ -7,15 +7,15 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes: [
     {
-      path: "/",
+      path: "/:id",
       component: StartGameScene,
     },
     {
-      path: "/singleplayer",
+      path: "/singleplayer/:id",
       component: GamePanel,
     },
     {
-      path: "/multiplayer",
+      path: "/multiplayer/:id",
       component: MultiPlayer,
     },
   ],

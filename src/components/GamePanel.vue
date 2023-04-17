@@ -2,6 +2,11 @@
   <button class="goback-button" @click="redirectToStartPage()">
     <span>Go Back</span>
   </button>
+  <div id="error-text" v-if="hasPostError">Backend not reachable.</div>
+  <div id="error-config-text" v-if="hasConfigError">
+    Because the config could not be fetched, the game result can't be
+    transmitted.
+  </div>
   <div id="game-panel">
     <div id="memory-panel" class="shadowed-panel" @click="manualReset">
       <div id="grid-container" v-if="!isFinished">
@@ -16,7 +21,9 @@
           />
         </div>
       </div>
-      <div id="finish-screen" v-if="isFinished">Well done!</div>
+      <div id="finish-screen" v-if="isFinished && !hasConfigError">
+        Well done!
+      </div>
     </div>
     <div id="summary-panel" class="shadowed-panel">
       <div id="heading">Summary</div>
@@ -37,7 +44,7 @@
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import MemoryCard from "./MemoryCard.vue";
 import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
@@ -50,16 +57,35 @@ const foundPairs = ref([] as CardPair[]);
 const canFlipCards = ref(true);
 const showModal = ref(false);
 const modalContent = ref({} as CardData);
+const hasPostError = ref();
+const hasConfigError = ref();
+let memoryController: MemoryController;
+let gameStarted = ref();
 const isFinished = computed(
   () => foundPairs.value.length == cards.value.length / 2
 );
+
+watch(gameStarted, (gameStarted) => {
+  if (gameStarted) {
+    hasConfigError.value = memoryController.hasConfigError;
+  }
+});
+
+watch(isFinished, (isFinished) => {
+  if (isFinished) {
+    hasPostError.value = memoryController.postGameResult();
+  }
+});
+
 let openCardCount = 0;
 let firstCard: CardData | undefined = undefined;
 let secondCard: CardData | undefined = undefined;
-let resetTimeout = 0;
+let resetTimeout: ReturnType<typeof setTimeout>;
 let allowReset = false;
-onMounted(() => {
-  cards.value = new MemoryController().gameData.cards;
+onMounted(async () => {
+  memoryController = new MemoryController();
+  cards.value = (await memoryController.fetchData()).cards;
+  gameStarted.value = true;
 });
 function openModal(cardContent: CardData) {
   showModal.value = true;
@@ -135,7 +161,7 @@ function addPairToSummary(card1: CardData, card2: CardData) {
   }, 1000);
 }
 function redirectToStartPage() {
-  router.push({ path: "/" });
+  router.back();
 }
 </script>
 
@@ -255,5 +281,25 @@ function redirectToStartPage() {
 .goback-button:hover span:after {
   opacity: 1;
   left: 0;
+}
+
+#error-text {
+  left: 0;
+  right: 0;
+  position: absolute;
+  text-align: center;
+  color: red;
+  font-size: 200%;
+}
+
+#error-config-text {
+  left: 2%;
+  right: 34.6%;
+  position: absolute;
+  top: 4%;
+  text-align: center;
+  color: red;
+  font-size: 500%;
+  z-index: 999;
 }
 </style>

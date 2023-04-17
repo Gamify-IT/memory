@@ -10,6 +10,6 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 
 function redirectToStartPage() {
-  router.push({ path: "/" });
+  router.back();
 }
 </script>

@@ -1,12 +1,8 @@
+import { CardType } from "./data-models";
+
 interface CardDTO {
   content: string;
   type: CardType;
-}
-
-enum CardType {
-  IMAGE,
-  TEXT,
-  MARKDOWN,
 }
 
 interface CardPairDTO {
@@ -14,6 +10,11 @@ interface CardPairDTO {
   card2: CardDTO;
 }
 
-interface GameDataDTO {
+export interface GameDataDTO {
   pairs: CardPairDTO[];
+}
+
+export class GameResultDTO {
+  constructor(public configurationAsUUID: string, public playerId: string) {}
+  public isFinished = true;
 }

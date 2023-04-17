@@ -12,14 +12,15 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
+const route = useRoute();
 
 function redirectToSingleplayer() {
-  router.push({ path: "/singleplayer" });
+  router.push({ path: "/singleplayer/" + route.params.id });
 }
 function redirectToMultiplayer() {
-  router.push({ path: "/multiplayer" });
+  router.push({ path: "/multiplayer/" + route.params.id });
 }
 function closeGame() {
   window.parent.postMessage("CLOSE ME");
