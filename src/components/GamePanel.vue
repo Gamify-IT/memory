@@ -73,6 +73,7 @@ watch(gameStarted, (gameStarted) => {
 
 watch(isFinished, (isFinished) => {
   if (isFinished) {
+    console.log("is Finished");
     hasPostError.value = memoryController.postGameResult();
   }
 });
