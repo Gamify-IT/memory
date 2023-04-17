@@ -2,7 +2,7 @@
   <button class="goback-button" @click="redirectToStartPage()">
     <span>Go Back</span>
   </button>
-  <div id="error-text" v-if="hasPostError">Backend not reachable.</div>
+  <div id="error-text" v-if="!hasPostError">Backend not reachable.</div>
   <div id="error-config-text" v-if="hasConfigError">
     Because the config could not be fetched, the game result can't be
     transmitted.
@@ -73,8 +73,8 @@ watch(gameStarted, (gameStarted) => {
 
 watch(isFinished, (isFinished) => {
   if (isFinished) {
-    console.log("is Finished");
     hasPostError.value = memoryController.postGameResult();
+    console.log("HasPostError: " + hasPostError.value);
   }
 });
 
