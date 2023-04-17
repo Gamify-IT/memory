@@ -48,7 +48,7 @@ import MemoryCard from "./MemoryCard.vue";
 import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
 import { CardData, CardPair, CardSelection } from "../types/data-models";
-import { MemoryController } from "@/types/memory-controller";
+import { MemoryController, hasConfigErr } from "@/types/memory-controller";
 
 const router = useRouter();
 const cards = ref([] as CardData[]);
@@ -59,14 +59,14 @@ const modalContent = ref({} as CardData);
 const hasPostError = ref();
 const hasConfigError = ref();
 let memoryController: MemoryController;
-const gameStarted = computed(() => cards.value.length == 12);
+let gameStarted = ref();
 const isFinished = computed(
   () => foundPairs.value.length == cards.value.length / 2
 );
 
 watch(gameStarted, (gameStarted) => {
   if (gameStarted) {
-    hasConfigError.value = memoryController.postGameResult();
+    hasConfigError.value = hasConfigErr;
   }
 });
 
@@ -84,6 +84,7 @@ let allowReset = false;
 onMounted(async () => {
   memoryController = new MemoryController();
   cards.value = (await memoryController.fetchData()).cards;
+  gameStarted.value = true;
 });
 function openModal(cardContent: CardData) {
   showModal.value = true;
