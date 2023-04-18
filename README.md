@@ -2,6 +2,7 @@
 
 This is a traditional memory game where you have to find matching all pairs.
 
+![game screenshot](https://raw.githubusercontent.com/Gamify-IT/docs/main/user-manuals/minigames/assets/memory-game-screen.webp)
 This repository contains the frontend for the [Memory minigame](https://gamifyit-docs.readthedocs.io/en/latest/user-manuals/minigames/memory.html).
 
 # Table of contents
