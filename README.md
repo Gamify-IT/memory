@@ -4,6 +4,24 @@ This is a traditional memory game where you have to find matching all pairs.
 
 This repository contains the frontend for the [Memory minigame](https://gamifyit-docs.readthedocs.io/en/latest/user-manuals/minigames/memory.html).
 
+# Table of contents
+
+<!-- TOC -->
+* [Links](#links)
+* [Development](#development)
+  * [Getting started](#getting-started)
+    * [Run with Docker-compose](#run-with-docker-compose)
+  * [Compile and Hot-Reload for Development](#compile-and-hot-reload-for-development)
+  * [Test](#test)
+  * [Build](#build)
+  * [User manual](#user-manual)
+<!-- TOC -->
+
+## Links
+- User documentation for the minigame can be found [here](https://gamifyit-docs.readthedocs.io/en/latest/user-manuals/minigames/memory.html)
+- For the backend, see the [Gamify-IT/memory-backend repository](https://github.com/Gamify-IT/memory-backend)
+- The installation manual and setup instructions can be found [here](https://gamifyit-docs.readthedocs.io/en/latest/install-manuals/index.html).
+
 ## Development
 
 ### Getting started
