@@ -16,5 +16,5 @@ export interface GameDataDTO {
 
 export class GameResultDTO {
   constructor(public configurationAsUUID: string, public playerId: string) {}
-  public isFinished = true;
+  public isFinished = "true";
 }
