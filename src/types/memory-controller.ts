@@ -2,8 +2,8 @@ import axios from "axios";
 import { CardData, GameData } from "./data-models";
 import { GameDataDTO, GameResultDTO } from "./dtos";
 import { emptyData } from "./empty-data";
+import config from "@/config";
 
-const baseURL = "/minigames/memory/api/v1";
 const configurationId = window.location.pathname.split("/").pop();
 
 export class MemoryController {
@@ -15,9 +15,11 @@ export class MemoryController {
     );
     console.log(result);
     let hasError = false;
-    await axios.post(`${baseURL}/results`, result).catch(function (error) {
-      hasError = true;
-    });
+    await axios
+      .post(`${config.apiBaseUrl}/results`, result)
+      .catch(function (error) {
+        hasError = true;
+      });
     return hasError;
   }
   gameData!: GameData;
@@ -37,7 +39,7 @@ export class MemoryController {
   public async fetchData(): Promise<GameData> {
     try {
       const result = await axios.get<GameDataDTO>(
-        `${baseURL}/configurations/${configurationId}`
+        `${config.apiBaseUrl}/configurations/${configurationId}`
       );
       const gameData = this.convertDTOToData(result.data);
       this.gameData = gameData;
