@@ -4,7 +4,6 @@ import { GameDataDTO, GameResultDTO } from "./dtos";
 import { emptyData } from "./empty-data";
 import config from "@/config";
 
-
 const configurationId = window.location.pathname.split("/").pop();
 
 export class MemoryController {
@@ -16,9 +15,11 @@ export class MemoryController {
     );
     console.log(result);
     let hasError = false;
-    await axios.post(`${config.apiBaseUrl}/results`, result).catch(function (error) {
-      hasError = true;
-    });
+    await axios
+      .post(`${config.apiBaseUrl}/results`, result)
+      .catch(function (error) {
+        hasError = true;
+      });
     return hasError;
   }
   gameData!: GameData;
