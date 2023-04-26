@@ -1,6 +1,5 @@
 import { CardData, GameData } from "@/types/data-models";
 import { GameDataDTO } from "@/types/dtos";
-import { MemoryController } from "@/types/memory-controller";
 import { emptyData } from "@/types/empty-data";
 
 function convertDTOToData(data: GameDataDTO) {
@@ -13,17 +12,8 @@ function convertDTOToData(data: GameDataDTO) {
 }
 
 describe("memory-controller.ts", () => {
-  const data: GameData = convertDTOToData(emptyData);
-  const controller = new MemoryController();
-  /*test("fetchData", async () => {
-    controller.gameData.cards.forEach(card => {
-      const matchingCard = data.cards.find(c => c.content === card.content);
-      if (matchingCard) {
-        expect(card).toMatchObject(matchingCard);
-      }
-    });
-  });*/
-  test("dummytest", async() => {
+  convertDTOToData(emptyData);
+  test("dummytest", async () => {
     expect(true).toBe(true);
-  })
+  });
 });

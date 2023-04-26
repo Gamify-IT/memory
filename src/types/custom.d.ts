@@ -1,1 +1,1 @@
-declare module 'marked-katex-extension';
+declare module "marked-katex-extension";

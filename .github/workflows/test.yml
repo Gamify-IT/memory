@@ -11,12 +11,12 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-    - run: npm ci
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - run: npm ci
 
-    - name: Build
-      run: npm run build    
+      - name: Build
+        run: npm run build
 
-    - name: Unit Tests
-      run: npm run test:unit
+      - name: Unit Tests
+        run: npm run test:unit

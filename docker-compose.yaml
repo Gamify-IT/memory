@@ -1,7 +1,6 @@
 version: "3.7"
 
 services:
-
   #databases
   setup:
     container_name: setup
@@ -80,7 +79,7 @@ services:
       - MEMORY_URL=http://memory-backend/api/v1
       - KEYCLOAK_ISSUER=http://localhost/keycloak/realms/Gamify-IT
       - KEYCLOAK_URL=http://keycloak/keycloak/realms/Gamify-IT
-  
+
   memory-backend:
     container_name: memory-backend
     image: ghcr.io/gamify-it/memory-backend:main
