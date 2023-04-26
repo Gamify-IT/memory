@@ -41,6 +41,8 @@ import { CardData, CardType, CardSelection } from "../types/data-models";
 import { marked } from "marked";
 import hljs from "highlight.js";
 import "highlight.js/styles/vs.css";
+import "katex/dist/katex.min.css";
+import katex from "katex";
 
 const props = defineProps({
   cardContent: {
@@ -65,6 +67,12 @@ function revealCard() {
 marked.setOptions({ breaks: true, gfm: true });
 
 const markdownContent = computed(() => marked(props.cardContent.content));
+
+const renderer = new marked.Renderer();
+renderer.code = (code, language) => {
+  return katex.renderToString(code, { displayMode: true });
+};
+marked.setOptions({ renderer });
 
 onMounted(() => {
   hljs.initHighlightingOnLoad();
