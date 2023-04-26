@@ -37,12 +37,13 @@
 
 <script setup lang="ts">
 import { PropType, ref, watch, computed, onMounted } from "vue";
+import katex from "katex";
+import markedKatex from "marked-katex-extension";
 import { CardData, CardType, CardSelection } from "../types/data-models";
 import { marked } from "marked";
 import hljs from "highlight.js";
 import "highlight.js/styles/vs.css";
 import "katex/dist/katex.min.css";
-import katex from "katex";
 
 const props = defineProps({
   cardContent: {
@@ -64,15 +65,20 @@ function revealCard() {
   }
 }
 
-marked.setOptions({ breaks: true, gfm: true });
+marked.use(
+  markedKatex({
+    renderer: new marked.Renderer(),
+    breaks: true,
+    gfm: true,
+    math: true,
+    render: {
+      math: (math: string) =>
+        katex.renderToString(math, { throwOnError: false }),
+    },
+  })
+);
 
 const markdownContent = computed(() => marked(props.cardContent.content));
-
-const renderer = new marked.Renderer();
-renderer.code = (code, language) => {
-  return katex.renderToString(code, { displayMode: true });
-};
-marked.setOptions({ renderer });
 
 onMounted(() => {
   hljs.initHighlightingOnLoad();
