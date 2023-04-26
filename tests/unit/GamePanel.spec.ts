@@ -62,6 +62,6 @@ describe("GamePanel.vue", () => {
     }
     await wrapper.vm.$nextTick();
     expect(cards.length).toBe(0);
-    expect(wrapper.findAllComponents(PairItem).length).toBe(cardLength/2);
+    expect(wrapper.findAllComponents(PairItem).length).toBe(cardLength / 2);
   });
 });

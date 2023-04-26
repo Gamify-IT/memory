@@ -13,7 +13,7 @@ function convertDTOToData(data: GameDataDTO) {
 
 describe("memory-controller.ts", () => {
   convertDTOToData(emptyData);
-  test("dummytest", async() => {
+  test("dummytest", async () => {
     expect(true).toBe(true);
-  })
+  });
 });

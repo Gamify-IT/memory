@@ -1,7 +1,6 @@
 version: "3.7"
 
 services:
-
   #databases
   setup:
     container_name: setup
@@ -97,7 +96,6 @@ services:
       - OVERWORLD_URL=http://overworld-backend/api/v1
       - KEYCLOAK_ISSUER=http://localhost/keycloak/realms/Gamify-IT
       - KEYCLOAK_URL=http://keycloak/keycloak/realms/Gamify-IT
-
 
   #frontends
   landing-page:
