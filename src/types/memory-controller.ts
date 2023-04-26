@@ -15,11 +15,9 @@ export class MemoryController {
     );
     console.log(result);
     let hasError = false;
-    await axios
-      .post(`${config.apiBaseUrl}/results`, result)
-      .catch(function () {
-        hasError = true;
-      });
+    await axios.post(`${config.apiBaseUrl}/results`, result).catch(function () {
+      hasError = true;
+    });
     return hasError;
   }
   gameData!: GameData;
