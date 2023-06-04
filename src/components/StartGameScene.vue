@@ -3,7 +3,12 @@
   <button class="button" @click="redirectToSingleplayer()">
     <span>Singleplayer</span>
   </button>
-  <button class="button multiplayer-button" @click="redirectToMultiplayer()">
+  <button
+    class="button multiplayer-button"
+    @click="redirectToMultiplayer()"
+    title="Not implemented yet"
+    disabled
+  >
     <span>Multiplayer</span>
   </button>
   <button class="button close-button" @click="closeGame()">
