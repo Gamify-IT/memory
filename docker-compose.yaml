@@ -118,6 +118,7 @@ services:
     container_name: memory
     image: ghcr.io/gamify-it/memory:main
     restart: always
+    pull_policy: always
     expose:
       - "80"
 
