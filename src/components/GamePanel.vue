@@ -95,6 +95,7 @@ function closeModal() {
   showModal.value = false;
 }
 function cardRevealProcedure(clickedCard: CardData) {
+  playSound("@/assets/music/swipe_sound.mp3");
   if (firstCard === clickedCard) return;
   clickedCard.flipped = true;
   if (openCardCount == 0) {
@@ -147,6 +148,7 @@ function resetCards() {
   }, 5000);
 }
 function addPairToSummary(card1: CardData, card2: CardData) {
+  playSound("@/assets/music/success_sound.mp3");
   canFlipCards.value = false;
   card1.selection = CardSelection.MATCH;
   card2.selection = CardSelection.MATCH;
@@ -161,7 +163,12 @@ function addPairToSummary(card1: CardData, card2: CardData) {
   }, 1000);
 }
 function redirectToStartPage() {
+  playSound("@/assets/music/click_sound.mp3");
   router.back();
+}
+function playSound(pathToAudioFile: string){
+  const sound = new Audio(pathToAudioFile);
+  sound.play();
 }
 </script>
 

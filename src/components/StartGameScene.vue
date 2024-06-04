@@ -20,15 +20,22 @@
 import { useRoute, useRouter } from "vue-router";
 const router = useRouter();
 const route = useRoute();
+const clickSound = new Audio("@/assets/music/click_sound.mp3");
 
 function redirectToSingleplayer() {
+  playClickSound();
   router.push({ path: "/singleplayer/" + route.params.id });
 }
 function redirectToMultiplayer() {
+  playClickSound();
   router.push({ path: "/multiplayer/" + route.params.id });
 }
 function closeGame() {
+  playClickSound();
   window.parent.postMessage("CLOSE ME");
+}
+function playClickSound(){
+  clickSound.play();
 }
 </script>
 
