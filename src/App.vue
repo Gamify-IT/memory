@@ -3,11 +3,16 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { onMounted, onUnmounted } from 'vue';
+const backgroundSound = new Audio("@/assets/music/background_music.mp3");
 
-onMounted(()=>{
-  const backgroundSound = new Audio("@/assets/music/background_music.mp3");
+onMounted(() => {
   backgroundSound.loop = true;
   backgroundSound.play();
+});
+
+onUnmounted(() => {
+  backgroundSound.pause();
+  backgroundSound.currentTime = 0;
 });
 </script>
