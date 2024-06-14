@@ -118,7 +118,6 @@ services:
     container_name: memory
     build: .
     restart: always
-    pull_policy: always
     expose:
       - "80"
 
