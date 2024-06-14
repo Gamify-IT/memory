@@ -113,14 +113,6 @@ services:
     pull_policy: always
     expose:
       - "80"
-      
-  memory:
-    container_name: memory
-    image: ghcr.io/gamify-it/memory:development
-    restart: always
-    pull_policy: always
-    expose:
-      - "80"
 
   lecturer-interface:
     container_name: lecturer-interface
