@@ -26,99 +26,40 @@ This repository contains the frontend for the [Memory minigame](https://gamifyit
 - The installation manual and setup instructions can be found [here](https://gamifyit-docs.readthedocs.io/en/latest/install-manuals/index.html).
 
 ## Development
-
+> Beginning of additions (that work)
 ### Getting started
 
 Clone the repository
-
 ```sh
 git clone https://github.com/Gamify-IT/memory.git
 ```
 
 Install the dependencies
-
 ```sh
 npm install
 ```
 
-#### Run with Docker-compose
-
-Start all dependencies with our docker-compose files.
-Check the [manual for docker-compose](https://github.com/Gamify-IT/docs/blob/main/dev-manuals/languages/docker/docker-compose.md).
-
 ### Compile and Hot-Reload for Development
-
+To run the project locally with your IDE feature and have all necessary dependencies running,
+start the dependencies via docker:
+```sh
+docker compose -f docker-compose-dev.yaml up
+```
+Then start the frontend with:
 ```sh
 npm run serve
 ```
+You can now access the game at [localhost](http://localhost).
 
-### Test
-
-Run the tests:
+### Build your local changes as a docker container
+To build and run your local changes as a docker container use:
+```sh
+docker compose up --build
+```
+You can remove the container with:
 
 ```sh
-npm run test:unit
+docker compose down
 ```
 
-To also get the test coverage:
-
-```sh
-npm run test:unit -- --coverage
-```
-
-### Build
-
-Build the Docker-Container
-
-```sh
-docker build -t memory-dev .
-```
-
-And run it at port 8000 with
-
-```sh
-docker run -d -p 8000:80 --name memory-dev memory-dev
-```
-
-To monitor, stop and remove the container you can use the following commands:
-
-```sh
-docker ps -a -f name=memory-dev
-```
-
-```sh
-docker stop memory-dev
-```
-
-```sh
-docker rm memory-dev
-```
-
-## User manual
-
-Run the docker container with the following command at port 8000:
-
-```sh
-docker run -d -p 8000:80 --name memory ghcr.io/gamify-it/memory:latest
-```
-
-Now you can access it at [http://localhost:8000](http://localhost:8000).  
-To access it externally replace localhost with your IP.
-
-To monitor the container you can use the following command:
-
-```sh
-docker ps -a -f name=memory
-```
-
-To stop the container you can use the following command:
-
-```sh
-docker stop memory
-```
-
-To remove the container you can use the following command:
-
-```sh
-docker rm memory
-```
+> End of additions
