@@ -4,15 +4,16 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue';
-const backgroundSound = new Audio("@/assets/music/background_music.mp3");
+import backgroundMusicSource from '/src/assets/music/background_music.mp3'
+const backgroundMusic = new Audio(backgroundMusicSource);
 
 onMounted(() => {
-  backgroundSound.loop = true;
-  backgroundSound.play();
+  backgroundMusic.loop = true;
+  backgroundMusic.play();
 });
 
 onUnmounted(() => {
-  backgroundSound.pause();
-  backgroundSound.currentTime = 0;
+  backgroundMusic.pause();
+  backgroundMusic.currentTime = 0;
 });
 </script>
