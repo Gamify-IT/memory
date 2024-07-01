@@ -3,6 +3,8 @@ import { CardData, GameData } from "./data-models";
 import { GameDataDTO, GameResultDTO } from "./dtos";
 import { emptyData } from "./empty-data";
 import config from "@/config";
+import store from "@/store/index";
+
 
 const configurationId = window.location.pathname.split("/").pop();
 const rewards = 0;
@@ -27,6 +29,7 @@ export class MemoryController {
     if (!hasError && response) {
       const returnedResult = this.fromDTO(response.data);
       console.log(returnedResult);
+      store.commit('setRewards', returnedResult.rewards)
     }
 
     return hasError;
