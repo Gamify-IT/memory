@@ -22,7 +22,7 @@
         </div>
       </div>
       <div id="finish-screen" v-if="isFinished && !hasConfigError">
-        Well done!
+        Well done! You've gained {{ store.state.rewards }}
       </div>
     </div>
     <div id="summary-panel" class="shadowed-panel">
@@ -50,6 +50,8 @@ import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
 import { CardData, CardPair, CardSelection } from "../types/data-models";
 import { MemoryController } from "@/types/memory-controller";
+import store from "@/store/index";
+
 
 const router = useRouter();
 const cards = ref([] as CardData[]);
