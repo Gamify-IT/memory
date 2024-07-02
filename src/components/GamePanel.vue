@@ -22,7 +22,7 @@
         </div>
       </div>
       <div id="finish-screen" v-if="isFinished && !hasConfigError">
-        Well done! You've gained {{ store.state.rewards }}
+        Well done! You've gained {{ store.state.rewards } coins!}
       </div>
     </div>
     <div id="summary-panel" class="shadowed-panel">
