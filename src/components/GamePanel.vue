@@ -53,6 +53,7 @@ import { MemoryController } from "@/types/memory-controller";
 import swipeSoundSource from '/src/assets/music/swipe_sound.mp3';
 import successSoundSource from '/src/assets/music/success_sound.mp3';
 import clickSoundSource from '/src/assets/music/click_sound.mp3';
+import wrongAnswerSoundSource from '/src/assets/music/wrong_answer_sound.mp3';
 
 const router = useRouter();
 const cards = ref([] as CardData[]);
@@ -132,6 +133,7 @@ function manualReset() {
   }
 }
 function resetCards() {
+  playSound(wrongAnswerSoundSource);
   canFlipCards.value = false;
   allowReset = true;
   if (firstCard !== undefined && secondCard !== undefined) {
