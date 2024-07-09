@@ -50,6 +50,10 @@ import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
 import { CardData, CardPair, CardSelection } from "../types/data-models";
 import { MemoryController } from "@/types/memory-controller";
+import swipeSoundSource from '/src/assets/music/swipe_sound.mp3';
+import successSoundSource from '/src/assets/music/success_sound.mp3';
+import clickSoundSource from '/src/assets/music/click_sound.mp3';
+import wrongAnswerSoundSource from '/src/assets/music/wrong_answer_sound.mp3';
 
 const router = useRouter();
 const cards = ref([] as CardData[]);
@@ -95,6 +99,7 @@ function closeModal() {
   showModal.value = false;
 }
 function cardRevealProcedure(clickedCard: CardData) {
+  playSound(swipeSoundSource);
   if (firstCard === clickedCard) return;
   clickedCard.flipped = true;
   if (openCardCount == 0) {
@@ -128,6 +133,7 @@ function manualReset() {
   }
 }
 function resetCards() {
+  playSound(wrongAnswerSoundSource);
   canFlipCards.value = false;
   allowReset = true;
   if (firstCard !== undefined && secondCard !== undefined) {
@@ -147,6 +153,7 @@ function resetCards() {
   }, 5000);
 }
 function addPairToSummary(card1: CardData, card2: CardData) {
+  playSound(successSoundSource);
   canFlipCards.value = false;
   card1.selection = CardSelection.MATCH;
   card2.selection = CardSelection.MATCH;
@@ -161,7 +168,12 @@ function addPairToSummary(card1: CardData, card2: CardData) {
   }, 1000);
 }
 function redirectToStartPage() {
+  playSound(clickSoundSource);
   router.back();
+}
+function playSound(pathToAudioFile: string){
+  const sound = new Audio(pathToAudioFile);
+  sound.play();
 }
 </script>
 
