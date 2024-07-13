@@ -51,6 +51,8 @@ import PairItem from "./PairItem.vue";
 import { CardData, CardPair, CardSelection } from "../types/data-models";
 import { MemoryController } from "@/types/memory-controller";
 import store from "@/store/index";
+import triumphSound from '/src/assets/trumpets.mp3';
+import negativeSound from '/src/assets/negativeSound.mp3';
 
 
 const router = useRouter();
@@ -76,6 +78,8 @@ watch(gameStarted, (gameStarted) => {
 watch(isFinished, async (isFinished) => {
   if (isFinished) {
     hasPostError.value = await memoryController.postGameResult();
+    playSound(triumphSound, 2000);
+
   }
 });
 
@@ -164,6 +168,12 @@ function addPairToSummary(card1: CardData, card2: CardData) {
 }
 function redirectToStartPage() {
   router.back();
+}
+
+function playSound(pathToAudioFile: string, duration: number){
+  const sound = new Audio(pathToAudioFile);
+  sound.play();
+  setTimeout(() => sound.pause(), duration);
 }
 </script>
 
