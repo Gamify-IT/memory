@@ -18,11 +18,11 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
-import clickSoundSrc from '/src/assets/music/click_sound.mp3';
+import clickSoundSource from '/src/assets/music/click_sound.mp3';
 
 const router = useRouter();
 const route = useRoute();
-const clickSound = new Audio(clickSoundSrc);
+const clickSound = new Audio(clickSoundSource);
 
 function redirectToSingleplayer() {
   playClickSound();

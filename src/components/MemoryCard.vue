@@ -44,9 +44,9 @@ import { marked } from "marked";
 import hljs from "highlight.js";
 import "highlight.js/styles/vs.css";
 import "katex/dist/katex.min.css";
-import clickSoundSrc from '/src/assets/music/click_sound.mp3';
+import clickSoundSource from '/src/assets/music/click_sound.mp3';
 
-const clickSound = new Audio(clickSoundSrc);
+const clickSound = new Audio(clickSoundSource);
 const props = defineProps({
   cardContent: {
     type: Object as PropType<CardData>,
