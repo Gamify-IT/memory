@@ -52,7 +52,7 @@ import { CardData, CardPair, CardSelection } from "@/types/data-models";
 import { MemoryController } from "@/types/memory-controller";
 import swipeSoundSource from '@/assets/music/swipe_sound.mp3';
 import successSoundSource from '@/assets/music/success_sound.mp3';
-import clickSoundSource from '@/assets/music/click.mp3';
+import clickSoundSource from '@/assets/music/click_sound.mp3';
 import wrongAnswerSoundSource from '@/assets/music/wrong_answer_sound.mp3';
 
 const router = useRouter();

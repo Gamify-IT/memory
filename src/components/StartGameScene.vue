@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
-import clickSoundSource from '@/assets/music/click.mp3';
+import clickSoundSource from '@/assets/music/click_sound.mp3';
 
 const router = useRouter();
 const route = useRoute();
