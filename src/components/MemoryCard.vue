@@ -44,9 +44,7 @@ import { marked } from "marked";
 import hljs from "highlight.js";
 import "highlight.js/styles/vs.css";
 import "katex/dist/katex.min.css";
-import clickSoundSource from '/src/assets/music/click.mp3';
 
-const clickSound = new Audio(clickSoundSource);
 const props = defineProps({
   cardContent: {
     type: Object as PropType<CardData>,
@@ -101,7 +99,6 @@ watch(
 );
 
 function playClickSound(){
-  clickSound.play();
 }
 </script>
 

@@ -18,11 +18,9 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
-import clickSoundSource from '/src/assets/music/click.mp3';
 
 const router = useRouter();
 const route = useRoute();
-const clickSound = new Audio(clickSoundSource);
 
 function redirectToSingleplayer() {
   playClickSound();
@@ -37,7 +35,6 @@ function closeGame() {
 }
 
 function playClickSound(){
-  clickSound.play();
 }
 
 async function handleCloseGame() {
