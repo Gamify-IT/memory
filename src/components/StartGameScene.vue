@@ -23,11 +23,11 @@ const router = useRouter();
 const route = useRoute();
 
 function redirectToSingleplayer() {
-  playClickSound();
+  //playClickSound();
   router.push({ path: "/singleplayer/" + route.params.id });
 }
 function redirectToMultiplayer() {
-  playClickSound();
+  //playClickSound();
   router.push({ path: "/multiplayer/" + route.params.id });
 }
 function closeGame() {
@@ -36,7 +36,7 @@ function closeGame() {
 
 
 async function handleCloseGame() {
-  await playClickSound();
+  //await playClickSound();
     setTimeout(() => {
       closeGame();
     }, 500);
