@@ -18,25 +18,30 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
+import clickSoundSource from '/src/assets/music/click_sound.mp3';
 
 const router = useRouter();
 const route = useRoute();
+const clickSound = new Audio(clickSoundSource);
 
 function redirectToSingleplayer() {
-  //playClickSound();
+  playClickSound();
   router.push({ path: "/singleplayer/" + route.params.id });
 }
 function redirectToMultiplayer() {
-  //playClickSound();
+  playClickSound();
   router.push({ path: "/multiplayer/" + route.params.id });
 }
 function closeGame() {
   window.parent.postMessage("CLOSE ME");
 }
 
+function playClickSound(){
+  clickSound.play();
+}
 
 async function handleCloseGame() {
-  //await playClickSound();
+  await playClickSound();
     setTimeout(() => {
       closeGame();
     }, 500);
