@@ -86,7 +86,7 @@ onMounted(() => {
 
 function openModal() {
   emit("openModal", props.cardContent);
-  playClickSound();
+  
 }
 
 watch(
@@ -98,8 +98,7 @@ watch(
   }
 );
 
-function playClickSound(){
-}
+
 </script>
 
 <style scoped>

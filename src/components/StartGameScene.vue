@@ -34,8 +34,6 @@ function closeGame() {
   window.parent.postMessage("CLOSE ME");
 }
 
-function playClickSound(){
-}
 
 async function handleCloseGame() {
   await playClickSound();
