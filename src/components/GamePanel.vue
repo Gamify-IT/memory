@@ -48,12 +48,12 @@ import { computed, onMounted, ref, watch } from "vue";
 import MemoryCard from "./MemoryCard.vue";
 import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
-import { CardData, CardPair, CardSelection } from "../types/data-models";
+import { CardData, CardPair, CardSelection } from "@/types/data-models";
 import { MemoryController } from "@/types/memory-controller";
-import swipeSoundSource from '/src/assets/music/swipe_sound.mp3';
-import successSoundSource from '/src/assets/music/success_sound.mp3';
-import clickSoundSource from '/src/assets/music/click_sound.mp3';
-import wrongAnswerSoundSource from '/src/assets/music/wrong_answer_sound.mp3';
+import swipeSoundSource from '@/assets/music/swipe_sound.mp3';
+import successSoundSource from '@/assets/music/success_sound.mp3';
+import clickSoundSource from '@/assets/music/click_sound.mp3';
+import wrongAnswerSoundSource from '@/assets/music/wrong_answer_sound.mp3';
 
 const router = useRouter();
 const cards = ref([] as CardData[]);
