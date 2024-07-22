@@ -52,7 +52,7 @@ import { CardData, CardPair, CardSelection } from "../types/data-models";
 import { MemoryController } from "@/types/memory-controller";
 import swipeSoundSource from '/src/assets/music/swipe_sound.mp3';
 import successSoundSource from '/src/assets/music/success_sound.mp3';
-import clickSoundSource from '/src/assets/music/click.mp3';
+
 import wrongAnswerSoundSource from '/src/assets/music/wrong_answer_sound.mp3';
 
 const router = useRouter();
@@ -168,7 +168,6 @@ function addPairToSummary(card1: CardData, card2: CardData) {
   }, 1000);
 }
 function redirectToStartPage() {
-  playSound(clickSoundSource);
   router.back();
 }
 function playSound(pathToAudioFile: string){
