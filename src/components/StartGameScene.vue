@@ -11,24 +11,40 @@
   >
     <span>Multiplayer</span>
   </button>
-  <button class="button close-button" @click="closeGame()">
+  <button class="button close-button" @click="handleCloseGame()">
     <span>Close Game</span>
   </button>
 </template>
 
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
+import clickSoundSource from '@/assets/music/click_sound.mp3';
+
 const router = useRouter();
 const route = useRoute();
+const clickSound = new Audio(clickSoundSource);
 
 function redirectToSingleplayer() {
+  playClickSound();
   router.push({ path: "/singleplayer/" + route.params.id });
 }
 function redirectToMultiplayer() {
+  playClickSound();
   router.push({ path: "/multiplayer/" + route.params.id });
 }
 function closeGame() {
   window.parent.postMessage("CLOSE ME");
+}
+
+function playClickSound(){
+  clickSound.play();
+}
+
+async function handleCloseGame() {
+  await playClickSound();
+    setTimeout(() => {
+      closeGame();
+    }, 500);
 }
 </script>
 

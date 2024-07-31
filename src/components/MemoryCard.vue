@@ -39,12 +39,14 @@
 import { PropType, ref, watch, computed, onMounted } from "vue";
 import katex from "katex";
 import markedKatex from "marked-katex-extension";
-import { CardData, CardType, CardSelection } from "../types/data-models";
+import { CardData, CardType, CardSelection } from "@/types/data-models";
 import { marked } from "marked";
 import hljs from "highlight.js";
 import "highlight.js/styles/vs.css";
 import "katex/dist/katex.min.css";
+import clickSoundSource from "@/assets/music/click_sound.mp3";
 
+const clickSound = new Audio(clickSoundSource);
 const props = defineProps({
   cardContent: {
     type: Object as PropType<CardData>,
@@ -86,6 +88,7 @@ onMounted(() => {
 
 function openModal() {
   emit("openModal", props.cardContent);
+  playClickSound();
 }
 
 watch(
@@ -96,6 +99,10 @@ watch(
     }
   }
 );
+
+function playClickSound(){
+  clickSound.play();
+}
 </script>
 
 <style scoped>

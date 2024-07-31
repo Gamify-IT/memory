@@ -48,12 +48,15 @@ import { computed, onMounted, ref, watch } from "vue";
 import MemoryCard from "./MemoryCard.vue";
 import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
-import { CardData, CardPair, CardSelection } from "../types/data-models";
+import { CardData, CardPair, CardSelection } from "@/types/data-models";
 import { MemoryController } from "@/types/memory-controller";
 import store from "@/store/index";
 import triumphSound from '/src/assets/trumpets.mp3';
 import negativeSound from '/src/assets/negativeSound.mp3';
-
+import swipeSoundSource from '@/assets/music/swipe_sound.mp3';
+import successSoundSource from '@/assets/music/success_sound.mp3';
+import clickSoundSource from '@/assets/music/click_sound.mp3';
+import wrongAnswerSoundSource from '@/assets/music/wrong_answer_sound.mp3';
 
 const router = useRouter();
 const cards = ref([] as CardData[]);
@@ -78,7 +81,7 @@ watch(gameStarted, (gameStarted) => {
 watch(isFinished, async (isFinished) => {
   if (isFinished) {
     hasPostError.value = await memoryController.postGameResult();
-    playSound(triumphSound, 2000);
+    playTimedSound(triumphSound, 2000);
 
   }
 });
@@ -101,6 +104,7 @@ function closeModal() {
   showModal.value = false;
 }
 function cardRevealProcedure(clickedCard: CardData) {
+  playSound(swipeSoundSource);
   if (firstCard === clickedCard) return;
   clickedCard.flipped = true;
   if (openCardCount == 0) {
@@ -134,6 +138,7 @@ function manualReset() {
   }
 }
 function resetCards() {
+  playSound(wrongAnswerSoundSource);
   canFlipCards.value = false;
   allowReset = true;
   if (firstCard !== undefined && secondCard !== undefined) {
@@ -153,6 +158,7 @@ function resetCards() {
   }, 5000);
 }
 function addPairToSummary(card1: CardData, card2: CardData) {
+  playSound(successSoundSource);
   canFlipCards.value = false;
   card1.selection = CardSelection.MATCH;
   card2.selection = CardSelection.MATCH;
@@ -167,13 +173,18 @@ function addPairToSummary(card1: CardData, card2: CardData) {
   }, 1000);
 }
 function redirectToStartPage() {
+  playSound(clickSoundSource);
   router.back();
 }
 
-function playSound(pathToAudioFile: string, duration: number){
+function playTimedSound(pathToAudioFile: string, duration: number){
   const sound = new Audio(pathToAudioFile);
   sound.play();
   setTimeout(() => sound.pause(), duration);
+  
+function playSound(pathToAudioFile: string){
+  const sound = new Audio(pathToAudioFile);
+  sound.play();
 }
 </script>
 

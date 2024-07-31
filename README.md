@@ -62,4 +62,28 @@ You can remove the container with:
 docker compose down
 ```
 
+
+To remove the container you can use the following command:
+
+```sh
+docker rm memory
+```
+
+## Audio source 
+
+1.	Background sound
+https://zvukipro.com/music/651-fonovaja-muzyka-dlja-igr-i-drugih-situacij-zacikleno.html
+
+2.	Click
+https://pixabay.com/de/sound-effects/interface-button-154180/
+
+3.	Success notification
+https://pixabay.com/de/sound-effects/bonus-143026/
+
+4.	Swipe 
+https://pixabay.com/de/sound-effects/swing-whoosh-5-198498/
+
+5. Wrong answer notification
+https://pixabay.com/de/sound-effects/error-126627/
+
 > End of additions
