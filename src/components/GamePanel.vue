@@ -22,7 +22,7 @@
         </div>
       </div>
       <div id="finish-screen" v-if="isFinished && !hasConfigError">
-        Well done!
+        🏆 Well done! You've gained {{ store.state.rewards }} coins! 🏆
       </div>
     </div>
     <div id="summary-panel" class="shadowed-panel">
@@ -50,6 +50,9 @@ import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
 import { CardData, CardPair, CardSelection } from "@/types/data-models";
 import { MemoryController } from "@/types/memory-controller";
+import store from "@/store/index";
+import triumphSound from '/src/assets/trumpets.mp3';
+import negativeSound from '/src/assets/negativeSound.mp3';
 import swipeSoundSource from '@/assets/music/swipe_sound.mp3';
 import successSoundSource from '@/assets/music/success_sound.mp3';
 import clickSoundSource from '@/assets/music/click_sound.mp3';
@@ -78,6 +81,8 @@ watch(gameStarted, (gameStarted) => {
 watch(isFinished, async (isFinished) => {
   if (isFinished) {
     hasPostError.value = await memoryController.postGameResult();
+    playTimedSound(triumphSound, 2000);
+
   }
 });
 
@@ -171,6 +176,12 @@ function redirectToStartPage() {
   playSound(clickSoundSource);
   router.back();
 }
+
+function playTimedSound(pathToAudioFile: string, duration: number){
+  const sound = new Audio(pathToAudioFile);
+  sound.play();
+  setTimeout(() => sound.pause(), duration);
+  
 function playSound(pathToAudioFile: string){
   const sound = new Audio(pathToAudioFile);
   sound.play();

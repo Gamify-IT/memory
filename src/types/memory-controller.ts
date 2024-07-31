@@ -1,23 +1,37 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import { CardData, GameData } from "./data-models";
 import { GameDataDTO, GameResultDTO } from "./dtos";
 import { emptyData } from "./empty-data";
 import config from "@/config";
+import store from "@/store/index";
+
 
 const configurationId = window.location.pathname.split("/").pop();
-
+const rewards = 0;
 export class MemoryController {
   hasConfigError = false;
   async postGameResult() {
     const result: GameResultDTO = new GameResultDTO(
       configurationId!,
-      window.localStorage.getItem("userId")!
+      window.localStorage.getItem("userId")!,
+      rewards!
+
     );
     console.log(result);
     let hasError = false;
-    await axios.post(`${config.apiBaseUrl}/results`, result).catch(function () {
+    let response: AxiosResponse<any, any> | void;
+    try {
+      response = await axios.post(`${config.apiBaseUrl}/results`, result);
+    } catch (error) {
       hasError = true;
-    });
+    }
+
+    if (!hasError && response) {
+      const returnedResult = this.fromDTO(response.data);
+      console.log(returnedResult);
+      store.commit('setRewards', returnedResult.rewards)
+    }
+
     return hasError;
   }
   gameData!: GameData;
@@ -60,4 +74,13 @@ export class MemoryController {
       cards[j] = temp;
     }
   }
+
+  private fromDTO(dto: any): GameResultDTO {
+    return new GameResultDTO(
+      dto.configurationAsUUID,
+      dto.playerId,
+      dto.rewards
+    );
+  }
+
 }
