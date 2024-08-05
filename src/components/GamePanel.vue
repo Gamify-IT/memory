@@ -177,11 +177,11 @@ function redirectToStartPage() {
   router.back();
 }
 
-function playTimedSound(pathToAudioFile: string, duration: number){
+function playTimedSound(pathToAudioFile: string, duration: number) {
   const sound = new Audio(pathToAudioFile);
   sound.play();
   setTimeout(() => sound.pause(), duration);
-  
+}
 function playSound(pathToAudioFile: string){
   const sound = new Audio(pathToAudioFile);
   sound.play();
