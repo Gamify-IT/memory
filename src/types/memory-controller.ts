@@ -57,8 +57,6 @@ export class MemoryController {
       const gameData = this.convertDTOToData(result.data);
       this.gameData = gameData;
       this.volumeLevel = result.data.volumeLevel;
-      console.log('Volume level in memory is '+this.volumeLevel);
-      this.applyVolumeToAllAudio();
       this.shuffleCards();
       return gameData;
     } catch (error) {
@@ -87,12 +85,13 @@ export class MemoryController {
     );
   }
 
-  private applyVolumeToAllAudio() {
-    const audioElements = document.querySelectorAll('audio');
-    audioElements.forEach((audio) => {
-      // Handle possible null value
-      audio.volume = this.volumeLevel !== null ? this.volumeLevel : 1;
-    });
+  createAudioWithVolume(src: string): HTMLAudioElement {
+    const audio = new Audio(src);
+    if (this.volumeLevel == 2 || this.volumeLevel == 3)
+    {
+      this.volumeLevel = 1;
+    }
+    audio.volume = this.volumeLevel !== null ? this.volumeLevel : 1;
+    return audio;
   }
-
 }

@@ -19,10 +19,18 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
 import clickSoundSource from '@/assets/music/click_sound.mp3';
+import { MemoryController } from "@/types/memory-controller";
+import { onMounted } from "vue";
 
 const router = useRouter();
 const route = useRoute();
-const clickSound = new Audio(clickSoundSource);
+const memoryController = new MemoryController();
+let clickSound: HTMLAudioElement;
+
+onMounted(async () => {
+  await memoryController.fetchData();
+  clickSound = memoryController.createAudioWithVolume(clickSoundSource);
+});
 
 function redirectToSingleplayer() {
   playClickSound();

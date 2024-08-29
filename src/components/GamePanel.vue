@@ -51,7 +51,7 @@ import PairItem from "./PairItem.vue";
 import { CardData, CardPair, CardSelection } from "@/types/data-models";
 import { MemoryController } from "@/types/memory-controller";
 import store from "@/store/index";
-import triumphSound from '@/assets/trumpets.mp3';
+import triumphSound from '@/assets/music/trumpets.mp3';
 import swipeSoundSource from '@/assets/music/swipe_sound.mp3';
 import successSoundSource from '@/assets/music/success_sound.mp3';
 import clickSoundSource from '@/assets/music/click_sound.mp3';
@@ -183,7 +183,7 @@ function playTimedSound(pathToAudioFile: string, duration: number) {
 }
 
 function playSound(pathToAudioFile: string){
-  const sound = new Audio(pathToAudioFile);
+  const sound = memoryController.createAudioWithVolume(pathToAudioFile);
   sound.play();
 }
 </script>
