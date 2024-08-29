@@ -10,6 +10,7 @@ const configurationId = window.location.pathname.split("/").pop();
 const rewards = 0;
 export class MemoryController {
   hasConfigError = false;
+  volumeLevel: number | null = 1;
   async postGameResult() {
     const result: GameResultDTO = new GameResultDTO(
       configurationId!,
@@ -55,6 +56,9 @@ export class MemoryController {
       );
       const gameData = this.convertDTOToData(result.data);
       this.gameData = gameData;
+      this.volumeLevel = result.data.volumeLevel;
+      console.log('Volume level in memory is '+this.volumeLevel);
+      this.applyVolumeToAllAudio();
       this.shuffleCards();
       return gameData;
     } catch (error) {
@@ -81,6 +85,14 @@ export class MemoryController {
       dto.playerId,
       dto.rewards
     );
+  }
+
+  private applyVolumeToAllAudio() {
+    const audioElements = document.querySelectorAll('audio');
+    audioElements.forEach((audio) => {
+      // Handle possible null value
+      audio.volume = this.volumeLevel !== null ? this.volumeLevel : 1;
+    });
   }
 
 }
