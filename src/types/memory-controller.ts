@@ -90,6 +90,9 @@ export class MemoryController {
     if (this.volumeLevel == 2 || this.volumeLevel == 3)
     {
       this.volumeLevel = 1;
+    } else if (this.volumeLevel == 1)
+    {
+      this.volumeLevel = 0.5;
     }
     audio.volume = this.volumeLevel !== null ? this.volumeLevel : 1;
     return audio;
