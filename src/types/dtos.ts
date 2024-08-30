@@ -12,7 +12,6 @@ interface CardPairDTO {
 
 export interface GameDataDTO {
   pairs: CardPairDTO[];
-  volumeLevel: number | null;
 }
 
 export class GameResultDTO {
