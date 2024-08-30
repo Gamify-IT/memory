@@ -80,7 +80,7 @@ watch(gameStarted, (gameStarted) => {
 watch(isFinished, async (isFinished) => {
   if (isFinished) {
     hasPostError.value = await memoryController.postGameResult();
-    playTimedSound(triumphSound, 2000);
+    playSound(triumphSound);
 
   }
 });
@@ -176,16 +176,12 @@ function redirectToStartPage() {
   router.back();
 }
 
-function playTimedSound(pathToAudioFile: string, duration: number) {
-  const sound = new Audio(pathToAudioFile);
-  sound.play();
-  setTimeout(() => sound.pause(), duration);
-}
 
 function playSound(pathToAudioFile: string){
   const sound = memoryController.createAudioWithVolume(pathToAudioFile);
   sound.play();
 }
+
 </script>
 
 <style scoped>
