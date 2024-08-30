@@ -45,8 +45,16 @@ import hljs from "highlight.js";
 import "highlight.js/styles/vs.css";
 import "katex/dist/katex.min.css";
 import clickSoundSource from "@/assets/music/click_sound.mp3";
+import { MemoryController } from "@/types/memory-controller";
 
-const clickSound = new Audio(clickSoundSource);
+
+const memoryController = new MemoryController();
+let clickSound: HTMLAudioElement;
+
+onMounted(async () => {
+  await memoryController.fetchData();
+  clickSound = memoryController.createAudioWithVolume(clickSoundSource);
+});
 const props = defineProps({
   cardContent: {
     type: Object as PropType<CardData>,
