@@ -86,4 +86,7 @@ https://pixabay.com/de/sound-effects/swing-whoosh-5-198498/
 5. Wrong answer notification
 https://pixabay.com/de/sound-effects/error-126627/
 
+6. Final triumph sound
+https://pixabay.com/sound-effects/success-fanfare-trumpets-6185/
+
 > End of additions
