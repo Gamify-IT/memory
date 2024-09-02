@@ -8,6 +8,11 @@ describe("StartGameScreen.vue", () => {
     const wrapper = mount(StartGameScene, {
       global: {
         plugins: [router],
+        mocks: {
+          clickSound: {
+            play: jest.fn(),
+          },
+        },
       },
     });
     router.push("/singleplayer");

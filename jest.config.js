@@ -4,4 +4,5 @@ module.exports = {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
   transformIgnorePatterns: ["^.+//.css$"],
+  setupFiles: ['jest-media-mock'],
 };
