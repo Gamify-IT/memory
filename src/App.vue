@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue';
-import backgroundMusicSource from '/src/assets/music/background_music.mp3'
+import backgroundMusicSource from "@/assets/music/background_music.mp3";
 import { MemoryController } from "@/types/memory-controller";
 
 const memoryController = new MemoryController();

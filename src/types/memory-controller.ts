@@ -85,8 +85,8 @@ export class MemoryController {
     );
   }
 
-  createAudioWithVolume(src: string): HTMLAudioElement {
-    const audio = new Audio(src);
+  createAudioWithVolume(pathToAudioFile: string): HTMLAudioElement {
+    const audio = new Audio(pathToAudioFile);
     if (this.volumeLevel == 2 || this.volumeLevel == 3)
     {
       this.volumeLevel = 1;

@@ -81,7 +81,6 @@ watch(isFinished, async (isFinished) => {
   if (isFinished) {
     hasPostError.value = await memoryController.postGameResult();
     playSound(triumphSound);
-
   }
 });
 
@@ -175,7 +174,6 @@ function redirectToStartPage() {
   playSound(clickSoundSource);
   router.back();
 }
-
 
 function playSound(pathToAudioFile: string){
   const sound = memoryController.createAudioWithVolume(pathToAudioFile);
