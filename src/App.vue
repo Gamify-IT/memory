@@ -4,10 +4,16 @@
 
 <script setup lang="ts">
 import { onMounted, onUnmounted } from 'vue';
-import backgroundMusicSource from '/src/assets/music/background_music.mp3'
-const backgroundMusic = new Audio(backgroundMusicSource);
+import backgroundMusicSource from "@/assets/music/background_music.mp3";
+import { MemoryController } from "@/types/memory-controller";
 
-onMounted(() => {
+const memoryController = new MemoryController();
+let backgroundMusic: HTMLAudioElement;
+
+onMounted(async () => {
+  await memoryController.fetchData();
+  backgroundMusic = memoryController.createAudioWithVolume(backgroundMusicSource);
+
   backgroundMusic.loop = true;
   backgroundMusic.play();
 });

@@ -10,6 +10,7 @@ const configurationId = window.location.pathname.split("/").pop();
 const rewards = 0;
 export class MemoryController {
   hasConfigError = false;
+  volumeLevel: number | null = 1;
   async postGameResult() {
     const result: GameResultDTO = new GameResultDTO(
       configurationId!,
@@ -55,6 +56,7 @@ export class MemoryController {
       );
       const gameData = this.convertDTOToData(result.data);
       this.gameData = gameData;
+      this.volumeLevel = result.data.volumeLevel;
       this.shuffleCards();
       return gameData;
     } catch (error) {
@@ -83,4 +85,16 @@ export class MemoryController {
     );
   }
 
+  createAudioWithVolume(pathToAudioFile: string): HTMLAudioElement {
+    const audio = new Audio(pathToAudioFile);
+    if (this.volumeLevel == 2 || this.volumeLevel == 3)
+    {
+      this.volumeLevel = 1;
+    } else if (this.volumeLevel == 1)
+    {
+      this.volumeLevel = 0.5;
+    }
+    audio.volume = this.volumeLevel !== null ? this.volumeLevel : 1;
+    return audio;
+  }
 }
