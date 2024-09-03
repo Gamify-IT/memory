@@ -52,7 +52,7 @@ export class MemoryController {
   public async fetchData(): Promise<GameData> {
     try {
       const result = await axios.get<GameDataDTO>(
-        `${config.apiBaseUrl}/configurations/${configurationId}`
+        `${config.apiBaseUrl}/configurations/${configurationId}/volume`
       );
       const gameData = this.convertDTOToData(result.data);
       this.gameData = gameData;
