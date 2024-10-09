@@ -30,7 +30,9 @@ import { CardPair } from "../types/data-models";
 import { PropType } from "vue";
 import MemoryCard from "./MemoryCard.vue";
 
-// Define the props of this component
+/**
+ * Define the props of this component
+ */
 defineProps({
   pair: {
     type: Object as PropType<CardPair>,

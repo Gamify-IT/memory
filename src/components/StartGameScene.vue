@@ -31,7 +31,6 @@ const route = useRoute();
 const memoryController = new MemoryController();
 let clickSound: HTMLAudioElement;
 
-// On component mounted, fetch game data and initialize the click sound
 onMounted(async () => {
   await memoryController.fetchData();
   clickSound = memoryController.createAudioWithVolume(clickSoundSource);

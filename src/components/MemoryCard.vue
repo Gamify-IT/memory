@@ -64,7 +64,6 @@ onMounted(async () => {
   await memoryController.fetchData();
   clickSound = memoryController.createAudioWithVolume(clickSoundSource);
 });
-// Define the props passed to the memory card component
 const props = defineProps({
   cardContent: {
     type: Object as PropType<CardData>,
@@ -104,10 +103,8 @@ marked.use(
   })
 );
 
-// Computed property to parse markdown content
 const markdownContent = computed(() => marked(props.cardContent.content));
 
-// Initialize syntax highlighting on page load
 onMounted(() => {
   hljs.initHighlightingOnLoad();
 });
@@ -119,7 +116,6 @@ function openModal() {
   emit("openModal", props.cardContent);
   playClickSound();
 }
-// Watch for changes in canFlip prop and emit cardHide when card is flipped
 watch(
   () => props.canFlip,
   (newValue) => {
@@ -129,9 +125,8 @@ watch(
   }
 );
 
-// Function to play the click sound
 /**
- *
+ * Function to play the click sound
  */
 function playClickSound(){
   clickSound.play();
