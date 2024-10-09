@@ -57,7 +57,9 @@ import { MemoryController } from "@/types/memory-controller";
 const memoryController = new MemoryController();
 let clickSound: HTMLAudioElement;
 
-// onMounted lifecycle hook to fetch data and initialize audio
+/**
+ * onMounted lifecycle hook to fetch data and initialize audio
+ */
 onMounted(async () => {
   await memoryController.fetchData();
   clickSound = memoryController.createAudioWithVolume(clickSoundSource);
@@ -77,13 +79,18 @@ const isImage = ref(props.cardContent.type == CardType.IMAGE);
 const isText = ref(props.cardContent.type == CardType.TEXT);
 const isMarkdown = ref(props.cardContent.type == CardType.MARKDOWN);
 
-// Function to reveal a card when clicked
+/**
+ * Function to reveal a card when clicked
+ */
 function revealCard() {
   if (props.canFlip && !props.cardContent.flipped) {
     emit("cardReveal", props.cardContent);
   }
 }
-// Configure the Markdown renderer to include KaTeX support
+
+/**
+ * Configure the Markdown renderer to include KaTeX support
+ */
 marked.use(
   markedKatex({
     renderer: new marked.Renderer(),
@@ -105,7 +112,9 @@ onMounted(() => {
   hljs.initHighlightingOnLoad();
 });
 
-// Function to open a modal when the button on the card is clicked
+/**
+ * Function to open a modal when the button on the card is clicked
+ */
 function openModal() {
   emit("openModal", props.cardContent);
   playClickSound();
@@ -121,6 +130,9 @@ watch(
 );
 
 // Function to play the click sound
+/**
+ *
+ */
 function playClickSound(){
   clickSound.play();
 }

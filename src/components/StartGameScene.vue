@@ -37,29 +37,39 @@ onMounted(async () => {
   clickSound = memoryController.createAudioWithVolume(clickSoundSource);
 });
 
-// Redirects to the singleplayer route
+/**
+ * Redirects to the singleplayer route
+ */
 function redirectToSingleplayer() {
   playClickSound();
   router.push({ path: "/singleplayer/" + route.params.id });
 }
 
-// Redirects to the multiplayer route (disabled for now)
+/**
+ * Redirects to the multiplayer route (disabled for now)
+ */
 function redirectToMultiplayer() {
   playClickSound();
   router.push({ path: "/multiplayer/" + route.params.id });
 }
 
-// Closes the game by sending a message to the parent window
+/**
+ * Closes the game by sending a message to the parent window
+ */
 function closeGame() {
   window.parent.postMessage("CLOSE ME");
 }
 
-// Plays the click sound
+/**
+ * Plays the click sound
+ */
 function playClickSound(){
   clickSound.play();
 }
 
-// Handles the closing of the game with a delay after the sound plays
+/**
+ * Handles the closing of the game with a delay after the sound plays
+ */
 async function handleCloseGame() {
   await playClickSound();
     setTimeout(() => {

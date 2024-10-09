@@ -79,14 +79,19 @@ const isFinished = computed(
   () => foundPairs.value.length == cards.value.length / 2
 );
 
-// Watches for game state change to handle configuration error
+
+/**
+ * Watches for game state change to handle configuration error
+ */
 watch(gameStarted, (gameStarted) => {
   if (gameStarted) {
     hasConfigError.value = memoryController.hasConfigError;
   }
 });
 
-// Watches for game completion and post game result
+/**
+ * Watches for game completion and post game result
+ */
 watch(isFinished, async (isFinished) => {
   if (isFinished) {
     hasPostError.value = await memoryController.postGameResult();
@@ -100,25 +105,35 @@ let secondCard: CardData | undefined = undefined;
 let resetTimeout: ReturnType<typeof setTimeout>;
 let allowReset = false;
 
-// Initialize game data on mounted
+/**
+ * Initialize game data on mounted
+ */
 onMounted(async () => {
   memoryController = new MemoryController();
   cards.value = (await memoryController.fetchData()).cards;
   gameStarted.value = true;
 });
 
-// Handles opening of modal
+/**
+ * Handles opening of modal
+ * @param cardContent
+ */
 function openModal(cardContent: CardData) {
   showModal.value = true;
   modalContent.value = cardContent;
 }
 
-// Closes the modal
+/**
+ * Closes the modal
+ */
 function closeModal() {
   showModal.value = false;
 }
 
-// Handles the revealed cards (flip)
+/**
+ * Handles the revealed cards (flip)
+ * @param clickedCard
+ */
 function cardRevealProcedure(clickedCard: CardData) {
   playSound(swipeSoundSource);
   if (firstCard === clickedCard) return;
@@ -137,12 +152,17 @@ function cardRevealProcedure(clickedCard: CardData) {
   openCardCount++;
 }
 
-// Handles the hidden cards (flip back)
+/**
+ * Handles the hidden cards (flip back)
+ * @param clickedCard
+ */
 function cardHideProcedure(clickedCard: CardData) {
   clickedCard.flipped = false;
 }
 
-// Manual reset of the game (when clicking the memory panel)
+/**
+ * Manual reset of the game (when clicking the memory panel)
+ */
 function manualReset() {
   if (allowReset) {
     openCardCount = 0;
@@ -158,7 +178,9 @@ function manualReset() {
   }
 }
 
-// Resets the cards after a mismatch
+/**
+ * Resets the cards after a mismatch
+ */
 function resetCards() {
   playSound(wrongAnswerSoundSource);
   canFlipCards.value = false;
@@ -180,7 +202,11 @@ function resetCards() {
   }, 5000);
 }
 
-// Adds a found pair to the summary
+/**
+ * Adds a found pair to the summary
+ * @param card1
+ * @param card2
+ */
 function addPairToSummary(card1: CardData, card2: CardData) {
   playSound(successSoundSource);
   canFlipCards.value = false;
@@ -197,13 +223,18 @@ function addPairToSummary(card1: CardData, card2: CardData) {
   }, 1000);
 }
 
-// Redirects back to the start page
+/**
+ * Redirects back to the start page
+ */
 function redirectToStartPage() {
   playSound(clickSoundSource);
   router.back();
 }
 
-// Function to play sounds
+/**
+ * Function to play sounds
+ * @param pathToAudioFile
+ */
 function playSound(pathToAudioFile: string){
   const sound = memoryController.createAudioWithVolume(pathToAudioFile);
   sound.play();

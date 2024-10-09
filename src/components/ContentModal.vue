@@ -30,7 +30,9 @@ import { marked } from "marked";
 import hljs from "highlight.js";
 import "highlight.js/styles/vs.css";
 
-// Define props for the card data passed to the modal component
+/**
+ * Define props for the card data passed to the modal component
+ */
 const props = defineProps({
   cardData: {
     type: Object as PropType<CardData>,
@@ -38,15 +40,22 @@ const props = defineProps({
   },
 });
 
-// Reactive variables to check the card type (Image, Text, or Markdown)
+/**
+ * Reactive variables to check the card type (Image, Text, or Markdown)
+ */
 const isImage = ref(props.cardData.type == CardType.IMAGE);
 const isText = ref(props.cardData.type == CardType.TEXT);
 const isMarkdown = ref(props.cardData.type == CardType.MARKDOWN);
 
-// Compute the markdown content by parsing it using the `marked` library
+/**
+ * Compute the markdown content by parsing it using the `marked` library
+ */
 const markdownContent = computed(() => marked(props.cardData.content));
 
-// Run onMounted hook to initialize syntax highlighting when the component is mounted
+
+/**
+ * Run onMounted hook to initialize syntax highlighting when the component is mounted
+ */
 onMounted(() => {
   hljs.initHighlightingOnLoad();
 });
