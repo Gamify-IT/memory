@@ -1,3 +1,7 @@
+/**
+ * Represents the data structure for cards in a memory game, including card content, type, selection state, and matched pairs.
+ */
+
 export class CardData {
   public found = false;
   public flipped = false;

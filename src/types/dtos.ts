@@ -1,3 +1,7 @@
+/**
+ * Defines DTOs (Data Transfer Objects) for game data, including card pairs, volume settings, and game results.
+ */
+
 import { CardType } from "./data-models";
 
 interface CardDTO {

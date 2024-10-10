@@ -1,4 +1,5 @@
 <template>
+  <!-- Memory Card Component -->
   <div
     class="memory-card"
     @click.stop="revealCard"
@@ -11,12 +12,15 @@
       'card-unselected': cardContent.selection == CardSelection.UNSELECTED,
     }"
   >
+    <!-- Front side of the card -->
     <div class="front"></div>
+    <!-- Back side of the card, revealed when flipped -->
     <div class="back">
       <div id="content">
         <div id="text" v-if="isText">
           {{ cardContent.content }}
         </div>
+        <!-- Display image if card type is 'IMAGE' -->
         <img
           alt="image not available"
           id="image"
@@ -24,12 +28,14 @@
           v-else-if="isImage"
           draggable="false"
         />
+        <!-- Render Markdown if card type is 'MARKDOWN' -->
         <div
           id="markdown"
           v-else-if="isMarkdown"
           v-html="markdownContent"
         ></div>
       </div>
+      <!-- Button to open the modal with detailed content -->
       <button id="detail-view" @click.stop="openModal">+</button>
     </div>
   </div>
@@ -51,6 +57,9 @@ import { MemoryController } from "@/types/memory-controller";
 const memoryController = new MemoryController();
 let clickSound: HTMLAudioElement;
 
+/**
+ * onMounted lifecycle hook to fetch data and initialize audio
+ */
 onMounted(async () => {
   await memoryController.fetchData();
   clickSound = memoryController.createAudioWithVolume(clickSoundSource);
@@ -69,12 +78,18 @@ const isImage = ref(props.cardContent.type == CardType.IMAGE);
 const isText = ref(props.cardContent.type == CardType.TEXT);
 const isMarkdown = ref(props.cardContent.type == CardType.MARKDOWN);
 
+/**
+ * Function to reveal a card when clicked
+ */
 function revealCard() {
   if (props.canFlip && !props.cardContent.flipped) {
     emit("cardReveal", props.cardContent);
   }
 }
 
+/**
+ * Configure the Markdown renderer to include KaTeX support
+ */
 marked.use(
   markedKatex({
     renderer: new marked.Renderer(),
@@ -94,11 +109,13 @@ onMounted(() => {
   hljs.initHighlightingOnLoad();
 });
 
+/**
+ * Function to open a modal when the button on the card is clicked
+ */
 function openModal() {
   emit("openModal", props.cardContent);
   playClickSound();
 }
-
 watch(
   () => props.canFlip,
   (newValue) => {
@@ -108,12 +125,15 @@ watch(
   }
 );
 
+/**
+ * Function to play the click sound
+ */
 function playClickSound(){
   clickSound.play();
 }
 </script>
-
 <style scoped>
+/* Basic style for the memory card */
 .memory-card {
   width: 100%;
   height: 100%;
@@ -123,26 +143,38 @@ function playClickSound(){
   transform-style: preserve-3d;
   transition: transform 0.5s;
 }
+
+/* Styling for unselected cards */
 .card-unselected {
   border: 2px solid #949494;
 }
+
+/* Styling for matched cards */
 .card-match {
   border: 2px solid #009e0d;
 }
+
+/* Styling for mismatched cards */
 .card-mismatch {
   border: 2px solid #950000;
 }
 
+/* Shows cursor pointer when card is clickable */
 .show-cursor {
   cursor: pointer;
 }
+
+/* Applies flip effect to the card */
 .flip {
   transform: rotateY(180deg);
 }
+
+/* Prevents interaction with the card when 'no-events' class is applied */
 .no-events {
   pointer-events: none;
 }
 
+/* Styles for the back of the card */
 .back {
   width: 100%;
   height: 100%;
@@ -154,6 +186,7 @@ function playClickSound(){
   pointer-events: all;
 }
 
+/* Styles for the front side of the card */
 .front {
   width: 100%;
   height: 100%;
@@ -164,10 +197,14 @@ function playClickSound(){
   backface-visibility: hidden;
   background-size: cover;
 }
+
+/* Container for content inside the back of the card */
 #content {
   height: 100%;
   overflow: auto;
 }
+
+/* Styling for text content inside the card */
 #text {
   padding: 5px;
   margin: auto;
@@ -175,6 +212,7 @@ function playClickSound(){
   vertical-align: middle;
 }
 
+/* Button to open detailed view in modal */
 #detail-view {
   position: fixed;
   display: flex;
@@ -190,9 +228,12 @@ function playClickSound(){
   color: white;
   font-size: 25px;
 }
+
+/* Styling for images on the back of the card */
 .back img {
   width: 100%;
   height: 100%;
   display: block;
 }
 </style>
+

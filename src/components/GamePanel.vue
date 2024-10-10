@@ -1,13 +1,18 @@
 <template>
+    <!-- Button to navigate back to the start page -->
   <button class="goback-button" @click="redirectToStartPage()">
     <span>Go Back</span>
   </button>
+  <!-- Error message if backend is not reachable -->
   <div id="error-text" v-if="hasPostError">Backend not reachable.</div>
+  <!-- Error message if config cannot be fetched -->
   <div id="error-config-text" v-if="hasConfigError">
     Because the config could not be fetched, the game result can't be
     transmitted.
   </div>
+  <!-- Game panel with memory game cards and summary -->
   <div id="game-panel">
+    <!-- Memory panel with the grid of cards -->
     <div id="memory-panel" class="shadowed-panel" @click="manualReset">
       <div id="grid-container" v-if="!isFinished">
         <div v-for="(card, index) in cards" :key="index">
@@ -21,10 +26,12 @@
           />
         </div>
       </div>
+      <!-- Finish screen with rewards when game is completed -->
       <div id="finish-screen" v-if="isFinished && !hasConfigError">
         🏆 Well done! You've gained {{ store.state.rewards }} coins! 🏆
       </div>
     </div>
+    <!-- Summary panel displaying found pairs -->
     <div id="summary-panel" class="shadowed-panel">
       <div id="heading">Summary</div>
       <div id="scrollbar">
@@ -36,6 +43,7 @@
         />
       </div>
     </div>
+    <!-- Modal for displaying detailed content of a card -->
     <ContentModal v-if="showModal" :cardData="modalContent">
       <button id="close-button" @click="closeModal">Close</button>
     </ContentModal>
@@ -71,12 +79,19 @@ const isFinished = computed(
   () => foundPairs.value.length == cards.value.length / 2
 );
 
+
+/**
+ * Watches for game state change to handle configuration error
+ */
 watch(gameStarted, (gameStarted) => {
   if (gameStarted) {
     hasConfigError.value = memoryController.hasConfigError;
   }
 });
 
+/**
+ * Watches for game completion and post game result
+ */
 watch(isFinished, async (isFinished) => {
   if (isFinished) {
     hasPostError.value = await memoryController.postGameResult();
@@ -89,18 +104,36 @@ let firstCard: CardData | undefined = undefined;
 let secondCard: CardData | undefined = undefined;
 let resetTimeout: ReturnType<typeof setTimeout>;
 let allowReset = false;
+
+/**
+ * Initialize game data on mounted
+ */
 onMounted(async () => {
   memoryController = new MemoryController();
   cards.value = (await memoryController.fetchData()).cards;
   gameStarted.value = true;
 });
+
+/**
+ * Handles opening of modal
+ * @param cardContent
+ */
 function openModal(cardContent: CardData) {
   showModal.value = true;
   modalContent.value = cardContent;
 }
+
+/**
+ * Closes the modal
+ */
 function closeModal() {
   showModal.value = false;
 }
+
+/**
+ * Handles the revealed cards (flip)
+ * @param clickedCard
+ */
 function cardRevealProcedure(clickedCard: CardData) {
   playSound(swipeSoundSource);
   if (firstCard === clickedCard) return;
@@ -118,9 +151,18 @@ function cardRevealProcedure(clickedCard: CardData) {
   }
   openCardCount++;
 }
+
+/**
+ * Handles the hidden cards (flip back)
+ * @param clickedCard
+ */
 function cardHideProcedure(clickedCard: CardData) {
   clickedCard.flipped = false;
 }
+
+/**
+ * Manual reset of the game (when clicking the memory panel)
+ */
 function manualReset() {
   if (allowReset) {
     openCardCount = 0;
@@ -135,6 +177,10 @@ function manualReset() {
     secondCard = undefined;
   }
 }
+
+/**
+ * Resets the cards after a mismatch
+ */
 function resetCards() {
   playSound(wrongAnswerSoundSource);
   canFlipCards.value = false;
@@ -155,6 +201,12 @@ function resetCards() {
     secondCard = undefined;
   }, 5000);
 }
+
+/**
+ * Adds a found pair to the summary
+ * @param card1
+ * @param card2
+ */
 function addPairToSummary(card1: CardData, card2: CardData) {
   playSound(successSoundSource);
   canFlipCards.value = false;
@@ -170,11 +222,19 @@ function addPairToSummary(card1: CardData, card2: CardData) {
     canFlipCards.value = true;
   }, 1000);
 }
+
+/**
+ * Redirects back to the start page
+ */
 function redirectToStartPage() {
   playSound(clickSoundSource);
   router.back();
 }
 
+/**
+ * Function to play sounds
+ * @param pathToAudioFile
+ */
 function playSound(pathToAudioFile: string){
   const sound = memoryController.createAudioWithVolume(pathToAudioFile);
   sound.play();
@@ -183,6 +243,7 @@ function playSound(pathToAudioFile: string){
 </script>
 
 <style scoped>
+/* Layout and styling for the game panel */
 #game-panel {
   display: flex;
   flex-direction: row;
@@ -191,6 +252,7 @@ function playSound(pathToAudioFile: string){
   padding: 2%;
   height: 92%;
 }
+/* Grid for displaying memory cards */
 #grid-container {
   display: grid;
   box-sizing: border-box;
@@ -202,18 +264,20 @@ function playSound(pathToAudioFile: string){
   padding: 5px;
   z-index: 1;
 }
+/* Styling for memory panel */
 #memory-panel {
   order: 1;
   border: none;
   flex-grow: 3;
   z-index: 1;
 }
+/* Finish screen when game is done */
 #finish-screen {
   text-align: center;
   font-size: 3em;
   font-weight: 600;
 }
-
+/* Styling for summary panel */
 #summary-panel {
   border: none;
   order: 2;
@@ -221,6 +285,7 @@ function playSound(pathToAudioFile: string){
   flex: auto;
   z-index: 0;
 }
+/* Styling for heading in summary panel */
 #heading {
   padding: 16px;
   font-size: 2em;
@@ -229,6 +294,7 @@ function playSound(pathToAudioFile: string){
   border-bottom: 3px solid rgb(52, 52, 52);
   z-index: 1;
 }
+/* Scroll area for summary pairs */
 #scrollbar {
   margin: 5px;
   overflow-x: hidden;
@@ -236,6 +302,7 @@ function playSound(pathToAudioFile: string){
   height: calc(100% - 50px - 2em);
   z-index: 1;
 }
+/* Overlay style for error messages */
 #overlay {
   background-color: rgba(52, 52, 52, 0.1);
   position: absolute;
@@ -243,19 +310,23 @@ function playSound(pathToAudioFile: string){
   height: 100vh;
   z-index: 100;
 }
+/* Shadow effect for panels */
 .shadowed-panel {
   box-shadow: 0 0 25px rgb(60, 60, 60);
   background-color: rgb(244, 244, 244);
   z-index: 1;
 }
+/* Close button for modal */
 #close-button {
   border: 1px solid black;
   background: grey;
   color: white;
 }
+/* Change cursor to pointer on hover over the close button */
 #close-button:hover {
   cursor: pointer;
 }
+/* Styles for the 'Go Back' button */
 .goback-button {
   display: inline-block;
   position: absolute;
@@ -274,14 +345,14 @@ function playSound(pathToAudioFile: string){
   margin-top: 0%;
   z-index: 999;
 }
-
+/* Styles for the span within the 'Go Back' button */
 .goback-button span {
   cursor: pointer;
   display: inline-block;
   position: relative;
   transition: 0.5s;
 }
-
+/* Styles for the pseudo-element after the span in the 'Go Back' button */
 .goback-button span:after {
   content: "\00ab";
   position: absolute;
@@ -290,16 +361,16 @@ function playSound(pathToAudioFile: string){
   left: -20px;
   transition: 0.5s;
 }
-
+/* Hover effect for the 'Go Back' button's span */
 .goback-button:hover span {
   padding-left: 25px;
 }
-
+/* Hover effect for the pseudo-element after the span in the 'Go Back' button */
 .goback-button:hover span:after {
   opacity: 1;
   left: 0;
 }
-
+/* Styles for error message when backend is not reachable */
 #error-text {
   left: 0;
   right: 0;
@@ -308,7 +379,7 @@ function playSound(pathToAudioFile: string){
   color: red;
   font-size: 200%;
 }
-
+/* Styles for error message related to configuration fetching */
 #error-config-text {
   left: 2%;
   right: 34.6%;

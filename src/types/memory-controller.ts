@@ -1,3 +1,8 @@
+/**
+ * Manages the game's data, including fetching game configurations, shuffling cards,
+ * posting game results, and handling volume settings.
+ */
+
 import axios, { AxiosResponse } from "axios";
 import { CardData, GameData } from "./data-models";
 import { GameDataDTO, GameResultDTO } from "./dtos";
@@ -11,6 +16,12 @@ const rewards = 0;
 export class MemoryController {
   hasConfigError = false;
   volumeLevel: number | null = 1;
+
+  /**
+   * Posts the game result to the server.
+   * Sends the result, including configuration ID, player ID, and rewards, to the server.
+   * @returns {boolean} Whether there was an error posting the result.
+   */
   async postGameResult() {
     const result: GameResultDTO = new GameResultDTO(
       configurationId!,
@@ -40,6 +51,11 @@ export class MemoryController {
     this.gameData = this.convertDTOToData(emptyData);
   }
 
+  /**
+   * Converts a GameDataDTO object into a GameData object.
+   * @param {GameDataDTO} gameDataDto - The DTO to convert.
+   * @returns {GameData} The converted game data.
+   */
   private convertDTOToData(gameDataDto: GameDataDTO) {
     const cards: CardData[] = [];
     gameDataDto.pairs.forEach((pair, index) => {
@@ -49,6 +65,11 @@ export class MemoryController {
     return new GameData(cards);
   }
 
+  /**
+   * Fetches game data from the server.
+   * Retrieves the configuration, including volume level and card pairs, and shuffles the cards.
+   * @returns {Promise<GameData>} The fetched game data.
+   */
   public async fetchData(): Promise<GameData> {
     try {
       const result = await axios.get<GameDataDTO>(
@@ -67,6 +88,10 @@ export class MemoryController {
     }
   }
 
+  /**
+   * Shuffles the cards in the game.
+   * Randomly rearranges the cards array in the game data.
+   */
   private shuffleCards() {
     const cards = this.gameData.cards;
     for (let i = cards.length - 1; i > 0; i--) {
@@ -77,6 +102,11 @@ export class MemoryController {
     }
   }
 
+  /**
+   * Converts a raw DTO into a GameResultDTO.
+   * @param {any} dto - The raw DTO to convert.
+   * @returns {GameResultDTO} The converted result DTO.
+   */
   private fromDTO(dto: any): GameResultDTO {
     return new GameResultDTO(
       dto.configurationAsUUID,
@@ -85,6 +115,11 @@ export class MemoryController {
     );
   }
 
+  /**
+   * Creates an audio element with the volume level set based on the current configuration.
+   * @param {string} pathToAudioFile - The path to the audio file.
+   * @returns {HTMLAudioElement} The audio element with the configured volume level.
+   */
   createAudioWithVolume(pathToAudioFile: string): HTMLAudioElement {
     const audio = new Audio(pathToAudioFile);
     if (this.volumeLevel == 2 || this.volumeLevel == 3)

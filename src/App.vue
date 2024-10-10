@@ -1,4 +1,5 @@
 <template>
+  <!-- Router view where components will be displayed based on route -->
   <router-view></router-view>
 </template>
 
@@ -10,6 +11,9 @@ import { MemoryController } from "@/types/memory-controller";
 const memoryController = new MemoryController();
 let backgroundMusic: HTMLAudioElement;
 
+/**
+ * Lifecycle hook that runs when the component is mounted
+ */
 onMounted(async () => {
   await memoryController.fetchData();
   backgroundMusic = memoryController.createAudioWithVolume(backgroundMusicSource);
@@ -18,6 +22,9 @@ onMounted(async () => {
   backgroundMusic.play();
 });
 
+/**
+ * Lifecycle hook that runs when the component is unmounted
+ */
 onUnmounted(() => {
   backgroundMusic.pause();
   backgroundMusic.currentTime = 0;
