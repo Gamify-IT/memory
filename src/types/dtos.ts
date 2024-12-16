@@ -23,3 +23,6 @@ export class GameResultDTO {
   constructor(public configurationAsUUID: string, public playerId: string, public rewards: number) {}
   public isFinished = "true";
 }
+export class ImageDTO {
+  constructor(public uuid:string, public image:File) {}
+}

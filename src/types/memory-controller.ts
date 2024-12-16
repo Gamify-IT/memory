@@ -3,10 +3,10 @@
  * posting game results, and handling volume settings.
  */
 
-import axios, { AxiosResponse } from "axios";
-import { CardData, GameData } from "./data-models";
-import { GameDataDTO, GameResultDTO } from "./dtos";
-import { emptyData } from "./empty-data";
+import axios, {AxiosResponse} from "axios";
+import {CardData, CardType, GameData} from "./data-models";
+import {GameDataDTO, GameResultDTO, ImageDTO} from "./dtos";
+import {emptyData} from "./empty-data";
 import config from "@/config";
 import store from "@/store/index";
 
@@ -59,8 +59,26 @@ export class MemoryController {
   private convertDTOToData(gameDataDto: GameDataDTO) {
     const cards: CardData[] = [];
     gameDataDto.pairs.forEach((pair, index) => {
-      cards.push(new CardData(pair.card1.content, pair.card1.type, index));
-      cards.push(new CardData(pair.card2.content, pair.card2.type, index));
+      let card1: CardData;
+      let card2: CardData;
+      if(pair.card1.type == CardType.IMAGE) {
+        this.fetchImage(pair.card1.content).then(result => {
+          card1 = new CardData(pair.card1.content, pair.card1.type, index, result.image);
+          cards.push(card1);
+        });
+      } else {
+        card1 = new CardData(pair.card1.content, pair.card1.type, index);
+        cards.push(card1);
+      }
+      if(pair.card2.type == CardType.IMAGE) {
+        this.fetchImage(pair.card2.content).then(result => {
+          card2 = new CardData(pair.card2.content, pair.card2.type, index, result.image);
+          cards.push(card2);
+        });
+      } else {
+        card2 = new CardData(pair.card2.content, pair.card2.type, index);
+        cards.push(card2);
+      }
     });
     return new GameData(cards);
   }
@@ -87,6 +105,19 @@ export class MemoryController {
       return gameData;
     }
   }
+
+  public async fetchImage(Id:string): Promise<ImageDTO> {
+    try {
+      const result = await axios.get<ImageDTO>(
+          `${config.apiBaseUrl}/configurations/images/${Id}`
+      );
+      return result.data;
+    } catch (error) {
+      console.error("Error while fetching image: " + error);
+      return new ImageDTO("",new File([], ""));
+    }
+  }
+
 
   /**
    * Shuffles the cards in the game.

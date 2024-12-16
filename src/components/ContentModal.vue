@@ -10,7 +10,7 @@
       <img
         alt="image"
         id="modal-image"
-        :src="cardData.content"
+        :src="URL.createObjectURL(cardData.image)"
         class="img-responsive"
         v-else-if="isImage"
       />
