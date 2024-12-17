@@ -52,7 +52,6 @@ const isMarkdown = ref(props.cardData.type == CardType.MARKDOWN);
  */
 const markdownContent = computed(() => marked(props.cardData.content));
 
-
 /**
  * Run onMounted hook to initialize syntax highlighting when the component is mounted
  */

@@ -53,7 +53,6 @@ import "katex/dist/katex.min.css";
 import clickSoundSource from "@/assets/music/click_sound.mp3";
 import { MemoryController } from "@/types/memory-controller";
 
-
 const memoryController = new MemoryController();
 let clickSound: HTMLAudioElement;
 
@@ -128,7 +127,7 @@ watch(
 /**
  * Function to play the click sound
  */
-function playClickSound(){
+function playClickSound() {
   clickSound.play();
 }
 </script>
@@ -236,4 +235,3 @@ function playClickSound(){
   display: block;
 }
 </style>
-

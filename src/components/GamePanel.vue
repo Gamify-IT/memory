@@ -1,5 +1,5 @@
 <template>
-    <!-- Button to navigate back to the start page -->
+  <!-- Button to navigate back to the start page -->
   <button class="goback-button" @click="redirectToStartPage()">
     <span>Go Back</span>
   </button>
@@ -59,11 +59,11 @@ import PairItem from "./PairItem.vue";
 import { CardData, CardPair, CardSelection } from "@/types/data-models";
 import { MemoryController } from "@/types/memory-controller";
 import store from "@/store/index";
-import triumphSound from '@/assets/music/trumpets.mp3';
-import swipeSoundSource from '@/assets/music/swipe_sound.mp3';
-import successSoundSource from '@/assets/music/success_sound.mp3';
-import clickSoundSource from '@/assets/music/click_sound.mp3';
-import wrongAnswerSoundSource from '@/assets/music/wrong_answer_sound.mp3';
+import triumphSound from "@/assets/music/trumpets.mp3";
+import swipeSoundSource from "@/assets/music/swipe_sound.mp3";
+import successSoundSource from "@/assets/music/success_sound.mp3";
+import clickSoundSource from "@/assets/music/click_sound.mp3";
+import wrongAnswerSoundSource from "@/assets/music/wrong_answer_sound.mp3";
 
 const router = useRouter();
 const cards = ref([] as CardData[]);
@@ -78,7 +78,6 @@ let gameStarted = ref();
 const isFinished = computed(
   () => foundPairs.value.length == cards.value.length / 2
 );
-
 
 /**
  * Watches for game state change to handle configuration error
@@ -235,11 +234,10 @@ function redirectToStartPage() {
  * Function to play sounds
  * @param pathToAudioFile
  */
-function playSound(pathToAudioFile: string){
+function playSound(pathToAudioFile: string) {
   const sound = memoryController.createAudioWithVolume(pathToAudioFile);
   sound.play();
 }
-
 </script>
 
 <style scoped>

@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { useRoute, useRouter } from "vue-router";
-import clickSoundSource from '@/assets/music/click_sound.mp3';
+import clickSoundSource from "@/assets/music/click_sound.mp3";
 import { MemoryController } from "@/types/memory-controller";
 import { onMounted } from "vue";
 
@@ -62,7 +62,7 @@ function closeGame() {
 /**
  * Plays the click sound
  */
-function playClickSound(){
+function playClickSound() {
   clickSound.play();
 }
 
@@ -71,9 +71,9 @@ function playClickSound(){
  */
 async function handleCloseGame() {
   await playClickSound();
-    setTimeout(() => {
-      closeGame();
-    }, 500);
+  setTimeout(() => {
+    closeGame();
+  }, 500);
 }
 </script>
 

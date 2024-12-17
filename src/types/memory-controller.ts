@@ -3,13 +3,12 @@
  * posting game results, and handling volume settings.
  */
 
-import axios, {AxiosResponse} from "axios";
-import {CardData, CardType, GameData} from "./data-models";
-import {GameDataDTO, GameResultDTO, ImageDTO} from "./dtos";
-import {emptyData} from "./empty-data";
+import axios, { AxiosResponse } from "axios";
+import { CardData, CardType, GameData } from "./data-models";
+import { GameDataDTO, GameResultDTO, ImageDTO } from "./dtos";
+import { emptyData } from "./empty-data";
 import config from "@/config";
 import store from "@/store/index";
-
 
 const configurationId = window.location.pathname.split("/").pop();
 const rewards = 0;
@@ -27,7 +26,6 @@ export class MemoryController {
       configurationId!,
       window.localStorage.getItem("userId")!,
       rewards!
-
     );
     console.log(result);
     let hasError = false;
@@ -41,7 +39,7 @@ export class MemoryController {
     if (!hasError && response) {
       const returnedResult = this.fromDTO(response.data);
       console.log(returnedResult);
-      store.commit('setRewards', returnedResult.rewards)
+      store.commit("setRewards", returnedResult.rewards);
     }
 
     return hasError;
@@ -61,18 +59,28 @@ export class MemoryController {
     gameDataDto.pairs.forEach((pair, index) => {
       let card1: CardData;
       let card2: CardData;
-      if(pair.card1.type == CardType.IMAGE) {
-        this.fetchImage(pair.card1.content).then(result => {
-          card1 = new CardData(pair.card1.content, pair.card1.type, index, result.image);
+      if (pair.card1.type == CardType.IMAGE) {
+        this.fetchImage(pair.card1.content).then((result) => {
+          card1 = new CardData(
+            pair.card1.content,
+            pair.card1.type,
+            index,
+            result.image
+          );
           cards.push(card1);
         });
       } else {
         card1 = new CardData(pair.card1.content, pair.card1.type, index);
         cards.push(card1);
       }
-      if(pair.card2.type == CardType.IMAGE) {
-        this.fetchImage(pair.card2.content).then(result => {
-          card2 = new CardData(pair.card2.content, pair.card2.type, index, result.image);
+      if (pair.card2.type == CardType.IMAGE) {
+        this.fetchImage(pair.card2.content).then((result) => {
+          card2 = new CardData(
+            pair.card2.content,
+            pair.card2.type,
+            index,
+            result.image
+          );
           cards.push(card2);
         });
       } else {
@@ -106,18 +114,17 @@ export class MemoryController {
     }
   }
 
-  public async fetchImage(Id:string): Promise<ImageDTO> {
+  public async fetchImage(Id: string): Promise<ImageDTO> {
     try {
       const result = await axios.get<ImageDTO>(
-          `${config.apiBaseUrl}/configurations/images/${Id}`
+        `${config.apiBaseUrl}/configurations/images/${Id}`
       );
       return result.data;
     } catch (error) {
       console.error("Error while fetching image: " + error);
-      return new ImageDTO("",new File([], ""));
+      return new ImageDTO("", new File([], ""));
     }
   }
-
 
   /**
    * Shuffles the cards in the game.
@@ -153,11 +160,9 @@ export class MemoryController {
    */
   createAudioWithVolume(pathToAudioFile: string): HTMLAudioElement {
     const audio = new Audio(pathToAudioFile);
-    if (this.volumeLevel == 2 || this.volumeLevel == 3)
-    {
+    if (this.volumeLevel == 2 || this.volumeLevel == 3) {
       this.volumeLevel = 1;
-    } else if (this.volumeLevel == 1)
-    {
+    } else if (this.volumeLevel == 1) {
       this.volumeLevel = 0.5;
     }
     audio.volume = this.volumeLevel !== null ? this.volumeLevel : 1;
