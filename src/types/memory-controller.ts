@@ -65,7 +65,7 @@ export class MemoryController {
             pair.card1.content,
             pair.card1.type,
             index,
-            result.image
+            new Blob(result.image, {type: "image/jpeg"})
           );
           cards.push(card1);
         });
@@ -79,7 +79,7 @@ export class MemoryController {
             pair.card2.content,
             pair.card2.type,
             index,
-            result.image
+            new Blob(result.image, {type: "image/jpeg"})
           );
           cards.push(card2);
         });
@@ -119,10 +119,10 @@ export class MemoryController {
       const result = await axios.get<ImageDTO>(
         `${config.apiBaseUrl}/configurations/images/${Id}`
       );
-      return result.data;
+      return new ImageDTO(result.data.uuid, result.data.image);
     } catch (error) {
       console.error("Error while fetching image: " + error);
-      return new ImageDTO("", new File([], ""));
+      return new ImageDTO("", []);
     }
   }
 

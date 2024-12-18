@@ -11,7 +11,7 @@ export class CardData {
     public content: string,
     public type: CardType,
     public pairid: number,
-    public image?: File
+    public image?: Blob
   ) {}
 }
 export enum CardSelection {
