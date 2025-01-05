@@ -62,7 +62,8 @@ export class MemoryController {
       if (pair.card1.type == CardType.IMAGE) {
         console.log("raw: "+ pair);
         console.log("Image1 content: " + pair.card1.content);
-        this.fetchImage(pair.card1.content).then((result) => {
+        const id = pair.card1.content;
+        this.fetchImage(id).then((result) => {
           card1 = new CardData(
             pair.card1.content,
             pair.card1.type,
@@ -76,7 +77,8 @@ export class MemoryController {
         cards.push(card1);
       }
       if (pair.card2.type == CardType.IMAGE) {
-        this.fetchImage(pair.card2.content).then((result) => {
+        const id = pair.card2.content;
+        this.fetchImage(id).then((result) => {
           card2 = new CardData(
             pair.card2.content,
             pair.card2.type,
