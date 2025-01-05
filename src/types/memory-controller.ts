@@ -116,10 +116,11 @@ export class MemoryController {
     }
   }
 
-  public async fetchImage(Id: string): Promise<ImageDTO> {
+  public async fetchImage(id: string): Promise<ImageDTO> {
     try {
+      console.log("id: " + id);
       const result = await axios.get<ImageDTO>(
-        `${config.apiBaseUrl}/configurations/images/${Id}`
+        `${config.apiBaseUrl}/configurations/images/${id}`
       );
       return new ImageDTO(result.data.uuid, result.data.image);
     } catch (error) {
