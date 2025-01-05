@@ -122,7 +122,7 @@ export class MemoryController {
     try {
       console.log("id: " + id);
       const result = await axios.get<ImageDTO>(
-        `${config.apiBaseUrl}/configurations/images/${id}`
+        `${config.apiBaseUrl}/configurations/images/e013d501-2b8c-4890-8e72-125face0438b013d501-2b8c-4890-8e72-125face0438b`
       );
       return new ImageDTO(result.data.uuid, result.data.image);
     } catch (error) {
