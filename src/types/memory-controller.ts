@@ -71,7 +71,8 @@ export class MemoryController {
             new Blob(result.image, {type: "image/jpeg"})
           );
           cards.push(card1);
-        });
+        }).finally(() => console.log("finally")
+        );
       } else {
         card1 = new CardData(pair.card1.content, pair.card1.type, index);
         cards.push(card1);
