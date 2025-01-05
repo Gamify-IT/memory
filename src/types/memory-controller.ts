@@ -59,11 +59,11 @@ export class MemoryController {
     gameDataDto.pairs.forEach((pair, index) => {
       let card1: CardData;
       let card2: CardData;
-      if (pair.card1.type == CardType.IMAGE) {
+      if (pair.card1.type === CardType.IMAGE) {
         console.log("raw: "+ pair);
         console.log("Image1 content: " + pair.card1.content);
         const id = pair.card1.content;
-        this.fetchImage("e013d501-2b8c-4890-8e72-125face0438b").then((result) => {
+        this.fetchImage(id).then((result) => {
           card1 = new CardData(
             pair.card1.content,
             pair.card1.type,
@@ -76,7 +76,8 @@ export class MemoryController {
         card1 = new CardData(pair.card1.content, pair.card1.type, index);
         cards.push(card1);
       }
-      if (pair.card2.type == CardType.IMAGE) {
+
+      if (pair.card2.type === CardType.IMAGE) {
         const id = pair.card2.content;
         this.fetchImage(id).then((result) => {
           card2 = new CardData(
@@ -118,11 +119,11 @@ export class MemoryController {
     }
   }
 
-  public async fetchImage(id: string): Promise<ImageDTO> {
+  public async fetchImage(uuid: string): Promise<ImageDTO> {
     try {
-      console.log("id: " + id);
+      console.log("id: " + uuid);
       const result = await axios.get<ImageDTO>(
-        `${config.apiBaseUrl}/configurations/images/e013d501-2b8c-4890-8e72-125face0438b`
+        `${config.apiBaseUrl}/configurations/images/${uuid}`
       );
       return new ImageDTO(result.data.uuid, result.data.image);
     } catch (error) {
