@@ -63,7 +63,7 @@ export class MemoryController {
         console.log("raw: "+ pair);
         console.log("Image1 content: " + pair.card1.content);
         const id = pair.card1.content;
-        this.fetchImage(id).then((result) => {
+        this.fetchImage("e013d501-2b8c-4890-8e72-125face0438b").then((result) => {
           card1 = new CardData(
             pair.card1.content,
             pair.card1.type,
@@ -71,8 +71,7 @@ export class MemoryController {
             new Blob(result.image, {type: "image/jpeg"})
           );
           cards.push(card1);
-        }).finally(() => console.log("finally")
-        );
+        });
       } else {
         card1 = new CardData(pair.card1.content, pair.card1.type, index);
         cards.push(card1);
