@@ -60,6 +60,8 @@ export class MemoryController {
       let card1: CardData;
       let card2: CardData;
       if (pair.card1.type == CardType.IMAGE) {
+        console.log("raw: "+ pair);
+        console.log("Image1 content: " + pair.card1.content);
         this.fetchImage(pair.card1.content).then((result) => {
           card1 = new CardData(
             pair.card1.content,
