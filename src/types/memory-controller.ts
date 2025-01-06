@@ -62,32 +62,44 @@ export class MemoryController {
       if (pair.card1.type === CardType.IMAGE) {
         console.log("raw: "+ pair);
         console.log("Image1 content: " + pair.card1.content);
-        const id = pair.card1.content;
-        this.fetchImage(id).then((result) => {
-          card1 = new CardData(
-            pair.card1.content,
-            pair.card1.type,
-            index,
-            new Blob(result.image, {type: "image/jpeg"})
-          );
-          cards.push(card1);
-        });
+        const id1 = pair.card1.content;
+        try {
+          axios.get<ImageDTO>(
+              `${config.apiBaseUrl}/configurations/images/${id1}`
+          ).then((result) => {
+            card1 = new CardData(
+                pair.card1.content,
+                pair.card1.type,
+                index,
+                new Blob(result.data.image, {type: "image/jpeg"}))
+            cards.push(card1);
+          });
+        } catch (error) {
+          console.error("Error while fetching image1: " + error);
+        }
+        
       } else {
         card1 = new CardData(pair.card1.content, pair.card1.type, index);
         cards.push(card1);
       }
 
       if (pair.card2.type === CardType.IMAGE) {
-        const id = pair.card2.content;
-        this.fetchImage(id).then((result) => {
-          card2 = new CardData(
-            pair.card2.content,
-            pair.card2.type,
-            index,
-            new Blob(result.image, {type: "image/jpeg"})
-          );
-          cards.push(card2);
-        });
+        const id2 = pair.card2.content;
+        try {
+          axios.get<ImageDTO>(
+              `${config.apiBaseUrl}/configurations/images/${id2}`
+          ).then((result) => {
+            card2 = new CardData(
+                pair.card2.content,
+                pair.card2.type,
+                index,
+                new Blob(result.data.image, {type: "image/jpeg"}))
+            cards.push(card2);
+          });
+        } catch (error) {
+          console.error("Error while fetching image2: " + error);
+        }
+
       } else {
         card2 = new CardData(pair.card2.content, pair.card2.type, index);
         cards.push(card2);
