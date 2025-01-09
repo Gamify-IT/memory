@@ -24,7 +24,7 @@
         <img
           alt="image not available"
           id="image"
-          :src="cardContent.content"
+          :src="cardContent.imageURL"
           v-else-if="isImage"
           draggable="false"
         />
