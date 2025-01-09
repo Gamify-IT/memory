@@ -67,7 +67,7 @@ export class MemoryController {
           axios.get<ImageDTO>(
               `${config.apiBaseUrl}/configurations/images/${id1}`
           ).then((result) => {
-            const imageBlob = new Blob(result.data.image, {type: "image/jpeg"});
+            const imageBlob = new Blob(result.data.image, {type: "image/png"});
             const imageURL = URL.createObjectURL(imageBlob);
             card1 = new CardData(
                 pair.card1.content,
