@@ -67,17 +67,20 @@ export class MemoryController {
           axios.get<ImageDTO>(
               `${config.apiBaseUrl}/configurations/images/${id1}`
           ).then((result) => {
+            const imageBlob = new Blob(result.data.image, {type: "image/jpeg"});
+            const imageURL = URL.createObjectURL(imageBlob);
             card1 = new CardData(
                 pair.card1.content,
                 pair.card1.type,
                 index,
-                new Blob(result.data.image, {type: "image/jpeg"}))
+                imageBlob,
+                imageURL)
             cards.push(card1);
           });
         } catch (error) {
           console.error("Error while fetching image1: " + error);
         }
-        
+
       } else {
         card1 = new CardData(pair.card1.content, pair.card1.type, index);
         cards.push(card1);
