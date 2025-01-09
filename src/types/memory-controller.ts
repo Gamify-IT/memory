@@ -70,13 +70,13 @@ export class MemoryController {
         ).then((result) => {
           const imageBase64 = result.data.image;
           const imageBinary = Uint8Array.from(Buffer.from(imageBase64,"base64"));
-          const imageData = new Blob([imageBinary], {type: 'image/png'});
+          const imageData1 = new Blob([imageBinary], {type: 'image/png'});
           card1 = new CardData(
               pair.card1.content,
               pair.card1.type,
               index,
-              imageData,
-              URL.createObjectURL(imageData))
+              imageData1,
+              URL.createObjectURL(imageData1))
           cards.push(card1);
         }).catch((error) => {
           console.error("Error while fetching image1: " + error);
@@ -94,13 +94,13 @@ export class MemoryController {
         ).then((result) => {
           const imageBase64 = result.data.image;
           const imageBinary = Uint8Array.from(Buffer.from(imageBase64,"base64"));
-          const imageData = new Blob([imageBinary], {type: 'image/png'});
+          const imageData2 = new Blob([imageBinary], {type: 'image/png'});
           card2 = new CardData(
               pair.card2.content,
               pair.card2.type,
               index,
-              imageData,
-              URL.createObjectURL(imageData))
+              imageData2,
+              URL.createObjectURL(imageData2))
           cards.push(card2);
         }).catch((error) => {
           console.error("Error while fetching image2: " + error);
