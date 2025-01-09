@@ -124,7 +124,7 @@ export class MemoryController {
       const result = await axios.get<GameDataDTO>(
         `${config.apiBaseUrl}/configurations/${configurationId}/volume`
       );
-      const gameData = this.convertDTOToData(result.data);
+      const gameData = await this.convertDTOToData(result.data);
       this.gameData = gameData;
       this.volumeLevel = result.data.volumeLevel;
       this.shuffleCards();
