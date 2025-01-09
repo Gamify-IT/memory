@@ -64,24 +64,23 @@ export class MemoryController {
         console.log("raw: "+ pair);
         console.log("Image1 content: " + pair.card1.content);
         const id1 = pair.card1.content;
-        try {
-          axios.get<ImageDTO>(
-              `${config.apiBaseUrl}/configurations/images/${id1}`
-          ).then((result) => {
-            const imageBase64 = result.data.image;
-            const imageBinary = Uint8Array.from(Buffer.from(imageBase64,"base64"));
-            const imageData = new Blob([imageBinary], {type: 'image/png'});
-            card1 = new CardData(
-                pair.card1.content,
-                pair.card1.type,
-                index,
-                imageData,
-                URL.createObjectURL(imageData))
-            cards.push(card1);
-          });
-        } catch (error) {
+
+        axios.get<ImageDTO>(
+            `${config.apiBaseUrl}/configurations/images/${id1}`
+        ).then((result) => {
+          const imageBase64 = result.data.image;
+          const imageBinary = Uint8Array.from(Buffer.from(imageBase64,"base64"));
+          const imageData = new Blob([imageBinary], {type: 'image/png'});
+          card1 = new CardData(
+              pair.card1.content,
+              pair.card1.type,
+              index,
+              imageData,
+              URL.createObjectURL(imageData))
+          cards.push(card1);
+        }).catch((error) => {
           console.error("Error while fetching image1: " + error);
-        }
+        });
 
       } else {
         card1 = new CardData(pair.card1.content, pair.card1.type, index);
@@ -90,24 +89,22 @@ export class MemoryController {
 
       if (pair.card2.type === CardType.IMAGE) {
         const id2 = pair.card2.content;
-        try {
-          axios.get<ImageDTO>(
-              `${config.apiBaseUrl}/configurations/images/${id2}`
-          ).then((result) => {
-            const imageBase64 = result.data.image;
-            const imageBinary = Uint8Array.from(Buffer.from(imageBase64,"base64"));
-            const imageData = new Blob([imageBinary], {type: 'image/png'});
-            card1 = new CardData(
-                pair.card2.content,
-                pair.card2.type,
-                index,
-                imageData,
-                URL.createObjectURL(imageData))
-            cards.push(card2);
-          });
-        } catch (error) {
+        axios.get<ImageDTO>(
+            `${config.apiBaseUrl}/configurations/images/${id2}`
+        ).then((result) => {
+          const imageBase64 = result.data.image;
+          const imageBinary = Uint8Array.from(Buffer.from(imageBase64,"base64"));
+          const imageData = new Blob([imageBinary], {type: 'image/png'});
+          card2 = new CardData(
+              pair.card2.content,
+              pair.card2.type,
+              index,
+              imageData,
+              URL.createObjectURL(imageData))
+          cards.push(card2);
+        }).catch((error) => {
           console.error("Error while fetching image2: " + error);
-        }
+        });
 
       } else {
         card2 = new CardData(pair.card2.content, pair.card2.type, index);
