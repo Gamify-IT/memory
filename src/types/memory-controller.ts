@@ -67,14 +67,15 @@ export class MemoryController {
           axios.get<ImageDTO>(
               `${config.apiBaseUrl}/configurations/images/${id1}`
           ).then((result) => {
-            const imageBlob = new Blob(result.data.image, {type: "image/png"});
-            const imageURL = URL.createObjectURL(imageBlob);
+            const imageBase64 = result.data.image;
+            const imageBinary = Uint8Array.from(Buffer.from(imageBase64,"base64"));
+            const imageData = new Blob([imageBinary], {type: 'image/png'});
             card1 = new CardData(
                 pair.card1.content,
                 pair.card1.type,
                 index,
-                imageBlob,
-                imageURL)
+                imageData,
+                URL.createObjectURL(imageData))
             cards.push(card1);
           });
         } catch (error) {
@@ -92,11 +93,15 @@ export class MemoryController {
           axios.get<ImageDTO>(
               `${config.apiBaseUrl}/configurations/images/${id2}`
           ).then((result) => {
-            card2 = new CardData(
+            const imageBase64 = result.data.image;
+            const imageBinary = Uint8Array.from(Buffer.from(imageBase64,"base64"));
+            const imageData = new Blob([imageBinary], {type: 'image/png'});
+            card1 = new CardData(
                 pair.card2.content,
                 pair.card2.type,
                 index,
-                new Blob(result.data.image, {type: "image/jpeg"}))
+                imageData,
+                URL.createObjectURL(imageData))
             cards.push(card2);
           });
         } catch (error) {
@@ -134,19 +139,6 @@ export class MemoryController {
     }
   }
 
-  public async fetchImage(uuid: string): Promise<ImageDTO> {
-    try {
-      console.log("id: " + uuid);
-      const id:string = uuid;
-      const result = await axios.get<ImageDTO>(
-        `${config.apiBaseUrl}/configurations/images/${id}`
-      );
-      return new ImageDTO(result.data.uuid, result.data.image);
-    } catch (error) {
-      console.error("Error while fetching image: " + error);
-      return new ImageDTO("", []);
-    }
-  }
 
   /**
    * Shuffles the cards in the game.

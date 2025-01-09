@@ -28,5 +28,5 @@ export class GameResultDTO {
   public isFinished = "true";
 }
 export class ImageDTO {
-  constructor(public uuid: string, public image: []) {}
+  constructor(public uuid: string, public image: string) {}
 }
