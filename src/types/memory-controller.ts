@@ -9,6 +9,7 @@ import { GameDataDTO, GameResultDTO, ImageDTO } from "./dtos";
 import { emptyData } from "./empty-data";
 import config from "@/config";
 import store from "@/store/index";
+import { Buffer } from "buffer";
 
 const configurationId = window.location.pathname.split("/").pop();
 const rewards = 0;
