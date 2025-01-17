@@ -16,7 +16,7 @@
     "@vue/test-utils": "^2.2.7",
     "axios": "^1.7.4",
     "highlight.js": "^11.7.0",
-    "katex": "^0.16.10",
+    "katex": "^0.16.21",
     "marked": "^4.3.0",
     "marked-katex-extension": "^2.0.1",
     "vue": "^3.2.13",
