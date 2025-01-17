@@ -44,7 +44,7 @@
       </div>
     </div>
     <!-- Modal for displaying detailed content of a card -->
-    <ContentModal v-if="showModal" :cardData="modalContent">
+    <ContentModal v-if="showModal" :cardData="modalContent" @click.self="closeModal()">
       <button id="close-button" @click="closeModal">Close</button>
     </ContentModal>
   </div>
