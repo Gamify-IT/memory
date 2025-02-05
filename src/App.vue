@@ -15,7 +15,6 @@ let backgroundMusic: HTMLAudioElement;
  * Lifecycle hook that runs when the component is mounted
  */
 onMounted(async () => {
-  await memoryController.fetchData();
   backgroundMusic = memoryController.createAudioWithVolume(
     backgroundMusicSource
   );

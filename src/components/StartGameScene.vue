@@ -32,7 +32,6 @@ const memoryController = new MemoryController();
 let clickSound: HTMLAudioElement;
 
 onMounted(async () => {
-  await memoryController.fetchData();
   clickSound = memoryController.createAudioWithVolume(clickSoundSource);
 });
 

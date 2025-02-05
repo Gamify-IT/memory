@@ -60,7 +60,6 @@ let clickSound: HTMLAudioElement;
  * onMounted lifecycle hook to fetch data and initialize audio
  */
 onMounted(async () => {
-  await memoryController.fetchData();
   clickSound = memoryController.createAudioWithVolume(clickSoundSource);
 });
 const props = defineProps({

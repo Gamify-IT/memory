@@ -82,7 +82,7 @@ let memoryController: MemoryController;
 let gameStarted = ref();
 let showGame = ref(false);
 const isFinished = computed(
-  () => foundPairs.value.length == cards.value.length / 2
+  () => ((foundPairs.value.length == cards.value.length / 2) && showGame.value)
 );
 
 /**
@@ -119,7 +119,7 @@ onMounted(async () => {
   gameStarted.value = true;
   setTimeout(() => {
     showGame.value = true;
-  }, 3000)
+  }, 2000)
 });
 
 /**

@@ -13,6 +13,7 @@
         :src="cardData.imageURL"
         class="img-responsive"
         v-else-if="isImage"
+        loading="eager"
       />
       <!-- Markdown content is displayed if the card type is MARKDOWN -->
       <div id="markdown" v-else-if="isMarkdown" v-html="markdownContent"></div>
