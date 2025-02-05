@@ -11,6 +11,7 @@
     transmitted.
   </div>
   <!-- Game panel with memory game cards and summary -->
+  <div style="display: contents" v-if="showGame">
   <div id="game-panel">
     <!-- Memory panel with the grid of cards -->
     <div id="memory-panel" class="shadowed-panel" @click="manualReset">
@@ -48,11 +49,15 @@
       <button id="close-button" @click="closeModal">Close</button>
     </ContentModal>
   </div>
+  </div>
+  <div class="container">
+    <b>loading ...</b>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { computed, onMounted, ref, watch } from "vue";
+import {computed, nextTick, onMounted, ref, watch} from "vue";
 import MemoryCard from "./MemoryCard.vue";
 import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
@@ -75,6 +80,7 @@ const hasPostError = ref();
 const hasConfigError = ref();
 let memoryController: MemoryController;
 let gameStarted = ref();
+let showGame = ref(false);
 const isFinished = computed(
   () => foundPairs.value.length == cards.value.length / 2
 );
@@ -111,6 +117,9 @@ onMounted(async () => {
   memoryController = new MemoryController();
   cards.value = (await memoryController.fetchData()).cards;
   gameStarted.value = true;
+  setTimeout(() => {
+    showGame.value = true;
+  }, 3000)
 });
 
 /**
@@ -387,5 +396,11 @@ function playSound(pathToAudioFile: string) {
   color: red;
   font-size: 500%;
   z-index: 999;
+}
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
