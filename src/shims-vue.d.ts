@@ -4,4 +4,4 @@ declare module "*.vue" {
   const component: DefineComponent<{}, {}, any>;
   export default component;
 }
-declare module '*.mp3';
+declare module "*.mp3";

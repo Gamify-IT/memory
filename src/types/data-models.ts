@@ -10,7 +10,9 @@ export class CardData {
   constructor(
     public content: string,
     public type: CardType,
-    public pairid: number
+    public pairid: number,
+    public image?: Blob,
+    public imageURL?: string
   ) {}
 }
 export enum CardSelection {

@@ -10,9 +10,10 @@
       <img
         alt="image"
         id="modal-image"
-        :src="cardData.content"
+        :src="cardData.imageURL"
         class="img-responsive"
         v-else-if="isImage"
+        loading="eager"
       />
       <!-- Markdown content is displayed if the card type is MARKDOWN -->
       <div id="markdown" v-else-if="isMarkdown" v-html="markdownContent"></div>
@@ -51,7 +52,6 @@ const isMarkdown = ref(props.cardData.type == CardType.MARKDOWN);
  * Compute the markdown content by parsing it using the `marked` library
  */
 const markdownContent = computed(() => marked(props.cardData.content));
-
 
 /**
  * Run onMounted hook to initialize syntax highlighting when the component is mounted
