@@ -1,5 +1,5 @@
 <template>
-    <!-- Button to navigate back to the start page -->
+  <!-- Button to navigate back to the start page -->
   <button class="goback-button" @click="redirectToStartPage()">
     <span>Go Back</span>
   </button>
@@ -11,6 +11,7 @@
     transmitted.
   </div>
   <!-- Game panel with memory game cards and summary -->
+  <div style="display: contents" v-if="showGame">
   <div id="game-panel">
     <!-- Memory panel with the grid of cards -->
     <div id="memory-panel" class="shadowed-panel" @click="manualReset">
@@ -44,26 +45,30 @@
       </div>
     </div>
     <!-- Modal for displaying detailed content of a card -->
-    <ContentModal v-if="showModal" :cardData="modalContent">
+    <ContentModal v-if="showModal" :cardData="modalContent" @click.self="closeModal()">
       <button id="close-button" @click="closeModal">Close</button>
     </ContentModal>
+  </div>
+  </div>
+  <div class="container">
+    <b>loading ...</b>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { computed, onMounted, ref, watch } from "vue";
+import {computed, nextTick, onMounted, ref, watch} from "vue";
 import MemoryCard from "./MemoryCard.vue";
 import ContentModal from "./ContentModal.vue";
 import PairItem from "./PairItem.vue";
 import { CardData, CardPair, CardSelection } from "@/types/data-models";
 import { MemoryController } from "@/types/memory-controller";
 import store from "@/store/index";
-import triumphSound from '@/assets/music/trumpets.mp3';
-import swipeSoundSource from '@/assets/music/swipe_sound.mp3';
-import successSoundSource from '@/assets/music/success_sound.mp3';
-import clickSoundSource from '@/assets/music/click_sound.mp3';
-import wrongAnswerSoundSource from '@/assets/music/wrong_answer_sound.mp3';
+import triumphSound from "@/assets/music/trumpets.mp3";
+import swipeSoundSource from "@/assets/music/swipe_sound.mp3";
+import successSoundSource from "@/assets/music/success_sound.mp3";
+import clickSoundSource from "@/assets/music/click_sound.mp3";
+import wrongAnswerSoundSource from "@/assets/music/wrong_answer_sound.mp3";
 
 const router = useRouter();
 const cards = ref([] as CardData[]);
@@ -75,10 +80,10 @@ const hasPostError = ref();
 const hasConfigError = ref();
 let memoryController: MemoryController;
 let gameStarted = ref();
+let showGame = ref(false);
 const isFinished = computed(
-  () => foundPairs.value.length == cards.value.length / 2
+  () => ((foundPairs.value.length == cards.value.length / 2) && showGame.value)
 );
-
 
 /**
  * Watches for game state change to handle configuration error
@@ -112,6 +117,9 @@ onMounted(async () => {
   memoryController = new MemoryController();
   cards.value = (await memoryController.fetchData()).cards;
   gameStarted.value = true;
+  setTimeout(() => {
+    showGame.value = true;
+  }, 2000)
 });
 
 /**
@@ -235,11 +243,10 @@ function redirectToStartPage() {
  * Function to play sounds
  * @param pathToAudioFile
  */
-function playSound(pathToAudioFile: string){
+function playSound(pathToAudioFile: string) {
   const sound = memoryController.createAudioWithVolume(pathToAudioFile);
   sound.play();
 }
-
 </script>
 
 <style scoped>
@@ -389,5 +396,11 @@ function playSound(pathToAudioFile: string){
   color: red;
   font-size: 500%;
   z-index: 999;
+}
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>

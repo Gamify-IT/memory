@@ -24,7 +24,7 @@
         <img
           alt="image not available"
           id="image"
-          :src="cardContent.content"
+          :src="cardContent.imageURL"
           v-else-if="isImage"
           draggable="false"
         />
@@ -53,7 +53,6 @@ import "katex/dist/katex.min.css";
 import clickSoundSource from "@/assets/music/click_sound.mp3";
 import { MemoryController } from "@/types/memory-controller";
 
-
 const memoryController = new MemoryController();
 let clickSound: HTMLAudioElement;
 
@@ -61,7 +60,6 @@ let clickSound: HTMLAudioElement;
  * onMounted lifecycle hook to fetch data and initialize audio
  */
 onMounted(async () => {
-  await memoryController.fetchData();
   clickSound = memoryController.createAudioWithVolume(clickSoundSource);
 });
 const props = defineProps({
@@ -128,7 +126,7 @@ watch(
 /**
  * Function to play the click sound
  */
-function playClickSound(){
+function playClickSound() {
   clickSound.play();
 }
 </script>
@@ -236,4 +234,3 @@ function playClickSound(){
   display: block;
 }
 </style>
-

@@ -2,14 +2,15 @@
  * Manages the game's data, including fetching game configurations, shuffling cards,
  * posting game results, and handling volume settings.
  */
-
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import axios, { AxiosResponse } from "axios";
-import { CardData, GameData } from "./data-models";
-import { GameDataDTO, GameResultDTO } from "./dtos";
+import { CardData, CardType, GameData } from "./data-models";
+import { GameDataDTO, GameResultDTO, ImageDTO } from "./dtos";
 import { emptyData } from "./empty-data";
 import config from "@/config";
 import store from "@/store/index";
-
+import { Buffer } from "buffer";
 
 const configurationId = window.location.pathname.split("/").pop();
 const rewards = 0;
@@ -27,7 +28,6 @@ export class MemoryController {
       configurationId!,
       window.localStorage.getItem("userId")!,
       rewards!
-
     );
     console.log(result);
     let hasError = false;
@@ -41,7 +41,7 @@ export class MemoryController {
     if (!hasError && response) {
       const returnedResult = this.fromDTO(response.data);
       console.log(returnedResult);
-      store.commit('setRewards', returnedResult.rewards)
+      store.commit("setRewards", returnedResult.rewards);
     }
 
     return hasError;
@@ -56,12 +56,60 @@ export class MemoryController {
    * @param {GameDataDTO} gameDataDto - The DTO to convert.
    * @returns {GameData} The converted game data.
    */
-  private convertDTOToData(gameDataDto: GameDataDTO) {
+  private async convertDTOToData(gameDataDto: GameDataDTO) {
     const cards: CardData[] = [];
-    gameDataDto.pairs.forEach((pair, index) => {
-      cards.push(new CardData(pair.card1.content, pair.card1.type, index));
-      cards.push(new CardData(pair.card2.content, pair.card2.type, index));
-    });
+    for(let index = 0; index < gameDataDto.pairs.length; index++) {
+      const pair = gameDataDto.pairs.at(index);
+      let card1: CardData;
+      let card2: CardData;
+
+      if (pair.card1.type === CardType.IMAGE) {
+        const id1 = pair.card1.content;
+        try {
+          const result = await axios.get<ImageDTO>(`${config.apiBaseUrl}/configurations/images/${id1}`);
+          const imageBase64 = result.data.image;
+          const imageBinary = Uint8Array.from(Buffer.from(imageBase64,"base64"));
+          const imageData1 = new Blob([imageBinary], {type: 'image/png'});
+          card1 = new CardData(
+              pair.card1.content,
+              pair.card1.type,
+              index,
+              imageData1,
+              URL.createObjectURL(imageData1))
+          cards.push(card1);
+        }
+        catch(error) {
+          console.error("Error while fetching image1: " + error);
+        }
+      } else {
+        card1 = new CardData(pair.card1.content, pair.card1.type, index);
+        cards.push(card1);
+      }
+
+      if (pair.card2.type === CardType.IMAGE) {
+        const id2 = pair.card2.content;
+        try {
+          const result = await axios.get<ImageDTO>(`${config.apiBaseUrl}/configurations/images/${id2}`);
+          const imageBase64 = result.data.image;
+          const imageBinary = Uint8Array.from(Buffer.from(imageBase64,"base64"));
+          const imageData2 = new Blob([imageBinary], {type: 'image/png'});
+          card2 = new CardData(
+              pair.card2.content,
+              pair.card2.type,
+              index,
+              imageData2,
+              URL.createObjectURL(imageData2))
+          cards.push(card2);
+        }
+        catch(error) {
+          console.error("Error while fetching image1: " + error);
+        }
+
+      } else {
+        card2 = new CardData(pair.card2.content, pair.card2.type, index);
+        cards.push(card2);
+      }
+    }
     return new GameData(cards);
   }
 
@@ -75,18 +123,20 @@ export class MemoryController {
       const result = await axios.get<GameDataDTO>(
         `${config.apiBaseUrl}/configurations/${configurationId}/volume`
       );
-      const gameData = this.convertDTOToData(result.data);
+      console.log(result)
+      const gameData = await this.convertDTOToData(result.data);
       this.gameData = gameData;
       this.volumeLevel = result.data.volumeLevel;
       this.shuffleCards();
       return gameData;
     } catch (error) {
       this.hasConfigError = true;
-      const gameData = this.convertDTOToData(emptyData);
+      const gameData = await this.convertDTOToData(emptyData);
       this.gameData = gameData;
       return gameData;
     }
   }
+
 
   /**
    * Shuffles the cards in the game.
@@ -94,6 +144,8 @@ export class MemoryController {
    */
   private shuffleCards() {
     const cards = this.gameData.cards;
+    console.log("before shuffle")
+    console.log(cards)
     for (let i = cards.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       const temp = cards[i];
@@ -122,11 +174,9 @@ export class MemoryController {
    */
   createAudioWithVolume(pathToAudioFile: string): HTMLAudioElement {
     const audio = new Audio(pathToAudioFile);
-    if (this.volumeLevel == 2 || this.volumeLevel == 3)
-    {
+    if (this.volumeLevel == 2 || this.volumeLevel == 3) {
       this.volumeLevel = 1;
-    } else if (this.volumeLevel == 1)
-    {
+    } else if (this.volumeLevel == 1) {
       this.volumeLevel = 0.5;
     }
     audio.volume = this.volumeLevel !== null ? this.volumeLevel : 1;

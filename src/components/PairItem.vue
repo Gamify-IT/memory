@@ -19,7 +19,6 @@
         :canFlip="false"
         :initiallyRevealed="true"
         @openModal="$emit('openModal', pair.card2)"
-
       />
     </div>
   </div>
@@ -40,7 +39,6 @@ defineProps({
   },
 });
 </script>
-
 
 <style scoped>
 /* Style for the container holding both card containers */
